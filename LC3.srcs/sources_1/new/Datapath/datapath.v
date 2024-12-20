@@ -51,5 +51,6 @@ conditionCode conditionCode_inst(
 regFile regFile_inst(
 	.data(dataBus),.DR(DR),.LDREG(LDREG),.SR1(SR1select),.SR2(SR2select),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2));
 
-//TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.    
+//TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.
+//test hook    
 endmodule
