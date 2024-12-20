@@ -21,10 +21,7 @@
 
 
 module address(
-	input[15:0] SR1, PC,
-	input[10:0] PCoffset11,
-	input[8:0] PCoffset9,
-	input[5:0] offset6,
+	input[15:0] SR1, PC, instruction,
 	input ADDR1MUX,
 	input[1:0] ADDR2MUX,
 	output reg[15:0] result
@@ -48,9 +45,9 @@ module address(
 		
 		case(ADDR2MUX)
 			ZERO: mux2 <= 0;
-			OFF6: mux2 <= $signed(offset6);
-			OFF9: mux2 <= $signed(PCoffset9);
-			OFF11: mux2 <= $signed(PCoffset11);
+			OFF6: mux2 <= $signed(instruction);
+			OFF9: mux2 <= $signed(instruction);
+			OFF11: mux2 <= $signed(instruction);
 		endcase
 		
 		result <= mux1 + mux2;

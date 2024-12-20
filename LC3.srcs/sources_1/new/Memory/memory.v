@@ -34,13 +34,15 @@ module memory(
 	wire[15:0] KBSR, KBDR, DSR, DDR;
 	wire KBSR_enable, DSR_enable, DDR_enable;
 	
+	reg [15:0] inmux;
+
+	
 	memoryRegister memoryRegister_inst(.data(data),.inmux(inmux),.clk(clk),.reset_n(reset_n),.MAR(MAR),.LDMAR(LDMAR),.LDMDR(LDMDR),.MIOEN(MIOEN),.GateMDR(GateMDR),.MDR(MDR),.result(result));
 	io io_inst(.data(data),.KBDR(KBDR),.KBSR(KBSR),.DDR(DDR),.DSR(DSR),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.foreignKeyboardInput(foreignKeyboardInput),.foreignDisplayOutput(foreignDisplayOutput));
 	RAM RAM_inst(.MDR(MDR),.address(MAR),.RW(RW),.MEMEN(MEMEN),.memoryRead(memoryRead),.clk(clk),.reset_n(reset_n),.R(R));
 	addressControlLogic addressControlLogic_inst(.MAR(MAR),.RW(RW),.MIOEN(MIOEN),.MEMEN(MEMEN),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.inmuxSelect(inmuxSelect));
 	
 	
-	reg [15:0] inmux;
 	always@(*)begin
 		case(inmuxSelect) 
 			`MEMORYREAD: inmux <= memoryRead;

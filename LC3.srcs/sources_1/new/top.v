@@ -28,8 +28,8 @@ wire[15:0] dataBus;
 datapath datapath_inst();
 controller controller_inst();
 memory memory_inst();
-io io_inst();
 
 
 
 endmodule
+
