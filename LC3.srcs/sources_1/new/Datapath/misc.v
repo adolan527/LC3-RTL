@@ -59,3 +59,22 @@ module MARmux(
 	
 	always@(*) if(GateMARmux) result<=temp; else result<={16'bz};
 endmodule
+
+module accessControlViolation(
+	input[15:0] PSR, dataBus,
+	output ACV
+	);
+	assign ACV = PSR[15] & (&dataBus[15:9] | &(~dataBus[15:14]));
+endmodule
+
+module branchEnable(
+	input[15:0] instruction,
+	input N, Z, P,
+	output BEN
+	);
+	assign BEN = (instruction[11] & N) | (instruction[10] & Z) | (instruction[9] & P);
+endmodule
+
+module SR1adrMux(
+	
+	// TODO: impplement SR1 and SR2 address muxes. consult textbook for logic.
