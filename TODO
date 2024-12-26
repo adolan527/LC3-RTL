@@ -2,7 +2,12 @@ TODO list:
 
 LC3.srcs/sources_1/new/Datapath/datapath.v
 
-	54 	// TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.
+	39 		// TODO: ensure every control signal inputted is used where necessary.wd
+	71 	// TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.
+
+LC3.srcs/sources_1/new/Datapath/misc.v
+
+	80 		// TODO: impplement SR1 and SR2 address muxes. consult textbook for logic.
 
 LC3.srcs/sources_1/new/Memory/addressControlLogic.v
 

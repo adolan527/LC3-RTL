@@ -77,4 +77,7 @@ endmodule
 
 module SR1adrMux(
 	
-	// TODO: impplement SR1 and SR2 address muxes. consult textbook for logic.
+	);
+	// TODO: implement SR1 and SR2 address muxes. consult textbook for logic.
+	
+endmodule
