@@ -19,9 +19,71 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//clk and reset_n are not explicity described in the textbook but can be assumed
 
 module regFile(
+	input[15:0] data, //databus input
+	input[2:0] DR, //destination register. Address of the register to write to
+	input LDREG, //active high write enable bit. 
+	input[2:0] SR1, SR2, //source registers 1 and 2. Address of register to read from
+	input clk, //clk
+	input reset_n, //active low async reset.
+	output reg[15:0] SR1out, SR2out //data from source registers 1 and 2
+    );
+	
+	
+	reg[15:0] registers[7:0];
+	reg[7:0] enable;
+	integer i;
+	always@(posedge clk or negedge reset_n)begin
+		for(i=0;i<8;i=i+1) begin
+			if (!reset_n) begin
+				registers[i] <= 0;
+			end
+			else if(enable[i]) registers[i] <= data;
+			else registers[i] <= registers[i];
+		end
+			
+	
+	end	
+	
+	
+	
+	always@(*)begin
+		enable = 0;
+		enable[DR] = LDREG;
+		SR1out = registers[SR1];
+		SR2out = registers[SR2];
+	end
+endmodule
+	
+	
+
+module regFile_tb();
+	reg LDREG, clk, reset_n;
+	reg[2:0]  DR, SR1, SR2;
+	reg[15:0]  data;
+	wire[15:0] SR1out, SR2out;
+
+	regFile regFile_inst(
+	 .data(data),.DR(DR),.LDREG(LDREG),.SR1(SR1),.SR2(SR2),.clk(clk),.reset_n(reset_n),.SR1out(SR1out),.SR2out(SR2out));
+
+	always #5 clk = ~clk;
+	always #10 data = $random;
+	always #10 DR = DR + 1;
+
+initial begin
+	clk = 0; reset_n = 0; #10
+	reset_n = 1; DR = 0; SR1 =0; SR2 = 1; data = 0; LDREG = 0;  #80;
+	LDREG = 1; #80;
+	reset_n = 0;
+	
+end
+
+endmodule
+
+
+/*
+module regFile_structural( 
 	input[15:0] data, //databus input
 	input[2:0] DR, //destination register. Address of the register to write to
 	input LDREG, //active high write enable bit. 
@@ -34,7 +96,8 @@ module regFile(
 	//each register is 1 word, 16 bits.
 	//8 registers
 	
-	wire[7:0] regOut, regSelect, regEnable;
+	wire[7:0] regSelect, regEnable;
+	wire[15:0] regOut[7:0];
 	
 	decoder decode(.in(DR),.out(regSelect));
 	
@@ -47,30 +110,14 @@ module regFile(
 	endgenerate
 	
 	always@(*)begin
-		case(SR1)
-			0: SR1out <= regOut[0];
-			1: SR1out <= regOut[1];
-			2: SR1out <= regOut[3];
-			3: SR1out <= regOut[2];
-			4: SR1out <= regOut[4];
-			5: SR1out <= regOut[5];
-			6: SR1out <= regOut[6];
-			7: SR1out <= regOut[7];
-		endcase
-		case(SR2)
-			0: SR2out <= regOut[0];
-			1: SR2out <= regOut[1];
-			2: SR2out <= regOut[3];
-			3: SR2out <= regOut[2];
-			4: SR2out <= regOut[4];
-			5: SR2out <= regOut[5];
-			6: SR2out <= regOut[6];
-			7: SR2out <= regOut[7];
-		endcase		
+		SR1out <= regOut[SR1];
+		SR2out <= regOut[SR2];
 	end
 		
-		
 endmodule
+
+
+
 
 module decoder(
 	input[2:0] in,
@@ -105,3 +152,6 @@ module register(
 	end
 		
 endmodule
+
+*/
+

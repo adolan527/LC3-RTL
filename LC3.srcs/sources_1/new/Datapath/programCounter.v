@@ -22,11 +22,8 @@
 
 module programCounter(
 	input[1:0] pcMux,
-	input[15:0] bus,
-	input [15:0] adder,
-	input clk,
-	input reset_n,
-	input GatePC,
+	input[15:0] bus, adder,
+	input clk, reset_n, GatePC, enable,
 	output reg[15:0] result
 	);
 	localparam PCINC = 2'b00;
@@ -38,15 +35,16 @@ module programCounter(
 	
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n) PC <= 0;
-		else 
-		case(pcMux)
+		else if(enable) case(pcMux)
 			PCINC: PC <= PC+1;
 			BUS: PC <= bus;
 			ADDER: PC <= adder;
 			default: PC <= 0;
 		endcase
+		else PC <= PC;
 	end
 	
 	always@(*) if(GatePC) result<=PC; else result<={16'bz};
 	
 endmodule
+
