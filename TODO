@@ -1,5 +1,9 @@
 TODO list:
 
+LC3.srcs/sources_1/new/Datapath/address.v
+
+	68 		//TODO Test address module
+
 LC3.srcs/sources_1/new/Datapath/datapath.v
 
 	39 		// TODO: ensure every control signal inputted is used where necessary.wd
