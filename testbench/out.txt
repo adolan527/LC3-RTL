@@ -1,10 +1,8 @@
-reg  clk, reset_n, GatePC, enable;
-reg[1:0]  pcMux;
-reg[15:0]  bus, adder;
-wire[15:0] result;
+reg  clk, data_in, reset_b, data_logging;
+wire wire[9:0] data_out t;
 
-programCounter programCounter_inst(
- .pcMux(pcMux),.bus(bus),.adder(adder),.clk(clk),.reset_n(reset_n),.GatePC(GatePC),.enable(enable),.result(result));
+SIPO SIPO_inst(
+ .clk(clk),.data_in(data_in),.reset_b(reset_b),.data_logging(data_logging),.wire[9:0](wire[9:0]),.data_out(data_out),.t(t));
 
 always #5 clk = ~clk;
 

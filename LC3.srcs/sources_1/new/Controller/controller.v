@@ -22,15 +22,19 @@
 
 module controller(
 	input [15:0] PSR, //processor status register. PSR[15] = user/supervisor, [10:8] priority, [2:0] N Z P
-	input [15:11] instruction,
+	input [15:11] instruction, //opcode
 	input INT, R, BEN, ACV, //Interrupt, ready to read memory, branch enable, access control violation
 	input clk, reset_n,
 	output LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector,
 	output GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
 	output[1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMUX, VectorMUX, ALUK,
 	output ADDR1MUX, MARMUX, TableMUX, PSRMUX,
-	output MIOEN, RW, SetPriv
+	output MIOEN, RW, SetPriv //memory IO enable, Read/Write enable, Set privelege
     );
+	
+	//TODO Implement control logic, add states.
+	
+	
 	
 	always@(*)begin //control signal assignment
 	

@@ -9,6 +9,10 @@ LC3.srcs/sources_1/new/Datapath/datapath.v
 	39 		// TODO: ensure every control signal inputted is used where necessary.wd
 	75 	// TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.
 
+LC3.srcs/sources_1/new/Datapath/programCounter.v
+
+	51 	module programCounter_tb();//TODO run tb
+
 LC3.srcs/sources_1/new/Memory/addressControlLogic.v
 
 	50 	// TODO: Write a tb for this module.

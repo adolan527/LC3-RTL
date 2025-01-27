@@ -46,7 +46,7 @@ instructionRegister instructionRegister_inst(
 	.data(dataBus),.clk(clk),.reset_n(reset_n),.instruction(instruction),.enable(LDIR));
 
 programCounter programCounter_inst(
-	.pcMux(PCMUX),.bus(dataBus),.adder(addressResult),.clk(clk),.reset_n(reset_n),.GatePC(GatePC),.result(PC),.enable(LDPC));
+	.pcMux(PCMUX),.bus(dataBus),.adder(addressResult),.clk(clk),.reset_n(reset_n),.GatePC(GatePC),.result(PC),.LDPC(LDPC));
 	
 ALU ALU_inst(
 	.operand_A(SR1),.operand_B(SR2muxOutput),.operationSelect(ALUK),.GateALU(GateALU),.result(dataBus));

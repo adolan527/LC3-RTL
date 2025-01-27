@@ -60,23 +60,19 @@ module programCounter_tb();//TODO run tb
 	always #5 clk = ~clk;
 
 	initial begin
-		clk = 0; reset_n = 0; pcMux = 0; bus = 16'h8888; adder = 16'h9999; GatePC = 0; LDPC = 0; #50 //PC will remain 0, output is Z
+		clk = 0; reset_n = 0; pcMux = 0; bus = 16'h8888; adder = 16'h9999; GatePC = 0; LDPC = 0; #10 //PC will remain 0, output is Z
+		reset_n = 1; #50
 		GatePC = 1; #10 //the result will be 0
 		LDPC =1; #50 //Will increment 5 times and output as it increments
 		pcMux = 1; #10//Will take input from bus, result will be 8888;
 		pcMux = 2; #10//Will take adder value, 9999;
 		pcMux = 3; #10//reset
-		GatePC = 0 pcMux = 1; bus =  16'hFFF0 #10//no output, value set to FFF0
+		GatePC = 0; pcMux = 1; bus =  16'hFFF0; #10//no output, value set to FFF0
 		pcMux = 0; #100 //inc 10  times
-		GatePC = 1;#10
+		GatePC = 1;#10//output for 1 tick
 		LDPC = 0;#10
 		reset_n = 0;
-		
-		
-		
-		
-		
-		
+
 		
 	end
 	
