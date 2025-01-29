@@ -1,5 +1,9 @@
 TODO list:
 
+LC3.srcs/sources_1/new/Controller/controller.v
+
+	35 		//TODO Implement control logic, add states.
+
 LC3.srcs/sources_1/new/Datapath/address.v
 
 	68 		//TODO Test address module

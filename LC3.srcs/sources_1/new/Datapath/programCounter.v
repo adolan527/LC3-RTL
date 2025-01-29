@@ -48,7 +48,7 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 	
 endmodule
 
-module programCounter_tb();//TODO run tb
+module programCounter_tb();
 	reg  clk, reset_n, GatePC, LDPC;
 	reg[1:0]  pcMux;
 	reg[15:0]  bus, adder;

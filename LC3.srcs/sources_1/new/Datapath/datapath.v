@@ -74,3 +74,18 @@ DRadrMux DRMUX_inst(
 
 // TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.    
 endmodule
+
+
+reg  LDPriority, SETPRIV, RW, MIOEN, PSRMUX, TableMUX, MARMUX, ADDR1MUX, LDVector, LDACV, LDSavedUSP, LDSavedSSP, clk, LDPriv, LDPC, LDREG, reset_n, GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP, LDMAR, LDMDR, LDIR, LDBEN, LDCC;
+reg[1:0]  PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX, ALUK;
+wire BEN ACV;
+wire[15:0] PSR;
+
+datapath datapath_inst(
+ .clk(clk),.reset_n(reset_n),.GatePC(GatePC),.GateMDR(GateMDR),.GateALU(GateALU),.GateMARMUX(GateMARMUX),.GateVector(GateVector),.GatePC1(GatePC1),.GatePSR(GatePSR),.GateSP(GateSP),.LDMAR(LDMAR),.LDMDR(LDMDR),.LDIR(LDIR),.LDBEN(LDBEN),.LDREG(LDREG),.LDCC(LDCC),.LDPC(LDPC),.LDPriv(LDPriv),.LDPriority(LDPriority),.LDSavedSSP(LDSavedSSP),.LDSavedUSP(LDSavedUSP),.LDACV(LDACV),.LDVector(LDVector),.PCMUX(PCMUX),.DRMUX(DRMUX),.SR1MUX(SR1MUX),.ADDR2MUX(ADDR2MUX),.SPMMUX(SPMMUX),.VectorMUX(VectorMUX),.ALUK(ALUK),.ADDR1MUX(ADDR1MUX),.MARMUX(MARMUX),.TableMUX(TableMUX),.PSRMUX(PSRMUX),.MIOEN(MIOEN),.RW(RW),.SETPRIV(SETPRIV),.BEN(BEN),.ACV(ACV),.PSR(PSR));
+
+always #5 clk = ~clk;
+
+initial begin
+clk = 0;
+end
