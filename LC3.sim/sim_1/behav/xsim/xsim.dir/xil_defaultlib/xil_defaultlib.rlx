@@ -1,0 +1,21 @@
+0.7
+2020.2
+Oct 14 2022
+05:20:55
+C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v,1665704903,verilog,,,,glbl,,,,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Controller/controller.v,1738552263,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v,,controller,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/ALU.v,1735701463,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/RAM.v,,ALU,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/address.v,1738397050,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/addressControlLogic.v,,address;address_tb,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/conditionCode.v,1735353319,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Controller/controller.v,,cctb;conditionCode,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v,1738387445,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/io.v,,datapath,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v,1738388071,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/programCounter.v,,DRadrMux;MARmux;SR1adrMux;SR2mux;SR2mux_tb;accessControlViolation;branchEnable;instructionRegister;instructionRegister_tb,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/programCounter.v,1738008711,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/regFile.v,,programCounter;programCounter_tb,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/regFile.v,1738197845,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v,,regFile;regFile_tb,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/RAM.v,1734622420,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/address.v,,RAM;RAM_tb,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/addressControlLogic.v,1738409732,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/conditionCode.v,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/constants.vh,addressControlLogic,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/constants.vh,1734624305,verilog,,,,,,,,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/io.v,1734590647,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v,,io;io_input;io_output,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memory.v,1738197841,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memoryRegister.v,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/constants.vh,memory,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memoryRegister.v,1734621584,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v,,memoryRegister,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v,1738411066,verilog,,C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memory.v,,lc3,,,../../../../LC3.srcs/Memory,,,,,
+C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v,1738411243,verilog,,,,top,,,../../../../LC3.srcs/Memory,,,,,

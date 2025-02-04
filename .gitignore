@@ -1,7 +1,6 @@
 # Exclude Vivado-generated files with any project name
 *.cache/
 *.hw/
-*.sim/
 *.gen/
 *.runs/
 *.srcs/sources_1/bd/
