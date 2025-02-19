@@ -32,7 +32,7 @@ module RAM(
 	wire[7:0] limitedAddress;
 	assign limitedAddress = address[7:0];
 	assign memoryRead = mem[address];
-	
+	assign R = 1;
 	
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
@@ -50,6 +50,45 @@ module RAM(
 	
 endmodule
 
+module RAM_DEBUG( //preloaded with data
+	input[15:0] MDR, address,
+	input RW, MEMEN, //RW - 0 read, 1 write. 
+	input clk, reset_n,
+	output [15:0] memoryRead,
+	output R
+	);
+	localparam WORDS = 127; //should be 2^ 16 -1, but that is too big.
+	reg[15:0] mem[WORDS:0];
+	wire[7:0] limitedAddress;
+	assign limitedAddress = address[7:0];
+	assign memoryRead = mem[address];
+	assign R = 1;
+	
+	localparam ZERO_MEMORY = 5;
+	integer i;
+	always@(posedge clk or negedge reset_n)begin
+		if(!reset_n)begin
+			mem[0] <= 16'b0001000000100001; //ADD R0 R0 #1
+			mem[1] <= 16'b0001001000000001; //ADD R1 R0 R1
+			mem[2] <= 16'b0001000000100100; //ADD R0 R0 #4
+			mem[3] <= 16'b0001000000000001; //ADD R0 R0 R1
+			mem[4] <= 16'b0001010000000001; //ADD R2 R0 R1
+			for(i=ZERO_MEMORY; i < WORDS; i = i + 1)begin
+				mem[i] <= 0;
+			end
+		end else 
+			for(i=0; i < WORDS; i = i + 1)begin
+				if(limitedAddress == i && MEMEN && RW) mem[i] <= MDR;
+				else mem[i]<=mem[i];
+			end
+	end
+	
+	
+endmodule
+
+
+
+/*
 
 module RAM_tb();
 
@@ -84,4 +123,4 @@ module RAM_tb();
 		address = 1;
 		
 	end
-endmodule
+endmodule*/	

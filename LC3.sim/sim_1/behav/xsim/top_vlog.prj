@@ -1,5 +1,6 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../LC3.srcs/Memory" \
+"../../../../LC3.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" \
 "../../../../LC3.srcs/Datapath/ALU.v" \
 "../../../../LC3.srcs/Memory/RAM.v" \
 "../../../../LC3.srcs/Datapath/address.v" \

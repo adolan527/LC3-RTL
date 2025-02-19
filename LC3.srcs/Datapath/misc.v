@@ -34,28 +34,28 @@ module instructionRegister(
 endmodule
 
 module SR2mux(
-    input[15:0] SR2,
+    input[15:0] SR2premux,
     input[15:0] instruction,
-    output reg[15:0] result
+    output reg[15:0] SR2
     );
     always@(*)begin
-        if(instruction[5]) result<= $signed(instruction[4:0]);
-        else result<=SR2;
+        if(instruction[5]) SR2<= $signed(instruction[4:0]);
+        else SR2<=SR2premux;
     end
 endmodule
 
 
 module MARmux( //memory address register mux: controls what data goes into the MAR
-    input[15:0] addressResult, //address result from the address Adder
+    input[15:0] addressSum, //address result from the address Adder
     input[15:0] instruction, 
-    input select, //select from controller. 0: addressResult, 1: 8 LSB from instruction
+    input select, //select from controller. 0: addressSum, 1: 8 LSB from instruction
 	input GateMARmux, // tristate buffer 
     output reg[15:0] result 
     );
 	
 	reg[15:0] temp;
     always@(*)begin
-        if(select) temp <= addressResult;
+        if(!select) temp <= addressSum;
         else temp<= {0,instruction[7:0]};
     end
 	
@@ -80,14 +80,14 @@ endmodule
 module SR1adrMux(
 	input[1:0] SR1MUX,
 	input[15:0] instruction,
-	output reg[2:0] SR1
+	output reg[2:0] SR1adr
 	);
 	always@(*) begin
 		case(SR1MUX)
-			2'b00: SR1<=instruction[11:9];
-			2'b01: SR1<=instruction[8:6];
-			2'b10: SR1<=3'b110;
-			2'b11: SR1<=0;
+			2'b00: SR1adr<=instruction[11:9];
+			2'b01: SR1adr<=instruction[8:6]; //add,
+			2'b10: SR1adr<=3'b110;
+			2'b11: SR1adr<=0;
 		endcase
 	end
 endmodule
@@ -95,14 +95,14 @@ endmodule
 module DRadrMux(
 	input[1:0] DRMUX,
 	input[15:0] instruction,
-	output reg[2:0] DR
+	output reg[2:0] DRadr
 	);
 	always@(*) begin
 		case(DRMUX)
-			2'b00: DR<=instruction[11:9];
-			2'b01: DR<=3'b110;
-			2'b10: DR<=3'b111;
-			2'b11: DR<=0;
+			2'b00: DRadr<=instruction[11:9]; //add, 
+			2'b01: DRadr<=3'b110;
+			2'b10: DRadr<=3'b111;
+			2'b11: DRadr<=0;
 		endcase
 	end
 endmodule

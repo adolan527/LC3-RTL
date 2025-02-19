@@ -22,9 +22,9 @@
 
 module regFile(
 	input[15:0] data, //databus input
-	input[2:0] DR, //destination register. Address of the register to write to
+	input[2:0] DRadr, //destination register. Address of the register to write to
 	input LDREG, //active high write enable bit. 
-	input[2:0] SR1, SR2, //source registers 1 and 2. Address of register to read from
+	input[2:0] SR1adr, SR2adr, //source registers 1 and 2. Address of register to read from
 	input clk, //clk
 	input reset_n, //active low async reset.
 	output reg[15:0] SR1out, SR2out //data from source registers 1 and 2
@@ -50,15 +50,15 @@ module regFile(
 	
 	always@(*)begin
 		enable = 0;
-		enable[DR] = LDREG;
-		SR1out = registers[SR1];
-		SR2out = registers[SR2];
+		enable[DRadr] = LDREG;
+		SR1out = registers[SR1adr];
+		SR2out = registers[SR2adr];
 	end
 endmodule
 	
 	
-
-module regFile_tb();
+/*
+module regFile_tb(); //Outdated due to variable name changes
 	reg LDREG, clk, reset_n;
 	reg[2:0]  DR, SR1, SR2;
 	reg[15:0]  data;
@@ -79,7 +79,7 @@ initial begin
 	
 end
 
-endmodule
+endmodule*/
 
 
 /*

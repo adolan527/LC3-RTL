@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="137.801 ns"></ZoomEndTime>
-      <Cursor1Time time="43.300 ns"></Cursor1Time>
+      <ZoomStartTime time="897.070 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,002.171 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="340"></NameColumnWidth>
-      <ValueColumnWidth column_width="150"></ValueColumnWidth>
+      <ValueColumnWidth column_width="145"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="6" />
+   <WVObjectSize size="10" />
    <wvobject fp_name="/top/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -37,14 +37,50 @@
       <obj_property name="ElementShortName">nextState[5:0]</obj_property>
       <obj_property name="ObjectShortName">nextState[5:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/top/lc3_inst/datapath_inst/programCounter_inst/PC" type="array">
       <obj_property name="ElementShortName">PC[15:0]</obj_property>
       <obj_property name="ObjectShortName">PC[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/temp" type="array">
-      <obj_property name="ElementShortName">temp[15:0]</obj_property>
-      <obj_property name="ObjectShortName">temp[15:0]</obj_property>
+   <wvobject fp_name="/top/lc3_inst/datapath_inst/memory_inst/MDR" type="array">
+      <obj_property name="ElementShortName">MDR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">MDR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/datapath_inst/memory_inst/MAR" type="array">
+      <obj_property name="ElementShortName">MAR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">MAR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/datapath_inst/dataBus" type="array">
+      <obj_property name="ElementShortName">dataBus[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dataBus[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/datapath_inst/instruction" type="array">
+      <obj_property name="ElementShortName">instruction[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group53" type="group">
+      <obj_property name="label">marmux</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/addressSum" type="array">
+         <obj_property name="ElementShortName">addressSum[15:0]</obj_property>
+         <obj_property name="ObjectShortName">addressSum[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/result" type="array">
+         <obj_property name="ElementShortName">result[15:0]</obj_property>
+         <obj_property name="ObjectShortName">result[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/temp" type="array">
+         <obj_property name="ElementShortName">temp[15:0]</obj_property>
+         <obj_property name="ObjectShortName">temp[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/select" type="logic">
+         <obj_property name="ElementShortName">select</obj_property>
+         <obj_property name="ObjectShortName">select</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/GateMARmux" type="logic">
+         <obj_property name="ElementShortName">GateMARmux</obj_property>
+         <obj_property name="ObjectShortName">GateMARmux</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>

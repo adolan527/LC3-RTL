@@ -24,7 +24,7 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 	input[1:0] pcMux,//selects where the next PC value should come from
 	input[15:0] bus, adder, //data bus and address adder values
 	input clk, reset_n, GatePC, LDPC, 
-	output reg[15:0] result //the output towards the data bus
+	output reg[15:0] result, addressAdder //result -> databus, addressMux -> address adder
 	);
 	localparam PCINC = 2'b00;
 	localparam BUS = 2'b01;
@@ -44,7 +44,10 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 		else PC <= PC;
 	end
 	
-	always@(*) if(GatePC) result<=PC; else result<={16'bz};
+	always@(*) begin
+		if(GatePC) result<=PC; else result<={16'bz};
+		addressAdder <= PC;
+	end
 	
 endmodule
 

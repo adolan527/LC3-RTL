@@ -21,7 +21,7 @@
 
 
 
-module memoryRegister(
+module memoryRegister( 
 	input[15:0] data, inmux,
 	input clk, reset_n,
 	output reg[15:0] result,

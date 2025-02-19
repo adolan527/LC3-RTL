@@ -31,7 +31,7 @@ always #5 clk = ~clk;
 
 initial begin
 clk = 0; reset_n = 0; #10
-reset_n = 1; #100
+reset_n = 1; #1000
 reset_n=0;
 end
 
