@@ -64,7 +64,7 @@ module RAM_DEBUG( //preloaded with data
 	assign memoryRead = mem[address];
 	assign R = 1;
 	
-	localparam ZERO_MEMORY = 5;
+	localparam ZERO_MEMORY = 7;
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n)begin
@@ -73,6 +73,8 @@ module RAM_DEBUG( //preloaded with data
 			mem[2] <= 16'b0001000000100100; //ADD R0 R0 #4
 			mem[3] <= 16'b0001000000000001; //ADD R0 R0 R1
 			mem[4] <= 16'b0001010000000001; //ADD R2 R0 R1
+			mem[5] <= 16'b0101000000110101; //AND R0 R0 #10101
+			mem[6] <= 16'b1001000000111111; //NOT R0 R0
 			for(i=ZERO_MEMORY; i < WORDS; i = i + 1)begin
 				mem[i] <= 0;
 			end

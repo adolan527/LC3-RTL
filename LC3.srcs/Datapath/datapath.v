@@ -24,17 +24,18 @@ module datapath(
 	input clk, reset_n, 
 	input GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
 	input LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector,
-	input[1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX, ALUK,
+	input[1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX,
 	input ADDR1MUX, MARMUX, TableMUX, PSRMUX, MIOEN, RW, SETPRIV,
 	input [15:0] foreignKeyboardInput,
 	output BEN, ACV, R, //branch enable, Access Control Violation, memory read signal
 	output [15:0] PSR, instruction, foreignDisplayOutput
     );
     wire[15:0] dataBus, PC, SR1, SR2, SR2premux, addressSum; 
-	wire[2:0] SR1adr, SR2adr, DRadr;
+	wire[2:0] SR1adr, SR2adr, DRadr, ALUK;
 	wire N, Z, P;
 	
 	wire[3:0] priorityLevel;
+	assign ALUK = instruction[15:14];
 	assign PSR[15:0] = GatePSR ? {SETPRIV,4*{0},priorityLevel,5*{0},N,Z,P} : 16'bz;
 	assign SR2adr = instruction[2:0];
 	

@@ -28,7 +28,7 @@ module controller(
 	input clk, reset_n,
 	output reg LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector, //42 output bits
 	output reg GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
-	output reg [1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMUX, VectorMUX, ALUK,
+	output reg [1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMUX, VectorMUX,
 	output reg ADDR1MUX, MARMUX, TableMUX, PSRMUX,
 	output reg MIOEN, RW, SetPriv //memory IO enable, Read/Write enable, Set privelege
     );
@@ -84,7 +84,7 @@ module controller(
 				LDMDR <= 0; LDIR <= 0; LDBEN <= 0; LDREG <= 0; LDCC <= 0;
 				LDPriv <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; LDACV <= 0; LDVector <= 0; 
 				GatePC <= 0; GateMDR <= 0; GateALU <= 0; GateVector <= 0; GatePC1 <= 0; GatePSR <= 0; GateSP <= 0; 
-				DRMUX <= 0; SR1MUX <= 0; SPMUX <= 0; VectorMUX <= 0; ALUK <= 0; TableMUX <= 0; PSRMUX <= 0; 
+				DRMUX <= 0; SR1MUX <= 0; SPMUX <= 0; VectorMUX <= 0;  TableMUX <= 0; PSRMUX <= 0; 
 				MIOEN <= 0; RW <= 0;
 
 			end
@@ -118,7 +118,7 @@ module controller(
 					`OPCODE_LDI		: 	nextState<=START;
 					`OPCODE_LDR		: 	nextState<=START;
 					`OPCODE_LEA		: 	nextState<=START;
-					`OPCODE_NOT		: 	nextState<=START;
+					`OPCODE_NOT		: 	nextState<=INSTR_NOT;
 					`OPCODE_RET		: 	nextState<=START;
 					`OPCODE_RTI		: 	nextState<=START;
 					`OPCODE_ST		: 	nextState<=START;
@@ -131,12 +131,17 @@ module controller(
 					
 			end
 			INSTR_ADD: begin
-				DRMUX <= 2'b00; SR1MUX <= 2'b01; ALUK <= 2'b00; LDREG <= 1;
+				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1;
 				GateALU <= 1;
 				nextState<= FETCH;
 			end
-			INSTR_AND: begin
-				DRMUX <= 2'b00; SR1MUX <= 2'b01; ALUK <= 2'b00; LDREG <= 1;
+			INSTR_AND: begin 
+				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1;
+				GateALU <= 1;
+				nextState<= FETCH;
+			end
+			INSTR_NOT: begin 
+				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1;
 				GateALU <= 1;
 				nextState<= FETCH;
 			end
@@ -148,7 +153,7 @@ module controller(
 				LDMAR <= 0; LDMDR <= 0; LDIR <= 0; LDBEN <= 0; LDREG <= 0; LDCC <= 0; LDPC <= 0; 
 				LDPriv <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; LDACV <= 0; LDVector <= 0; 
 				GatePC <= 0; GateMDR <= 0; GateALU <= 0; GateMARMUX <= 0; GateVector <= 0; GatePC1 <= 0; GatePSR <= 0; GateSP <= 0; 
-				PCMUX <= 0; DRMUX <= 0; SR1MUX <= 0; ADDR2MUX <= 0; SPMUX <= 0; VectorMUX <= 0; ALUK <= 0; ADDR1MUX <= 0; MARMUX <= 0; TableMUX <= 0; PSRMUX <= 0; 
+				PCMUX <= 0; DRMUX <= 0; SR1MUX <= 0; ADDR2MUX <= 0; SPMUX <= 0; VectorMUX <= 0; ADDR1MUX <= 0; MARMUX <= 0; TableMUX <= 0; PSRMUX <= 0; 
 				MIOEN <= 0; RW <= 0; SetPriv <= 0;
 				nextState <= FETCH;
 			end
@@ -162,7 +167,7 @@ module controller(
 			LDMAR <= 0; LDMAR <= 0; LDMDR <= 0; LDIR <= 0; LDBEN <= 0; LDREG <= 0; LDCC <= 0; LDPC <= 0; 
 			LDPriv <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; LDACV <= 0; LDVector <= 0; 
 			GatePC <= 0; GateMDR <= 0; GateALU <= 0; GateMARMUX <= 0; GateVector <= 0; GatePC1 <= 0; GatePSR <= 0; GateSP <= 0; 
-			PCMUX <= 0; DRMUX <= 0; SR1MUX <= 0; ADDR2MUX <= 0; SPMUX <= 0; VectorMUX <= 0; ALUK <= 0; ADDR1MUX <= 0; MARMUX <= 0; TableMUX <= 0; PSRMUX <= 0; 
+			PCMUX <= 0; DRMUX <= 0; SR1MUX <= 0; ADDR2MUX <= 0; SPMUX <= 0; VectorMUX <= 0; ADDR1MUX <= 0; MARMUX <= 0; TableMUX <= 0; PSRMUX <= 0; 
 			MIOEN <= 0; RW <= 0; SetPriv <= 0;
 		end else begin
 			currentState <= nextState;

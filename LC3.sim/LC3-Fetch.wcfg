@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="897.070 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,002.171 ns"></ZoomEndTime>
-      <Cursor1Time time="0.000 ns"></Cursor1Time>
+      <ZoomStartTime time="379.940 ns"></ZoomStartTime>
+      <ZoomEndTime time="485.541 ns"></ZoomEndTime>
+      <Cursor1Time time="429.840 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="340"></NameColumnWidth>
-      <ValueColumnWidth column_width="145"></ValueColumnWidth>
+      <ValueColumnWidth column_width="140"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="10" />
+   <WVObjectSize size="13" />
    <wvobject fp_name="/top/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -27,6 +27,10 @@
    <wvobject fp_name="/top/reset_n" type="logic">
       <obj_property name="ElementShortName">reset_n</obj_property>
       <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/controller_inst/instruction" type="array">
+      <obj_property name="ElementShortName">instruction[15:12]</obj_property>
+      <obj_property name="ObjectShortName">instruction[15:12]</obj_property>
    </wvobject>
    <wvobject fp_name="/top/lc3_inst/controller_inst/currentState" type="array">
       <obj_property name="ElementShortName">currentState[5:0]</obj_property>
@@ -81,6 +85,35 @@
       <wvobject fp_name="/top/lc3_inst/datapath_inst/MARmux_inst/GateMARmux" type="logic">
          <obj_property name="ElementShortName">GateMARmux</obj_property>
          <obj_property name="ObjectShortName">GateMARmux</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/registers" type="array">
+      <obj_property name="ElementShortName">registers[7:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">registers[7:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group21" type="group">
+      <obj_property name="label">ALU</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/result" type="array">
+         <obj_property name="ElementShortName">result[15:0]</obj_property>
+         <obj_property name="ObjectShortName">result[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/operand_A" type="array">
+         <obj_property name="ElementShortName">operand_A[15:0]</obj_property>
+         <obj_property name="ObjectShortName">operand_A[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/operand_B" type="array">
+         <obj_property name="ElementShortName">operand_B[15:0]</obj_property>
+         <obj_property name="ObjectShortName">operand_B[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/operationSelect" type="array">
+         <obj_property name="ElementShortName">operationSelect[1:0]</obj_property>
+         <obj_property name="ObjectShortName">operationSelect[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/GateALU" type="logic">
+         <obj_property name="ElementShortName">GateALU</obj_property>
+         <obj_property name="ObjectShortName">GateALU</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
