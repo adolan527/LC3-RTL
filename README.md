@@ -1,6 +1,5 @@
-tl;dr LC3 ISA in Vivado/Verilog
-
 # LC3
+![LC3](https://github.com/adolan527/LC3-RTL/blob/master/LC3.png)
 ## Project Overview and Motivations
 The LC3 micro-architecture is defined in the book "Introduction to Computing Systems" by Patt & Patel. 
 This ISA is often used as a resource to teach computer engineers the fundamentals of assembly and CPU architecture.
