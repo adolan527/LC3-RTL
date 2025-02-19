@@ -1,9 +1,8 @@
 TODO list:
 
-LC3.srcs/Datapath/datapath.v
+LC3.srcs/Controller/controller.v
 
-	39 		// TODO: ensure every control signal inputted is used where necessary.wd
-	75 	// TODO: Write tb for each module individually, better commenting, visually verify schematic, connect IO of modules to datapath module IO.
+	111 					case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 
 LC3.srcs/Memory/addressControlLogic.v
 
