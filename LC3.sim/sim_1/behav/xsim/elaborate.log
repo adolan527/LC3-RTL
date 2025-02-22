@@ -4,10 +4,7 @@ Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'select' [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v:46]
-WARNING: [VRFC 10-3091] actual bit length 3 differs from formal bit length 2 for port 'operationSelect' [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v:61]
 WARNING: [VRFC 10-5021] port 'keyboardInput' is not connected on this instance [C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v:27]
-WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v:39]
 WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:59]
 Completed static elaboration
 Starting simulation data flow analysis

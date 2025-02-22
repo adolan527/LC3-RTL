@@ -31,19 +31,20 @@ module datapath(
 	output [15:0] PSR, instruction, foreignDisplayOutput
     );
     wire[15:0] dataBus, PC, SR1, SR2, SR2premux, addressSum; 
-	wire[2:0] SR1adr, SR2adr, DRadr, ALUK;
+	wire[2:0] SR1adr, SR2adr, DRadr;
+	wire[1:0] ALUK;
 	wire N, Z, P;
 	
 	wire[3:0] priorityLevel;
 	assign ALUK = instruction[15:14];
-	assign PSR[15:0] = GatePSR ? {SETPRIV,4*{0},priorityLevel,5*{0},N,Z,P} : 16'bz;
+	assign PSR[15:0] = GatePSR ? {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P} : 16'bz;
 	assign SR2adr = instruction[2:0];
 	
 MARmux MARmux_inst(
 	.addressSum(addressSum),
 	.instruction(instruction),
 	.result(dataBus),
-	.select(0),
+	.select(MARMUX),
 	.GateMARmux(GateMARMUX)
 );
 SR2mux SR2mux_inst(

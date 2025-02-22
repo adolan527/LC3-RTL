@@ -64,20 +64,14 @@ module RAM_DEBUG( //preloaded with data
 	assign memoryRead = mem[address];
 	assign R = 1;
 	
-	localparam ZERO_MEMORY = 7;
+	initial begin
+        $readmemh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/aluTest/main.hex", mem); 
+    end
+	
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n)begin
-			mem[0] <= 16'b0001000000100001; //ADD R0 R0 #1
-			mem[1] <= 16'b0001001000000001; //ADD R1 R0 R1
-			mem[2] <= 16'b0001000000100100; //ADD R0 R0 #4
-			mem[3] <= 16'b0001000000000001; //ADD R0 R0 R1
-			mem[4] <= 16'b0001010000000001; //ADD R2 R0 R1
-			mem[5] <= 16'b0101000000110101; //AND R0 R0 #10101
-			mem[6] <= 16'b1001000000111111; //NOT R0 R0
-			for(i=ZERO_MEMORY; i < WORDS; i = i + 1)begin
-				mem[i] <= 0;
-			end
+			$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/aluTest/memDump.hex", mem);
 		end else 
 			for(i=0; i < WORDS; i = i + 1)begin
 				if(limitedAddress == i && MEMEN && RW) mem[i] <= MDR;

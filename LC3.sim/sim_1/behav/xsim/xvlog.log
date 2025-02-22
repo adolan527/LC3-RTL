@@ -16,7 +16,6 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs
 INFO: [VRFC 10-311] analyzing module controller
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module datapath
-WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/datapath.v:39]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/io.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module io
 INFO: [VRFC 10-311] analyzing module io_input

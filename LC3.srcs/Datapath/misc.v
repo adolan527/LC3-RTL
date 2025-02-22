@@ -45,7 +45,7 @@ module SR2mux(
 endmodule
 
 
-module MARmux( //memory address register mux: controls what data goes into the MAR
+module MARmux( //memory address register mux: controls what address goes into the databus 
     input[15:0] addressSum, //address result from the address Adder
     input[15:0] instruction, 
     input select, //select from controller. 0: addressSum, 1: 8 LSB from instruction
@@ -85,7 +85,7 @@ module SR1adrMux(
 	always@(*) begin
 		case(SR1MUX)
 			2'b00: SR1adr<=instruction[11:9];
-			2'b01: SR1adr<=instruction[8:6]; //add, and, not
+			2'b01: SR1adr<=instruction[8:6]; //add, and, not, LDR, STR, JMP, JSRR
 			2'b10: SR1adr<=3'b110;
 			2'b11: SR1adr<=0;
 		endcase
