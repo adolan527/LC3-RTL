@@ -1,6 +1,6 @@
 # Exclude Vivado-generated files with any project name
 *.cache/
-*.gen/
+*.hw/
 *.runs/
 
 # Exclude common Vivado temporary files

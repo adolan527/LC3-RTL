@@ -26,7 +26,7 @@ This directory contains the testbenches which have been used to verify modules.
  - *state.csv* - Instruction, controller state, and register values of LC3, written from testbench. Logged during last state of each instruction.
  - *top.v* - Testbench verilog implementation.
 **sim_1/** contains Vivado generated files corresponding to the IP.
-### LC3.ip_user_files/ and LC3.gen
+### LC3.ip_user_files/ and LC3.gen/
 This directory contains the majority of the Vivado generated files corresponding to IP's used.
 The only IP used for this project is a block memory generator. 
 It is currently not used, as a custom implementation allows for easier debugging at the cost of limited size.
