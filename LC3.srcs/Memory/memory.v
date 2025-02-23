@@ -18,15 +18,20 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "specialRegisters.vh"
+`include "memoryConstants.vh"
 
 	
 module memory(
+	//DEBUG ports
+
 	input[15:0] data, foreignKeyboardInput,
 	input clk, reset_n,
 	output [15:0] result, foreignDisplayOutput,
 	input LDMDR, LDMAR, MIOEN, RW, GateMDR, //MIOEN = memory io enable
-	output R
+	output R,
+	
+	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead
+
     );
 	
 	wire[15:0] MDR, MAR, memoryRead;
@@ -39,7 +44,17 @@ module memory(
 	
 	memoryRegister memoryRegister_inst(.data(data),.inmux(inmux),.clk(clk),.reset_n(reset_n),.MAR(MAR),.LDMAR(LDMAR),.LDMDR(LDMDR),.MIOEN(MIOEN),.GateMDR(GateMDR),.MDR(MDR),.result(result));
 	io io_inst(.data(data),.KBDR(KBDR),.KBSR(KBSR),.DSR(DSR),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.foreignKeyboardInput(foreignKeyboardInput),.foreignDisplayOutput(foreignDisplayOutput));
-	RAM_DEBUG RAM_inst(.MDR(MDR),.address(MAR),.RW(RW),.MEMEN(MEMEN),.memoryRead(memoryRead),.clk(clk),.reset_n(reset_n),.R(R));
+	RAM RAM_inst(
+	.MDR(MDR),
+	.address(MAR),
+	.RW(RW),
+	.MEMEN(MEMEN),
+	.memoryRead(memoryRead),
+	.clk(clk),
+	.reset_n(reset_n),
+	.R(R),
+	.debugMemoryRead(debugMemoryRead)
+	);
 	addressControlLogic addressControlLogic_inst(.MAR(MAR),.RW(RW),.MIOEN(MIOEN),.MEMEN(MEMEN),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.inmuxSelect(inmuxSelect));
 	
 	

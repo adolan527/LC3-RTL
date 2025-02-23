@@ -27,9 +27,10 @@ module regFile(
 	input[2:0] SR1adr, SR2adr, //source registers 1 and 2. Address of register to read from
 	input clk, //clk
 	input reset_n, //active low async reset.
-	output reg[15:0] SR1out, SR2out //data from source registers 1 and 2
+	output reg[15:0] SR1out, SR2out, //data from source registers 1 and 2
+	output reg[16 * 8 -1:0] debugRegRead
     );
-	
+	 
 	
 	reg[15:0] registers[7:0];
 	reg[7:0] enable;
@@ -42,8 +43,6 @@ module regFile(
 			else if(enable[i]) registers[i] <= data;
 			else registers[i] <= registers[i];
 		end
-			
-	
 	end	
 	
 	
@@ -54,6 +53,16 @@ module regFile(
 		SR1out = registers[SR1adr];
 		SR2out = registers[SR2adr];
 	end
+	
+	genvar j;
+    generate
+        for (j = 0; j < 8; j = j + 1) begin
+            always @(*) begin
+                debugRegRead[(j+1)*16 -1 : j*16] = registers[j]; 
+            end
+        end
+    endgenerate
+	
 endmodule
 	
 	

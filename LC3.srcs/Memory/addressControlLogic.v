@@ -19,10 +19,10 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "specialRegisters.vh"
+`include "memoryConstants.vh"
 
 
-//
+
 module addressControlLogic(
 	input[15:0] MAR,
 	input RW, MIOEN,

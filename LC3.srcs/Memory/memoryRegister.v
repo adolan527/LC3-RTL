@@ -18,10 +18,11 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+`include "memoryConstants.vh"
 
 
 
-module memoryRegister( 
+module memoryRegister( //stores MAR and MDR
 	input[15:0] data, inmux,
 	input clk, reset_n,
 	output reg[15:0] result,

@@ -18,8 +18,8 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "constants.vh"
-
+`include "../globalConstants.vh"
+`include "controllerConstants.vh"
 
 module controller(
 	input [15:0] PSR, //processor status register. PSR[15] = user/supervisor, [10:8] priority, [2:0] N Z P
@@ -30,13 +30,18 @@ module controller(
 	output reg GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
 	output reg [1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMUX, VectorMUX,
 	output reg ADDR1MUX, MARMUX, TableMUX, PSRMUX,
-	output reg MIOEN, RW, SetPriv //memory IO enable, Read/Write enable, Set privilege. PRIV = 0 -> S, PRIV = 1 -> U
-    );
+	output reg MIOEN, RW, SetPriv, //memory IO enable, Read/Write enable, Set privilege. PRIV = 0 -> S, PRIV = 1 -> U
 	
+	output wire[5:0] debugCurrentState, debugNextState
+    );
 	
 
 	//6-bit State names.
 	reg [5:0] currentState, nextState;
+	
+	assign debugCurrentState = currentState;
+	assign debugNextState = nextState;
+
 	
 	localparam FETCH = 6'd18; //Main fetch state.
 	localparam FETCH_CHECK_ACV = 6'd33; //access control violation check after fetch
@@ -45,45 +50,59 @@ module controller(
 	localparam DECODE_INSTR = 6'd32; //decide which instruction to execute
 	
 	//MICRO-INSTRUCTIONS
-	localparam INSTR_ADD	=	6'd1;	//ADD 
-	localparam INSTR_AND	=	6'd5;	//AND
-	localparam INSTR_NOT	=	6'd9;	//NOT 
-	localparam INSTR_LEA	=	6'd14;	//LEA 
-	localparam INSTR_LD 	=	6'd2;	//LD  
-	localparam INSTR_LDR	=	6'd6;	//LDR 
-	localparam INSTR_LDI	=	6'd10;	//LDI 
-	localparam INSTR_STI	=	6'd11;	//STI 
-	localparam INSTR_STR	=	6'd7;	//STR 
-	localparam INSTR_ST 	=	6'd3;	//ST  
-	localparam INSTR_JSR	=	6'd4;	//JSR 
-	localparam INSTR_JMP	=	6'd12;	//JMP 
-	localparam INSTR_BR 	=	6'd0;	//BR  
-	localparam INSTR_RTI	=	6'd8;	//RTI 
-	localparam INSTR_TRAP	=	6'd15;	//TRAP 
+	localparam INSTR_ADD		= 6'd1;		//ADD 
+	localparam INSTR_AND		= 6'd5;		//AND
+	localparam INSTR_NOT		= 6'd9;		//NOT 
+	localparam INSTR_LEA		= 6'd14;	//LEA 
+	localparam INSTR_LD 		= 6'd2;		//LD  
+	localparam INSTR_LDR		= 6'd6;		//LDR 
+	localparam INSTR_LDI		= 6'd10;	//LDI 
+	localparam INSTR_STI		= 6'd11;	//STI 
+	localparam INSTR_STR		= 6'd7;		//STR 
+	localparam INSTR_ST 		= 6'd3;		//ST  
+	localparam INSTR_JSR		= 6'd4;		//JSR 
+	localparam INSTR_JMP		= 6'd12;	//JMP 
+	localparam INSTR_BR 		= 6'd0;		//BR  
+	localparam INSTR_RTI		= 6'd8;		//RTI 
+	localparam INSTR_TRAP		= 6'd15;	//TRAP 
 	
-	localparam LOAD_CHECK_ACV = 6'd35; //state inside lD, LDR, and LDI which checks for ACV
-	localparam LOAD_READ_MEM = 6'd25; //LD, LDR, LDI, MDR < M[MAR]
-	localparam LOAD_WRITE_REG = 6'd27; //LD, LDR, LDI, DR < M
-	localparam LDI_CHECK_ACV = 6'd17; //LDI first half
-	localparam LDI_READ_MEM = 6'd24; //LDI first half
-	localparam LDI_LATTER = 6'd26; //LDI MAR <= MDR	
+	localparam LDI_CHECK_ACV 	= 6'd17; //LDI first half
+	localparam LDI_READ_MEM 	= 6'd24; //LDI first half
+	localparam LDI_LATTER 		= 6'd26; //LDI MAR <= MDR	
+	
+	localparam LOAD_CHECK_ACV 	= 6'd35; //state inside lD, LDR, and LDI which checks for ACV
+	localparam LOAD_READ_MEM 	= 6'd25; //LD, LDR, LDI, MDR <= M[MAR]
+	localparam LOAD_WRITE_REG 	= 6'd27; //LD, LDR, LDI, DR <= M. Last LOAD state
+	
+	
+	localparam STI_CHECK_ACV	= 6'd19; //STI first half
+	localparam STI_READ_MEM		= 6'd29; //STI first half
+	localparam STI_LATTER		= 6'd31; //STI MAR <= MDR
+	
+	localparam STORE_CHECK_ACV 	= 6'd23; //ST, STR, STI, checks for ACV
+	localparam STORE_WRITE_MEM 	= 6'd16; //ST, STR, STI, M[MAR] <= MDR. Last STORE state
+	
+	
+	
 	
 
-	localparam START = 6'b0; // Debug start state
+	localparam START 			= 6'b0; // Debug start state
 	
-	localparam INTERRUPT = 6'd49;
-	localparam FETCH_ACV = 6'd60;
-	localparam LOAD_ACV = 6'd57;
-	localparam LDI_ACV = 6'd56;
-
+	localparam INTERRUPT 		= 6'd49;// Not implemented
+	
+	localparam FETCH_ACV 		= 6'd60; //Handles ACV in Fetch
+	localparam LOAD_ACV 		= 6'd57; //Handles ACV in LD, LDR, LDI
+	localparam LDI_ACV 			= 6'd56; //Handles ACV in LDI
+	localparam STORE_ACV 		= 6'd48; //Handles ACV in ST, STR, STI
+	localparam STI_ACV 			= 6'd61; //Handles ACV in STI
 	
 	
 	
 	always@(*)begin //control signal assignment
 		case(currentState)
 			FETCH:begin // MAR <- PC, PC <- PC+1, set ACV, [INT]. note: Interrupt not implemented
-				LDMAR <= 1; MARMUX <= 0; ADDR1MUX <= 0; ADDR2MUX <= 0; GateMARMUX <= 1; // MAR <- PC
-				PCMUX <= 0; LDPC <= 1; // PC <- PC+1
+				LDMAR <= 1; MARMUX <= `MARMUX_ADR_SUM; ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_0; GateMARMUX <= 1; // MAR <- PC
+				PCMUX <= `PCMUX_INC; LDPC <= 1; // PC <- PC+1
 				// TODO: implement ACV here 
 				if(INT) nextState<=INTERRUPT; //interrupt
 				else nextState <= FETCH_CHECK_ACV;
@@ -122,16 +141,16 @@ module controller(
 					`OPCODE_BR		: 	nextState<=START;
 					`OPCODE_JMP		: 	nextState<=START;
 					`OPCODE_JSR		: 	nextState<=START;
-					`OPCODE_LD		: 	nextState<=START;
-					`OPCODE_LDI		: 	nextState<=START;
-					`OPCODE_LDR		: 	nextState<=START;
-					`OPCODE_LEA		: 	nextState<=START;
+					`OPCODE_LD		: 	nextState<=INSTR_LD;
+					`OPCODE_LDI		: 	nextState<=INSTR_LDI;
+					`OPCODE_LDR		: 	nextState<=INSTR_LDR;
+					`OPCODE_LEA		: 	nextState<=INSTR_LEA;
 					`OPCODE_NOT		: 	nextState<=INSTR_NOT;
 					`OPCODE_RET		: 	nextState<=START;
 					`OPCODE_RTI		: 	nextState<=START;
-					`OPCODE_ST		: 	nextState<=START;
-					`OPCODE_STI		: 	nextState<=START;
-					`OPCODE_STR 	: 	nextState<=START;
+					`OPCODE_ST		: 	nextState<=INSTR_ST;
+					`OPCODE_STI		: 	nextState<=INSTR_STI;
+					`OPCODE_STR 	: 	nextState<=INSTR_STR;
 					`OPCODE_TRAP	: 	nextState<=START;
 					`OPCODE_RESERVED: 	nextState<=START;
 					default			: 	nextState<=START;
@@ -139,43 +158,44 @@ module controller(
 					
 			end
 			INSTR_ADD: begin
-				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1; LDCC<=1;
+				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND;  LDREG <= 1; LDCC<=1;
 				GateALU <= 1;
 				nextState<= FETCH;
 			end
 			INSTR_AND: begin 
-				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1; LDCC<=1;
+				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND;  LDREG <= 1; LDCC<=1;
 				GateALU <= 1;
 				nextState<= FETCH;
 			end
 			INSTR_NOT: begin 
-				DRMUX <= 2'b00; SR1MUX <= 2'b01;  LDREG <= 1; LDCC<=1;
+				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND;  LDREG <= 1; LDCC<=1;
 				GateALU <= 1;
 				nextState<= FETCH;
 			end
 			INSTR_LEA: begin //DR<−PC+off9
 				//Use the MARMUX, and address adder
-				ADDR1MUX <= 0; ADDR2MUX <= 2'b10; // PC + 9 bit offset
-				MARMUX <= 0; GateMARMUX <= 1; //Use address sum, output to databus. Does not load MAR
+				DRMUX <= `DRMUX_FIRST; ADDR1MUX <= `ADDR1MUX_PC ; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; //Use address sum, output to databus. Does not load MAR
 				LDREG <= 1; //Loads into regfile
+				nextState <= FETCH;
 			end
 			INSTR_LD: begin //MAR<−PC+off9 , set ACV
-				ADDR1MUX <= 0; ADDR2MUX <= 2'b10; // PC + 9 bit offset
-				MARMUX <= 0; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
+				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
 				// TODO: implement ACV here
 				nextState <= LOAD_CHECK_ACV;
 			end
 			
 			INSTR_LDR: begin //MAR<-B+off6, set ACV
-				ADDR1MUX <= 1; ADDR2MUX <= 2'b01; SR1MUX <= 2'b01; // SR1 + 6 bit offset
-				MARMUX <= 0; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
+				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; // SR1 + 6 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
 				// TODO: implement ACV here
 				nextState <= LOAD_CHECK_ACV;
 			end
 			
 			INSTR_LDI: begin //MAR <- PC+off9
-				ADDR1MUX <= 0; ADDR2MUX <= 2'b10; // PC + 9 bit offset
-				MARMUX <= 0; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.				
+				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.				
 				//TODO: implement ACV here
 				nextState <= LDI_CHECK_ACV;
 			end
@@ -195,16 +215,15 @@ module controller(
 			
 			LDI_LATTER: begin //MAR <-MDR, set ACV
 				LDMDR <= 0; MIOEN <= 0;//disable
-				LDMAR <= 1;
+				LDMAR <= 1; GateMDR <= 1;
 				//TODO : implement ACV here
 				nextState <= LOAD_CHECK_ACV;
 			end
 
-			
-			
 			LOAD_CHECK_ACV: begin // check ACV
 				ADDR1MUX <= 0; ADDR2MUX <= 2'b00;  SR1MUX <= 2'b00; // Disable
 				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //Disable
+				GateMDR <= 0; // Disable
 				if(ACV) nextState<=LOAD_ACV;
 				else nextState <= LOAD_READ_MEM;
 			end
@@ -217,13 +236,67 @@ module controller(
 			
 			LOAD_WRITE_REG: begin //DR<-MDR, set CC 
 				LDMDR <= 0; MIOEN <= 0;//disable
-				LDREG <= 1;
+				GateMDR <= 1; LDREG <= 1; DRMUX <= `DRMUX_FIRST;
 				LDCC <= 1;
 				nextState <= FETCH;
 			end
 			
+			INSTR_ST: begin // MAR <- PC + off9, set ACV
+				ADDR1MUX <= `ADDR1MUX_PC ; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
+				// TODO: implement ACV here
+				nextState <= STORE_CHECK_ACV;
+			end
 			
+			INSTR_STR: begin //MAR <- B + off6
+				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; // SR1 + 6 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
+				// TODO: implement ACV here
+				nextState <= STORE_CHECK_ACV;
+			end
 			
+			INSTR_STI: begin // MAR<−PC+off9, set ACV
+				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
+				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
+				//TODO: implement ACV here
+				nextState <= STI_CHECK_ACV;
+			end
+				
+			STI_CHECK_ACV: begin //check ACV
+				ADDR1MUX <= 0; ADDR2MUX <= 2'b00; SR1MUX <= 2'b00; // Disable
+				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //Disable
+				if(ACV) nextState<=STI_ACV;
+				else nextState <= STI_READ_MEM;
+			end
+			
+			STI_READ_MEM: begin //MDR <-M[MAR]
+				LDMDR <= 1; MIOEN <= 1;
+				if(R) nextState<=STI_LATTER;
+				else nextState<= STI_READ_MEM;
+			end
+			
+			STI_LATTER: begin // MAR<-MDR, set ACV
+				LDMDR <= 0; MIOEN <= 0;//disable
+				LDMAR <= 1; GateMDR <= 1;
+				//TODO : implement ACV here
+				nextState <= STORE_CHECK_ACV;
+			end
+			
+			STORE_CHECK_ACV: begin // MDR <- SR, check ACV
+				ADDR1MUX <= 0; ADDR2MUX <= 2'b00; // disable
+				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //disable
+				GateMDR <= 0; // Disable
+				LDMDR <= 1; MIOEN <= 0; 
+				SR1MUX <= `SR1MUX_FIRST; ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0; GateMARMUX <= 1; // Send data through MARMUX
+				if(ACV) nextState<=STORE_ACV;
+				else nextState<= STORE_WRITE_MEM;
+			end
+			
+			STORE_WRITE_MEM: begin //M[MAR]<-MDR
+				LDMDR <= 0; RW <= 1; //write to memory
+				if(R) nextState<= FETCH;
+				else nextState<= STORE_WRITE_MEM;
+			end
 			
 			START: begin
 				nextState<=FETCH;

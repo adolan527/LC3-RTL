@@ -21,6 +21,14 @@
 
 
 module lc3(
+	//DEBUG ports
+	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead,
+	output [16 * 8 -1:0] debugRegRead,
+	output [15:0] debugInstruction,
+	output [5:0] debugCurrentState, debugNextState,
+
+
+	
 	input clk, reset_n,
 	input[15:0] keyboardInput,
 	output[15:0] displayOutput
@@ -28,6 +36,7 @@ module lc3(
 
 wire  INT, R, BEN, ACV, clk, reset_n;
 wire[15:0]  instruction;
+assign debugInstruction = instruction;
 wire[15:0]  PSR;
 wire GatePC1, SetPriv, RW, MIOEN, PSRMUX, TableMUX, MARMUX, ADDR1MUX, GateSP, GatePSR, LDMAR, GateVector, GateMARMUX, GateALU, GatePC, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector, GateMD, R;
 wire[1:0] ADDR2MUX, SPMUX, VectorMUX, ALUK, SR1MUX, DRMUX, PCMUX;
@@ -74,7 +83,9 @@ controller controller_inst(
  .PSRMUX(PSRMUX),
  .MIOEN(MIOEN),
  .RW(RW),
- .SetPriv(SetPriv)
+ .SetPriv(SetPriv),
+ .debugCurrentState(debugCurrentState),
+ .debugNextState(debugNextState)
  );
 
 wire  LDPriority, SETPRIV, RW, MIOEN, PSRMUX, TableMUX, MARMUX, ADDR1MUX, LDVector, LDACV, LDSavedUSP, LDSavedSSP, clk, LDPriv, LDPC, LDREG, reset_n, GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP, LDMAR, LDMDR, LDIR, LDBEN, LDCC;
@@ -125,7 +136,10 @@ datapath datapath_inst(
  .PSR(PSR),
  .instruction(instruction),
  .foreignKeyboardInput(keyboardInput),
- .foreignDisplayOutput(displayOutput)
+ .foreignDisplayOutput(displayOutput),
+ 
+ .debugMemoryRead(debugMemoryRead),
+ .debugRegRead(debugRegRead)
  );
 
 

@@ -21,6 +21,8 @@
 
 
 module datapath(
+	//DEBUG ports
+
 	input clk, reset_n, 
 	input GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
 	input LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector,
@@ -28,7 +30,10 @@ module datapath(
 	input ADDR1MUX, MARMUX, TableMUX, PSRMUX, MIOEN, RW, SETPRIV,
 	input [15:0] foreignKeyboardInput,
 	output BEN, ACV, R, //branch enable, Access Control Violation, memory read signal
-	output [15:0] PSR, instruction, foreignDisplayOutput
+	output [15:0] PSR, instruction, foreignDisplayOutput,
+	
+	output [16 * 8 -1:0] debugRegRead,
+	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead
     );
     wire[15:0] dataBus, PC, SR1, SR2, SR2premux, addressSum; 
 	wire[2:0] SR1adr, SR2adr, DRadr;
@@ -68,7 +73,7 @@ conditionCode conditionCode_inst(
 	.data(dataBus),.LDCC(LDCC),.clk(clk),.reset_n(reset_n),.N(N),.Z(Z),.P(P));
 	
 regFile regFile_inst(
-	.data(dataBus),.DRadr(DRadr),.LDREG(LDREG),.SR1adr(SR1adr),.SR2adr(SR2adr),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2premux));
+	.data(dataBus),.DRadr(DRadr),.LDREG(LDREG),.SR1adr(SR1adr),.SR2adr(SR2adr),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2premux),.debugRegRead(debugRegRead));
 	
 accessControlViolation acv_inst(
 	.ACV(ACV),.PSR(PSR),.dataBus(dataBus));
@@ -92,7 +97,8 @@ memory memory_inst(
  .LDMDR(LDMDR),.LDMAR(LDMAR),.MIOEN(MIOEN),
  .RW(RW),
  .GateMDR(GateMDR),
- .R(R)
+ .R(R),
+ .debugMemoryRead(debugMemoryRead)
  );
 
 

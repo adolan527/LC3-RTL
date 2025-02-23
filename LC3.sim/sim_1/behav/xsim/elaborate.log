@@ -4,8 +4,8 @@ Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-5021] port 'keyboardInput' is not connected on this instance [C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v:27]
-WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:59]
+WARNING: [VRFC 10-5021] port 'keyboardInput' is not connected on this instance [C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v:38]
+WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:60]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -27,7 +27,7 @@ Compiling module xil_defaultlib.memoryRegister
 Compiling module xil_defaultlib.io_input
 Compiling module xil_defaultlib.io_output
 Compiling module xil_defaultlib.io
-Compiling module xil_defaultlib.RAM_DEBUG
+Compiling module xil_defaultlib.RAM
 Compiling module xil_defaultlib.addressControlLogic
 Compiling module xil_defaultlib.memory
 Compiling module xil_defaultlib.datapath

@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
+`include "../globalConstants.vh"
 
 module address( //generates an address for the PCMUX and MARMUX
 	input[15:0] SR1, PC, instruction, //sourceRegister1
@@ -26,28 +26,20 @@ module address( //generates an address for the PCMUX and MARMUX
 	input[1:0] ADDR2MUX, //offset select
 	output reg[15:0] result
     );
-	
-	localparam PCFLAG = 1'b0;
-	localparam SR1FLAG = 1'b1;
-	
-	localparam ZERO = 2'b00;
-	localparam OFF6 = 2'b01;
-	localparam OFF9 = 2'b10;
-	localparam OFF11 = 2'b11;
-	
+		
 	reg[15:0] mux1, mux2;
 	
 	always@(*)begin
 		case(ADDR1MUX)
-			PCFLAG: mux1 <= PC;
-			SR1FLAG: mux1 <= SR1;
+			`ADDR1MUX_PC: mux1 <= PC;
+			`ADDR1MUX_SR1: mux1 <= SR1;
 		endcase
 		
 		case(ADDR2MUX)
-			ZERO: mux2 <= 0;
-			OFF6: mux2 <= $signed(instruction);
-			OFF9: mux2 <= $signed(instruction);
-			OFF11: mux2 <= $signed(instruction);
+			`ADDR2MUX_OFFSET_0: mux2 <= 0;
+			`ADDR2MUX_OFFSET_6: mux2 <= $signed(instruction[5:0]);
+			`ADDR2MUX_OFFSET_9: mux2 <= $signed(instruction[8:0]);
+			`ADDR2MUX_OFFSET_11: mux2 <= $signed(instruction[10:0]);
 		endcase
 		
 		result <= mux1 + mux2;

@@ -18,60 +18,80 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+`include "memoryConstants.vh"
+`include "../globalConstants.vh"
 
-
-module RAM(
+module RAM( //temporary implementation for testing
 	input[15:0] MDR, address,
 	input RW, MEMEN, //RW - 0 read, 1 write. 
 	input clk, reset_n,
 	output [15:0] memoryRead,
-	output R
+	output R,
+	
+	output reg [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead
 	);
-	localparam WORDS = 127; //should be 2^ 16 -1, but that is too big.
-	reg[15:0] mem[WORDS:0];
-	wire[7:0] limitedAddress;
+
+	reg[15:0] mem[`MEMORY_WORDCOUNT-1:0];
+	wire[7:0] limitedAddress; //truncates address input to work with the smaller memory
 	assign limitedAddress = address[7:0];
 	assign memoryRead = mem[address];
 	assign R = 1;
 	
+	
+	initial begin
+		$readmemh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/main.hex", mem); 
+	end
+
+	
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n)begin
-			for(i=0; i < WORDS; i = i + 1)begin
-				mem[i] <= 0;
-			end
+			$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/memDump.hex", mem);
 		end else 
-			for(i=0; i < WORDS; i = i + 1)begin
+			for(i=0; i < `MEMORY_WORDCOUNT; i = i + 1)begin
 				if(limitedAddress == i && MEMEN && RW) mem[i] <= MDR;
 				else mem[i]<=mem[i];
 			end
 	end
 	
+	genvar j;
+    generate
+        for (j = 0; j < `MEMORY_WORDCOUNT; j = j + 1) begin
+            always @(*) begin
+                debugMemoryRead[(j+1)*16 -1 : j*16] = mem[j]; 
+            end
+        end
+    endgenerate
+	
 	
 endmodule
+/*
+module RAM_DEBUG( //temporary implementation for testing +
 
-module RAM_DEBUG( //preloaded with data
 	input[15:0] MDR, address,
 	input RW, MEMEN, //RW - 0 read, 1 write. 
 	input clk, reset_n,
 	output [15:0] memoryRead,
 	output R
 	);
-	localparam WORDS = 127; //should be 2^ 16 -1, but that is too big.
-	reg[15:0] mem[WORDS:0];
-	wire[7:0] limitedAddress;
+
+	reg[15:0] mem[`MEMORY_WORDCOUNT-1:0];
+	wire[7:0] limitedAddress; //truncates address input to work with the smaller memory
 	assign limitedAddress = address[7:0];
 	assign memoryRead = mem[address];
 	assign R = 1;
 	
+	assign DEBUG_RAM = mem;
+	
 	initial begin
-        $readmemh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/aluTest/main.hex", mem); 
+        $readmemh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/main.hex", mem); 
+		
     end
 	
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n)begin
-			$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/aluTest/memDump.hex", mem);
+			//$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/memDump.hex", mem);
 		end else 
 			for(i=0; i < WORDS; i = i + 1)begin
 				if(limitedAddress == i && MEMEN && RW) mem[i] <= MDR;
@@ -79,9 +99,16 @@ module RAM_DEBUG( //preloaded with data
 			end
 	end
 	
+	always@(*)begin
+		if(DEBUG_MEMDUMP) begin
+			$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/memDump.hex", mem);
+		end
+	end
+
+	
 	
 endmodule
-
+*/
 
 
 /*

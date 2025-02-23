@@ -4,7 +4,6 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs
 INFO: [VRFC 10-311] analyzing module ALU
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/RAM.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module RAM
-INFO: [VRFC 10-311] analyzing module RAM_DEBUG
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/address.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module address
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/addressControlLogic.v" into library xil_defaultlib
@@ -22,19 +21,19 @@ INFO: [VRFC 10-311] analyzing module io_input
 INFO: [VRFC 10-311] analyzing module io_output
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module lc3
-WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:29]
-WARNING: [VRFC 10-3248] data object 'R' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:32]
-WARNING: [VRFC 10-9364] second declaration of 'R' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:32]
-WARNING: [VRFC 10-3248] data object 'LDPriority' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:80]
-WARNING: [VRFC 10-9364] second declaration of 'LDPriority' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:80]
-WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:80]
-WARNING: [VRFC 10-2938] 'GateMDR' is already implicitly declared on line 58 [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:80]
-WARNING: [VRFC 10-3248] data object 'PCMUX' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:81]
-WARNING: [VRFC 10-9364] second declaration of 'PCMUX' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:81]
-WARNING: [VRFC 10-3248] data object 'BEN' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:82]
-WARNING: [VRFC 10-9364] second declaration of 'BEN' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:82]
-WARNING: [VRFC 10-3248] data object 'PSR' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:83]
-WARNING: [VRFC 10-9364] second declaration of 'PSR' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:83]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:37]
+WARNING: [VRFC 10-3248] data object 'R' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:41]
+WARNING: [VRFC 10-9364] second declaration of 'R' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:41]
+WARNING: [VRFC 10-3248] data object 'LDPriority' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:91]
+WARNING: [VRFC 10-9364] second declaration of 'LDPriority' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:91]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:91]
+WARNING: [VRFC 10-2938] 'GateMDR' is already implicitly declared on line 67 [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:91]
+WARNING: [VRFC 10-3248] data object 'PCMUX' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:92]
+WARNING: [VRFC 10-9364] second declaration of 'PCMUX' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:92]
+WARNING: [VRFC 10-3248] data object 'BEN' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
+WARNING: [VRFC 10-9364] second declaration of 'BEN' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
+WARNING: [VRFC 10-3248] data object 'PSR' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:94]
+WARNING: [VRFC 10-9364] second declaration of 'PSR' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:94]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memory.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module memory
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memoryRegister.v" into library xil_defaultlib
@@ -43,7 +42,7 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs
 INFO: [VRFC 10-311] analyzing module instructionRegister
 INFO: [VRFC 10-311] analyzing module SR2mux
 INFO: [VRFC 10-311] analyzing module MARmux
-WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:59]
+WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:60]
 INFO: [VRFC 10-311] analyzing module accessControlViolation
 INFO: [VRFC 10-311] analyzing module branchEnable
 INFO: [VRFC 10-311] analyzing module SR1adrMux

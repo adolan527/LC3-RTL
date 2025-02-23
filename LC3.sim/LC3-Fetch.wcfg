@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="379.940 ns"></ZoomStartTime>
-      <ZoomEndTime time="485.541 ns"></ZoomEndTime>
-      <Cursor1Time time="429.840 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="2,122.001 ns"></ZoomEndTime>
+      <Cursor1Time time="976.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="340"></NameColumnWidth>
-      <ValueColumnWidth column_width="140"></ValueColumnWidth>
+      <ValueColumnWidth column_width="135"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="13" />
+   <WVObjectSize size="15" />
    <wvobject fp_name="/top/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -91,10 +91,13 @@
       <obj_property name="ElementShortName">registers[7:0][15:0]</obj_property>
       <obj_property name="ObjectShortName">registers[7:0][15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/top/first32mem" type="array">
+      <obj_property name="ElementShortName">first32mem[31:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">first32mem[31:0][15:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="group21" type="group">
       <obj_property name="label">ALU</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/result" type="array">
          <obj_property name="ElementShortName">result[15:0]</obj_property>
          <obj_property name="ObjectShortName">result[15:0]</obj_property>
@@ -114,6 +117,31 @@
       <wvobject fp_name="/top/lc3_inst/datapath_inst/ALU_inst/GateALU" type="logic">
          <obj_property name="ElementShortName">GateALU</obj_property>
          <obj_property name="ObjectShortName">GateALU</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group207" type="group">
+      <obj_property name="label">REG</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/SR1adr" type="array">
+         <obj_property name="ElementShortName">SR1adr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">SR1adr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/SR2adr" type="array">
+         <obj_property name="ElementShortName">SR2adr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">SR2adr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/DRadr" type="array">
+         <obj_property name="ElementShortName">DRadr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">DRadr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/LDREG" type="logic">
+         <obj_property name="ElementShortName">LDREG</obj_property>
+         <obj_property name="ObjectShortName">LDREG</obj_property>
+      </wvobject>
+      <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/enable" type="array">
+         <obj_property name="ElementShortName">enable[7:0]</obj_property>
+         <obj_property name="ObjectShortName">enable[7:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

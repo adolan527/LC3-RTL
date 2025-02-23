@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
+`include "../globalConstants.vh"
 
 module instructionRegister(
     input[15:0] data,
@@ -55,8 +55,10 @@ module MARmux( //memory address register mux: controls what address goes into th
 	
 	reg[15:0] temp;
     always@(*)begin
-        if(!select) temp <= addressSum;
-        else temp<= {0,instruction[7:0]};
+		case(select)
+			`MARMUX_ADR_SUM: temp <= addressSum;
+			`MARMUX_INSTR: temp <= {0,instruction[7:0]};
+		endcase
     end
 	
 	always@(*) if(GateMARmux) result<=temp; else result<={16'bz};
@@ -84,10 +86,10 @@ module SR1adrMux(
 	);
 	always@(*) begin
 		case(SR1MUX)
-			2'b00: SR1adr<=instruction[11:9];
-			2'b01: SR1adr<=instruction[8:6]; //add, and, not, LDR, STR, JMP, JSRR
-			2'b10: SR1adr<=3'b110;
-			2'b11: SR1adr<=0;
+			`SR1MUX_FIRST: SR1adr<=instruction[11:9];
+			`SR1MUX_SECOND: SR1adr<=instruction[8:6]; //add, and, not, LDR, STR, JMP, JSRR
+			`SR1MUX_SIX: SR1adr<=3'b110;
+			`SR1MUX_ZERO: SR1adr<=0;
 		endcase
 	end
 endmodule
@@ -99,10 +101,10 @@ module DRadrMux(
 	);
 	always@(*) begin
 		case(DRMUX)
-			2'b00: DRadr<=instruction[11:9]; //add, 
-			2'b01: DRadr<=3'b110;
-			2'b10: DRadr<=3'b111;
-			2'b11: DRadr<=0;
+			`DRMUX_FIRST: DRadr<=instruction[11:9]; //add, 
+			`DRMUX_SIX: DRadr<=3'b110;
+			`DRMUX_SEVEN: DRadr<=3'b111;
+			`DRMUX_ZERO: DRadr<=0;
 		endcase
 	end
 endmodule

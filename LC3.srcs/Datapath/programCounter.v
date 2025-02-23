@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
+`include "../globalConstants.vh"
 
 module programCounter(//Stores the program counter, gated output to databus. PC selects from PC+1, address from bus, or address from adder (ex: using a LDR).
 	input[1:0] pcMux,//selects where the next PC value should come from
@@ -26,19 +26,16 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 	input clk, reset_n, GatePC, LDPC, 
 	output reg[15:0] result, addressAdder //result -> databus, addressMux -> address adder
 	);
-	localparam PCINC = 2'b00;
-	localparam BUS = 2'b01;
-	localparam ADDER = 2'b10;
-	localparam NONE = 2'b11;
+
 	
 	reg[15:0] PC;
 	
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n) PC <= 0;
 		else if(LDPC) case(pcMux)
-			PCINC: PC <= PC+1;
-			BUS: PC <= bus;
-			ADDER: PC <= adder;
+			`PCMUX_INC: PC <= PC+1;
+			`PCMUX_BUS: PC <= bus;
+			`PCMUX_ADDR: PC <= adder;
 			default: PC <= 0;
 		endcase
 		else PC <= PC;
