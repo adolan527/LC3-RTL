@@ -2,12 +2,16 @@ TODO list:
 
 LC3.srcs/Controller/controller.v
 
-	87 					// TODO: implement ACV here
-	119 					case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
-	165 					// TODO: implement ACV here
-	172 					// TODO: implement ACV here
-	179 					//TODO: implement ACV here
-	199 					//TODO : implement ACV here
+	106 					// TODO: implement ACV here
+	138 					case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+	185 					// TODO: implement ACV here
+	192 					// TODO: implement ACV here
+	199 					//TODO: implement ACV here
+	219 					//TODO : implement ACV here
+	247 					// TODO: implement ACV here
+	254 					// TODO: implement ACV here
+	261 					//TODO: implement ACV here
+	281 					//TODO : implement ACV here
 
 LC3.srcs/Memory/addressControlLogic.v
 

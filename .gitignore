@@ -1,10 +1,7 @@
 # Exclude Vivado-generated files with any project name
 *.cache/
-*.hw/
 *.gen/
 *.runs/
-*.srcs/sources_1/bd/
-*.srcs/constrs_1/tmp/
 
 # Exclude common Vivado temporary files
 *.jou
@@ -12,7 +9,6 @@
 *.str
 *.rpt
 *.bit
-*.bin
 *.xml
 *.html
 
@@ -20,6 +16,7 @@
 !*.srcs/**
 !*.ip_user_files/**
 !*.sim/**
+!*.gen/**
 
 # Always include the .xpr file
 !*.xpr
