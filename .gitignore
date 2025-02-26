@@ -2,6 +2,7 @@
 *.cache/
 *.hw/
 *.runs/
+*.gen/
 
 # Exclude common Vivado temporary files
 *.jou
@@ -16,7 +17,7 @@
 !*.srcs/**
 !*.ip_user_files/**
 !*.sim/**
-!*.gen/**
+
 
 # Always include the .xpr file
 !*.xpr

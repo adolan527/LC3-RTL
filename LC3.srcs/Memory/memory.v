@@ -21,7 +21,9 @@
 `include "memoryConstants.vh"
 
 	
-module memory(
+module memory
+#(parameter MEMORY_INIT_FILE = "")
+(
 	//DEBUG ports
 
 	input[15:0] data, foreignKeyboardInput,
@@ -44,7 +46,7 @@ module memory(
 	
 	memoryRegister memoryRegister_inst(.data(data),.inmux(inmux),.clk(clk),.reset_n(reset_n),.MAR(MAR),.LDMAR(LDMAR),.LDMDR(LDMDR),.MIOEN(MIOEN),.GateMDR(GateMDR),.MDR(MDR),.result(result));
 	io io_inst(.data(data),.KBDR(KBDR),.KBSR(KBSR),.DSR(DSR),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.foreignKeyboardInput(foreignKeyboardInput),.foreignDisplayOutput(foreignDisplayOutput));
-	RAM RAM_inst(
+	RAM #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) RAM_inst(
 	.MDR(MDR),
 	.address(MAR),
 	.RW(RW),

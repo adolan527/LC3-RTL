@@ -20,7 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module lc3(
+module lc3
+#(parameter MEMORY_INIT_FILE = "")
+(
 	//DEBUG ports
 	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead,
 	output [16 * 8 -1:0] debugRegRead,
@@ -93,7 +95,7 @@ wire[1:0]  PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX, ALUK;
 wire BEN, ACV;
 wire[15:0] PSR;
 
-datapath datapath_inst(
+datapath #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) datapath_inst(
  .clk(clk),
  .reset_n(reset_n),
  .GatePC(GatePC),

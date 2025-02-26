@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="2,122.001 ns"></ZoomEndTime>
-      <Cursor1Time time="976.000 ns"></Cursor1Time>
+      <ZoomEndTime time="214.201 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="340"></NameColumnWidth>
-      <ValueColumnWidth column_width="135"></ValueColumnWidth>
+      <ValueColumnWidth column_width="125"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="15" />
+   <WVObjectSize size="16" />
    <wvobject fp_name="/top/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -141,7 +141,10 @@
       <wvobject fp_name="/top/lc3_inst/datapath_inst/regFile_inst/enable" type="array">
          <obj_property name="ElementShortName">enable[7:0]</obj_property>
          <obj_property name="ObjectShortName">enable[7:0]</obj_property>
-         <obj_property name="isExpanded"></obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject fp_name="/top/lc3_inst/controller_inst/PSR" type="array">
+      <obj_property name="ElementShortName">PSR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">PSR[15:0]</obj_property>
    </wvobject>
 </wave_config>

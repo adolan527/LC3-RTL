@@ -66,9 +66,36 @@ endmodule
 
 module accessControlViolation(
 	input[15:0] PSR, dataBus,
-	output ACV
+	input clk, reset_n, LDACV,
+	output reg ACV
 	);
-	assign ACV = PSR[15] & (&dataBus[15:9] | &(~dataBus[15:14]));
+	always@(posedge clk or negedge reset_n) begin
+		if(!reset_n) ACV <= 0;
+		else if(LDACV) ACV <= PSR[15] & //user mode and
+			(&dataBus[15:9] | &(~dataBus[15:14])); // Address >= 0xFF00 or Address < 0x3000
+		else ACV <= ACV;
+	end
+	
+endmodule
+
+module programStatusRegister(
+	input SETPRIV, priorityLevel, N, Z, P, clk, reset_n, GatePSR,
+	output reg[15:0] PSR,
+	output [15:0] dataBus
+	);
+	
+	always@(posedge clk or negedge reset_n)begin
+		if(!reset_n)begin
+			PSR <= 0;
+		end 
+		else begin
+			PSR <= {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P};
+		end
+	end
+	
+	assign dataBus = GatePSR ? PSR : {16'bz};
+	
+	
 endmodule
 
 module branchEnable(

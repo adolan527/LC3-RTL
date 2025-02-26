@@ -82,7 +82,10 @@ module controller(
 	localparam STORE_CHECK_ACV 	= 6'd23; //ST, STR, STI, checks for ACV
 	localparam STORE_WRITE_MEM 	= 6'd16; //ST, STR, STI, M[MAR] <= MDR. Last STORE state
 	
+	localparam BRANCH_EXECUTE	= 6'd22; //PC <= PC + off9
 	
+	localparam JSR_IMM			= 6'd21; //PC <= PC + off11
+	localparam JSR_REG			= 6'd20; //PC <= SR
 	
 	
 
@@ -103,13 +106,14 @@ module controller(
 			FETCH:begin // MAR <- PC, PC <- PC+1, set ACV, [INT]. note: Interrupt not implemented
 				LDMAR <= 1; MARMUX <= `MARMUX_ADR_SUM; ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_0; GateMARMUX <= 1; // MAR <- PC
 				PCMUX <= `PCMUX_INC; LDPC <= 1; // PC <- PC+1
-				// TODO: implement ACV here 
+				LDACV <= 1;
+				
 				if(INT) nextState<=INTERRUPT; //interrupt
 				else nextState <= FETCH_CHECK_ACV;
 				
 				//Reset everything not explicity set above
 				LDMDR <= 0; LDIR <= 0; LDBEN <= 0; LDREG <= 0; LDCC <= 0;
-				LDPriv <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; LDACV <= 0; LDVector <= 0; 
+				LDPriv <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; LDVector <= 0; 
 				GatePC <= 0; GateMDR <= 0; GateALU <= 0; GateVector <= 0; GatePC1 <= 0; GatePSR <= 0; GateSP <= 0; 
 				DRMUX <= 0; SR1MUX <= 0; SPMUX <= 0; VectorMUX <= 0;  TableMUX <= 0; PSRMUX <= 0; 
 				MIOEN <= 0; RW <= 0;
@@ -117,7 +121,8 @@ module controller(
 			end
 			FETCH_CHECK_ACV: begin //check ACV
 				LDMAR <= 0; LDPC <= 0;
-				GateMARMUX <= 0;
+				GateMARMUX <= 0; LDACV <= 0;
+				
 				if(ACV) nextState<=FETCH_ACV;
 				else nextState <= FETCH_AWAIT;
 			end
@@ -138,8 +143,8 @@ module controller(
 				case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 					`OPCODE_ADD		: 	nextState<=INSTR_ADD;
 					`OPCODE_AND		: 	nextState<=INSTR_AND;
-					`OPCODE_BR		: 	nextState<=START;
-					`OPCODE_JMP		: 	nextState<=START;
+					`OPCODE_BR		: 	nextState<=INSTR_BR;
+					`OPCODE_JMP		: 	nextState<=INSTR_JMP;
 					`OPCODE_JSR		: 	nextState<=START;
 					`OPCODE_LD		: 	nextState<=INSTR_LD;
 					`OPCODE_LDI		: 	nextState<=INSTR_LDI;
@@ -182,27 +187,27 @@ module controller(
 			INSTR_LD: begin //MAR<−PC+off9 , set ACV
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
-				// TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= LOAD_CHECK_ACV;
 			end
 			
 			INSTR_LDR: begin //MAR<-B+off6, set ACV
 				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; // SR1 + 6 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
-				// TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= LOAD_CHECK_ACV;
 			end
 			
 			INSTR_LDI: begin //MAR <- PC+off9
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.				
-				//TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= LDI_CHECK_ACV;
 			end
 			
 			LDI_CHECK_ACV: begin //check ACV
 				ADDR1MUX <= 0; ADDR2MUX <= 2'b00; SR1MUX <= 2'b00; // Disable
-				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //Disable
+				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; LDACV <= 0;//Disable
 				if(ACV) nextState<=LDI_ACV;
 				else nextState <= LDI_READ_MEM;
 			end
@@ -216,14 +221,14 @@ module controller(
 			LDI_LATTER: begin //MAR <-MDR, set ACV
 				LDMDR <= 0; MIOEN <= 0;//disable
 				LDMAR <= 1; GateMDR <= 1;
-				//TODO : implement ACV here
+				LDACV <= 1;
 				nextState <= LOAD_CHECK_ACV;
 			end
 
 			LOAD_CHECK_ACV: begin // check ACV
 				ADDR1MUX <= 0; ADDR2MUX <= 2'b00;  SR1MUX <= 2'b00; // Disable
 				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //Disable
-				GateMDR <= 0; // Disable
+				GateMDR <= 0; LDACV <= 0; // Disable
 				if(ACV) nextState<=LOAD_ACV;
 				else nextState <= LOAD_READ_MEM;
 			end
@@ -244,27 +249,27 @@ module controller(
 			INSTR_ST: begin // MAR <- PC + off9, set ACV
 				ADDR1MUX <= `ADDR1MUX_PC ; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
-				// TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= STORE_CHECK_ACV;
 			end
 			
 			INSTR_STR: begin //MAR <- B + off6
 				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; // SR1 + 6 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
-				// TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= STORE_CHECK_ACV;
 			end
 			
 			INSTR_STI: begin // MAR<−PC+off9, set ACV
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; // PC + 9 bit offset
 				MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; //Use address sum, output to databus. LD MAR.
-				//TODO: implement ACV here
+				LDACV <= 1;
 				nextState <= STI_CHECK_ACV;
 			end
 				
 			STI_CHECK_ACV: begin //check ACV
 				ADDR1MUX <= 0; ADDR2MUX <= 2'b00; SR1MUX <= 2'b00; // Disable
-				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //Disable
+				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; LDACV <= 0; //Disable
 				if(ACV) nextState<=STI_ACV;
 				else nextState <= STI_READ_MEM;
 			end
@@ -278,14 +283,14 @@ module controller(
 			STI_LATTER: begin // MAR<-MDR, set ACV
 				LDMDR <= 0; MIOEN <= 0;//disable
 				LDMAR <= 1; GateMDR <= 1;
-				//TODO : implement ACV here
+				LDACV <= 1;
 				nextState <= STORE_CHECK_ACV;
 			end
 			
 			STORE_CHECK_ACV: begin // MDR <- SR, check ACV
 				ADDR1MUX <= 0; ADDR2MUX <= 2'b00; // disable
 				MARMUX <= 0; GateMARMUX <= 0; LDMAR <= 0; //disable
-				GateMDR <= 0; // Disable
+				GateMDR <= 0; LDACV <= 0; // Disable
 				LDMDR <= 1; MIOEN <= 0; 
 				SR1MUX <= `SR1MUX_FIRST; ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0; GateMARMUX <= 1; // Send data through MARMUX
 				if(ACV) nextState<=STORE_ACV;
@@ -298,6 +303,42 @@ module controller(
 				else nextState<= STORE_WRITE_MEM;
 			end
 			
+			INSTR_BR: begin // check BEN
+				if(BEN) nextState <= BRANCH_EXECUTE;
+				else nextState <= FETCH;
+			end
+			
+			BRANCH_EXECUTE: begin // PC <= PC + off9
+				LDPC <= 1; PCMUX <= `PCMUX_ADDR; 
+				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9;
+				nextState <= FETCH;
+			end
+			
+			INSTR_JMP: begin // PC <= BaseR
+				LDPC <= 1; PCMUX <= `PCMUX_ADDR; 
+				SR1MUX <= `SR1MUX_SECOND;
+				ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0;
+				nextState <= FETCH;
+			end
+			
+			INSTR_JSR: begin // JSR or JSRR (imm or reg)
+				if(instruction[11]) nextState <= JSR_IMM;
+				else nextState <= JSR_REG;
+			end
+			
+			JSR_REG: begin // R7 <= PC. PC <= PC + baseR
+				DRMUX <= `DRMUX_SEVEN; LDREG <= 1; GatePC <= 1;
+				LDPC <= 1; PCMUX <= `PCMUX_ADDR; 
+				SR1MUX <= `SR1MUX_SECOND;
+				ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0;
+				nextState <= FETCH;
+			end
+			
+			JSR_IMM: begin // R7 <= PC. PC <= PC + off11
+				LDPC <= 1; PCMUX <= `PCMUX_ADDR; 
+				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_11;
+				nextState <= FETCH;
+			end
 			START: begin
 				nextState<=FETCH;
 			end

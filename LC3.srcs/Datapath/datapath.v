@@ -20,7 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module datapath(
+module datapath
+#(parameter MEMORY_INIT_FILE = "")
+(
 	//DEBUG ports
 
 	input clk, reset_n, 
@@ -42,9 +44,21 @@ module datapath(
 	
 	wire[3:0] priorityLevel;
 	assign ALUK = instruction[15:14];
-	assign PSR[15:0] = GatePSR ? {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P} : 16'bz;
+	assign PSR[15:0] = GatePSR ? {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P} : 16'bz; //TODO Fix PSR. Should always output to controller, gate to bus.
 	assign SR2adr = instruction[2:0];
 	
+	//TODO finish implementing new PSR.
+	/*
+module programStatusRegister(
+	input SETPRIV, priorityLevel, N, Z, P, clk, reset_n, GatePSR,
+	output reg[15:0] PSR,
+	output [15:0] dataBus
+	);
+	
+programStatusRegister programStatusRegister_inst(
+	.clk(clk),.reset_n(reset_n),
+	.SETPRIV(SETPRIV),.
+	*/
 MARmux MARmux_inst(
 	.addressSum(addressSum),
 	.instruction(instruction),
@@ -76,7 +90,7 @@ regFile regFile_inst(
 	.data(dataBus),.DRadr(DRadr),.LDREG(LDREG),.SR1adr(SR1adr),.SR2adr(SR2adr),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2premux),.debugRegRead(debugRegRead));
 	
 accessControlViolation acv_inst(
-	.ACV(ACV),.PSR(PSR),.dataBus(dataBus));
+	.ACV(ACV),.PSR(PSR),.dataBus(dataBus),.clk(clk),.reset_n(reset_n),.LDACV(LDACV));
 	
 branchEnable ben_inst(.BEN(BEN),.instruction(instruction),.N(N),.Z(Z),.P(P));
 	
@@ -89,7 +103,7 @@ DRadrMux DRMUX_inst(
 
 
 
-memory memory_inst(
+memory #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) memory_inst(
  .data(dataBus),
  .foreignKeyboardInput(foreignKeyboardInput),
  .clk(clk),.reset_n(reset_n),.result(dataBus),

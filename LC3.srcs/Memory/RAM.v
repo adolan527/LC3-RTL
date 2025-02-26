@@ -21,7 +21,9 @@
 `include "memoryConstants.vh"
 `include "../globalConstants.vh"
 
-module RAM( //temporary implementation for testing
+module RAM
+#(parameter MEMORY_INIT_FILE = "")
+( //temporary implementation for testing
 	input[15:0] MDR, address,
 	input RW, MEMEN, //RW - 0 read, 1 write. 
 	input clk, reset_n,
@@ -39,14 +41,13 @@ module RAM( //temporary implementation for testing
 	
 	
 	initial begin
-		$readmemh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/main.hex", mem); 
+		$readmemh(MEMORY_INIT_FILE, mem); 
 	end
 
 	
 	integer i;
 	always@(posedge clk or negedge reset_n)begin
 		if(!reset_n)begin
-			$writememh("C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/memDump.hex", mem);
 		end else 
 			for(i=0; i < `MEMORY_WORDCOUNT; i = i + 1)begin
 				if(limitedAddress == i && MEMEN && RW) mem[i] <= MDR;

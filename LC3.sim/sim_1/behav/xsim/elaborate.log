@@ -6,6 +6,7 @@ Starting static elaboration
 Pass Through NonSizing Optimizer
 WARNING: [VRFC 10-5021] port 'keyboardInput' is not connected on this instance [C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v:38]
 WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:60]
+WARNING: [VRFC 10-3705] select index 11 into 'instruction' is out of bounds [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Controller/controller.v:325]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis

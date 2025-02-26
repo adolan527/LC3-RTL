@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/state.csv"
-`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/memory/memoryTest/memDump.hex"
+`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/state.csv"
+`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memDump.hex"
 
 module top();
 
