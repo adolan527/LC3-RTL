@@ -55,3 +55,22 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs
 INFO: [VRFC 10-311] analyzing module regFile
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/Module tests/misc_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module instructionRegister_tb
+INFO: [VRFC 10-311] analyzing module SR2mux_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/branchTest/branch_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module branch_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v" into library xil_defaultlib
+WARNING: [VRFC 10-9157] macro 'STATE_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v:3]
+WARNING: [VRFC 10-9157] macro 'MEMDUMP_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v:4]
+INFO: [VRFC 10-311] analyzing module memoryTest_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v" into library xil_defaultlib
+WARNING: [VRFC 10-9157] macro 'STATE_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:3]
+WARNING: [VRFC 10-9157] macro 'MEMDUMP_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:4]
+WARNING: [VRFC 10-9157] macro 'MEMLOAD_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:5]
+INFO: [VRFC 10-311] analyzing module REPLACENAMEHERE_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'glbl' [C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v:6]

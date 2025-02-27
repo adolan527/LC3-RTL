@@ -23,7 +23,7 @@
 
 module controller(
 	input [15:0] PSR, //processor status register. PSR[15] = user/supervisor, [10:8] priority, [2:0] N Z P
-	input [15:12] instruction, //opcode
+	input [15:11] instruction, //opcode + 1
 	input INT, R, BEN, ACV, //Interrupt, ready to read memory, branch enable, access control violation
 	input clk, reset_n,
 	output reg LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector, //42 output bits
@@ -100,6 +100,10 @@ module controller(
 	localparam STI_ACV 			= 6'd61; //Handles ACV in STI
 	
 	
+	// TODO consider blocking assignments. Current implementation creates unintended latches.
+	// Blocking assignment approach would be a 6-bit indexed ROM for each output. 
+	// Non-blocking (current) approach is 6-bit indexed ROM for each output, but many ROM values are x, and those values rely on latches.
+	// The only advantage of non-blocking is the ability for values to stay between states, but that is (probably) never used.
 	
 	always@(*)begin //control signal assignment
 		case(currentState)
@@ -140,18 +144,17 @@ module controller(
 				//BEN is continuously assigned from datapath.
 				GateMDR <= 0; LDIR<= 0;
 
-				case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+				case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 					`OPCODE_ADD		: 	nextState<=INSTR_ADD;
 					`OPCODE_AND		: 	nextState<=INSTR_AND;
 					`OPCODE_BR		: 	nextState<=INSTR_BR;
 					`OPCODE_JMP		: 	nextState<=INSTR_JMP;
-					`OPCODE_JSR		: 	nextState<=START;
+					`OPCODE_JSR		: 	nextState<=INSTR_JSR;
 					`OPCODE_LD		: 	nextState<=INSTR_LD;
 					`OPCODE_LDI		: 	nextState<=INSTR_LDI;
 					`OPCODE_LDR		: 	nextState<=INSTR_LDR;
 					`OPCODE_LEA		: 	nextState<=INSTR_LEA;
 					`OPCODE_NOT		: 	nextState<=INSTR_NOT;
-					`OPCODE_RET		: 	nextState<=START;
 					`OPCODE_RTI		: 	nextState<=START;
 					`OPCODE_ST		: 	nextState<=INSTR_ST;
 					`OPCODE_STI		: 	nextState<=INSTR_STI;
@@ -335,6 +338,7 @@ module controller(
 			end
 			
 			JSR_IMM: begin // R7 <= PC. PC <= PC + off11
+				DRMUX <= `DRMUX_SEVEN; LDREG <= 1; GatePC <= 1;
 				LDPC <= 1; PCMUX <= `PCMUX_ADDR; 
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_11;
 				nextState <= FETCH;

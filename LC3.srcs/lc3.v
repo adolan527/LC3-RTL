@@ -45,7 +45,7 @@ wire[1:0] ADDR2MUX, SPMUX, VectorMUX, ALUK, SR1MUX, DRMUX, PCMUX;
 
 controller controller_inst(
  .PSR(PSR),
- .instruction(instruction[15:12]),
+ .instruction(instruction[15:11]),
  .INT(INT),
  .R(R),
  .BEN(BEN),

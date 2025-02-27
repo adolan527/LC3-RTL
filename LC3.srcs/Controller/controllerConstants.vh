@@ -34,7 +34,6 @@
 `define OPCODE_LDR 	4'b0110
 `define OPCODE_LEA 	4'b1110
 `define OPCODE_NOT 	4'b1001
-`define OPCODE_RET 	4'b1100
 `define OPCODE_RTI 	4'b1000
 `define OPCODE_ST 	4'b0011
 `define OPCODE_STI 	4'b1011

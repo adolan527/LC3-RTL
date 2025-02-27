@@ -3,7 +3,7 @@
 `define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/state.csv"
 `define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memDump.hex"
 
-module top();
+module memoryTest_tb();
 
 reg clk, reset_n;
 wire [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead;
@@ -15,7 +15,7 @@ reg[15:0] mem[`MEMORY_WORDCOUNT-1:0];
 reg[15:0] first32mem[31:0];
 wire [15:0] instruction;
 
-lc3 lc3_inst( //instantiation
+lc3 #(.MEMORY_INIT_FILE("C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/main.hex")) lc3_inst( //instantiation
  .clk(clk),.reset_n(reset_n),.debugMemoryRead(debugMemoryRead),.debugRegRead(debugRegRead),.debugInstruction(instruction),.debugCurrentState(currentState),.debugNextState(nextState));
 
 always #5 clk = ~clk; //clock

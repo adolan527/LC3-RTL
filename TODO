@@ -1,17 +1,17 @@
 TODO list:
 
+LC3.sim/SystemTests/memoryTest/top.v
+
+	18 	//TODO fix file loading error
+
 LC3.srcs/Controller/controller.v
 
-	106 					// TODO: implement ACV here
-	138 					case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
-	185 					// TODO: implement ACV here
-	192 					// TODO: implement ACV here
-	199 					//TODO: implement ACV here
-	219 					//TODO : implement ACV here
-	247 					// TODO: implement ACV here
-	254 					// TODO: implement ACV here
-	261 					//TODO: implement ACV here
-	281 					//TODO : implement ACV here
+	143 					case(instruction)// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+
+LC3.srcs/Datapath/datapath.v
+
+	47 		assign PSR[15:0] = GatePSR ? {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P} : 16'bz; //TODO Fix PSR. Should always output to controller, gate to bus.
+	50 		//TODO finish implementing new PSR.
 
 LC3.srcs/Memory/addressControlLogic.v
 
