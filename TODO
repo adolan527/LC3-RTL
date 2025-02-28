@@ -2,8 +2,8 @@ TODO list:
 
 LC3.srcs/Controller/controller.v
 
-	103 		// TODO consider blocking assignments. Current implementation creates unintended latches.
-	147 					case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+	103 	// TODO break into microsequencer, control store, and microinstruction
+	144 					case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 
 LC3.srcs/Datapath/datapath.v
 
