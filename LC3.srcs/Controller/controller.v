@@ -43,27 +43,27 @@ module controller(
 	assign debugNextState = nextState;
 
 	
-	localparam FETCH = 6'd18; //Main fetch state.
-	localparam FETCH_CHECK_ACV = 6'd33; //access control violation check after fetch
-	localparam FETCH_AWAIT = 6'd28; //await memory read
-	localparam DECODE = 6'd30; //populate instruction register
-	localparam DECODE_INSTR = 6'd32; //decide which instruction to execute
+	localparam FETCH 			= 6'd18; //Main fetch state.
+	localparam FETCH_CHECK_ACV 	= 6'd33; //access control violation check after fetch
+	localparam FETCH_AWAIT 		= 6'd28; //await memory read
+	localparam DECODE 			= 6'd30; //populate instruction register
+	localparam DECODE_INSTR 	= 6'd32; //decide which instruction to execute
 	
 	//MICRO-INSTRUCTIONS
-	localparam INSTR_ADD		= 6'd1;		//ADD 
-	localparam INSTR_AND		= 6'd5;		//AND
-	localparam INSTR_NOT		= 6'd9;		//NOT 
+	localparam INSTR_ADD		= 6'd1 ;		//ADD 
+	localparam INSTR_AND		= 6'd5 ;		//AND
+	localparam INSTR_NOT		= 6'd9 ;		//NOT 
 	localparam INSTR_LEA		= 6'd14;	//LEA 
-	localparam INSTR_LD 		= 6'd2;		//LD  
-	localparam INSTR_LDR		= 6'd6;		//LDR 
+	localparam INSTR_LD 		= 6'd2 ;		//LD  
+	localparam INSTR_LDR		= 6'd6 ;		//LDR 
 	localparam INSTR_LDI		= 6'd10;	//LDI 
 	localparam INSTR_STI		= 6'd11;	//STI 
-	localparam INSTR_STR		= 6'd7;		//STR 
-	localparam INSTR_ST 		= 6'd3;		//ST  
-	localparam INSTR_JSR		= 6'd4;		//JSR 
+	localparam INSTR_STR		= 6'd7 ;		//STR 
+	localparam INSTR_ST 		= 6'd3 ;		//ST  
+	localparam INSTR_JSR		= 6'd4 ;		//JSR 
 	localparam INSTR_JMP		= 6'd12;	//JMP 
-	localparam INSTR_BR 		= 6'd0;		//BR  
-	localparam INSTR_RTI		= 6'd8;		//RTI 
+	localparam INSTR_BR 		= 6'd0 ;		//BR  
+	localparam INSTR_RTI		= 6'd8 ;		//RTI 
 	localparam INSTR_TRAP		= 6'd15;	//TRAP 
 	
 	localparam LDI_CHECK_ACV 	= 6'd17; //LDI first half
@@ -89,7 +89,7 @@ module controller(
 	
 	
 
-	localparam START 			= 6'b0; // Debug start state
+	localparam START 			= 6'b0 ; // Debug start state
 	
 	localparam INTERRUPT 		= 6'd49;// Not implemented
 	
@@ -100,10 +100,7 @@ module controller(
 	localparam STI_ACV 			= 6'd61; //Handles ACV in STI
 	
 	
-	// TODO consider blocking assignments. Current implementation creates unintended latches.
-	// Blocking assignment approach would be a 6-bit indexed ROM for each output. 
-	// Non-blocking (current) approach is 6-bit indexed ROM for each output, but many ROM values are x, and those values rely on latches.
-	// The only advantage of non-blocking is the ability for values to stay between states, but that is (probably) never used.
+// TODO break into microsequencer, control store, and microinstruction
 	
 	always@(*)begin //control signal assignment
 		case(currentState)
