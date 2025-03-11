@@ -16,6 +16,7 @@ verilog xil_defaultlib  \
 "../../../../LC3.srcs/Datapath/programCounter.v" \
 "../../../../LC3.srcs/Datapath/regFile.v" \
 "../../../../LC3.srcs/top.v" \
+"../../../../LC3.srcs/Datapath/interrupt.v" \
 "../../../Module tests/misc_tb.v" \
 "../../../SystemTests/branchTest/branch_tb.v" \
 "../../../SystemTests/memoryTest/memoryTest_tb.v" \

@@ -28,10 +28,12 @@ module datapath
 	input clk, reset_n, 
 	input GatePC, GateMDR, GateALU, GateMARMUX, GateVector, GatePC1, GatePSR, GateSP,
 	input LDMAR, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector,
-	input[1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX,
+	input[1:0] PCMUX, DRMUX, SR1MUX, ADDR2MUX, SPMMUX, VectorMUX, SPMUX,
 	input ADDR1MUX, MARMUX, TableMUX, PSRMUX, MIOEN, RW, SETPRIV,
 	input [15:0] foreignKeyboardInput,
-	output BEN, ACV, R, //branch enable, Access Control Violation, memory read signal
+	input [2:0] interrupt_priority,
+	input [7:0] INTV,
+	output BEN, ACV, R, INT, //branch enable, Access Control Violation, memory read signal, interrupt signal
 	output [15:0] PSR, instruction, foreignDisplayOutput,
 	
 	output [16 * 8 -1:0] debugRegRead,
@@ -44,21 +46,10 @@ module datapath
 	
 	wire[3:0] priorityLevel;
 	assign ALUK = instruction[15:14];
-	assign PSR[15:0] = GatePSR ? {SETPRIV,4'b0000,priorityLevel,5'b00000,N,Z,P} : 16'bz; //TODO Fix PSR. Should always output to controller, gate to bus.
 	assign SR2adr = instruction[2:0];
 	
-	//TODO finish implementing new PSR.
-	/*
-module programStatusRegister(
-	input SETPRIV, priorityLevel, N, Z, P, clk, reset_n, GatePSR,
-	output reg[15:0] PSR,
-	output [15:0] dataBus
-	);
+
 	
-programStatusRegister programStatusRegister_inst(
-	.clk(clk),.reset_n(reset_n),
-	.SETPRIV(SETPRIV),.
-	*/
 MARmux MARmux_inst(
 	.addressSum(addressSum),
 	.instruction(instruction),
@@ -83,14 +74,8 @@ ALU ALU_inst(
 address address_inst(
 	.SR1(SR1),.PC(PC),.instruction(instruction),.result(addressSum),.ADDR1MUX(ADDR1MUX),.ADDR2MUX(ADDR2MUX));
 	
-conditionCode conditionCode_inst(
-	.data(dataBus),.LDCC(LDCC),.clk(clk),.reset_n(reset_n),.N(N),.Z(Z),.P(P));
-	
 regFile regFile_inst(
 	.data(dataBus),.DRadr(DRadr),.LDREG(LDREG),.SR1adr(SR1adr),.SR2adr(SR2adr),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2premux),.debugRegRead(debugRegRead));
-	
-accessControlViolation acv_inst(
-	.ACV(ACV),.PSR(PSR),.dataBus(dataBus),.clk(clk),.reset_n(reset_n),.LDACV(LDACV));
 	
 branchEnable ben_inst(.BEN(BEN),.instruction(instruction),.N(N),.Z(Z),.P(P));
 	
@@ -114,6 +99,50 @@ memory #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) memory_inst(
  .R(R),
  .debugMemoryRead(debugMemoryRead)
  );
+
+
+	
+TRAPBlock TRAPBlock_inst(
+.clk(clk),
+.reset_n(reset_n),
+.dataBusIn(dataBus),
+.dataBusOut(dataBus),
+.GateVector(GateVector),
+.LDVector(LDVector),
+.TableMUX(TableMUX),
+.VectorMUX(VectorMUX)
+);
+
+	
+stackPointer stackPointer_inst(
+.clk(clk),
+.reset_n(reset_n),
+.SPMUX(SPMUX),
+.LDSavedSSP(LDSavedSSP),
+.LDSavedUSP(LDSavedUSP),
+.GateSP(GateSP),
+.SR1(SR1),
+.dataBus(dataBus)
+);
+
+
+PSRBlock PSRBlock_inst(
+	.clk(clk),
+	.reset_n(reset_n),
+	.SETPRIV(SETPRIV),
+	.PSRMUX(PSRMUX),
+	.LDACV(LDACV),
+	.LDPriority(LDPriority),
+	.LDPriv(LDPriv),
+	.LDCC(LDCC),
+	.GatePSR(GatePSR),
+	.dataBusIn(dataBus),
+	.dataBusOut(dataBus),
+	.PSR(PSR),
+	.ACV(ACV),
+	.INT(INT),
+	.interrupt_priority(3'bz)
+);
 
 
 endmodule

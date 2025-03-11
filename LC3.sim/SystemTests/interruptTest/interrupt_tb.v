@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
-`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/state.csv"
-`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/memDump.hex"
-`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/main.hex"
+`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/interruptTest/state.csv"
+`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/interruptTest/memDump.hex"
+`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/interruptTest/main.hex"
 
-module REPLACENAMEHERE_tb();
+module interrupt_tb();
 
 reg clk, reset_n;
 wire [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead;

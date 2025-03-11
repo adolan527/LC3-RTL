@@ -63,7 +63,7 @@ module MARmux( //memory address register mux: controls what address goes into th
 	
 	always@(*) if(GateMARmux) result<=temp; else result<={16'bz};
 endmodule
-
+/*
 module accessControlViolation(
 	input[15:0] PSR, dataBus,
 	input clk, reset_n, LDACV,
@@ -96,7 +96,7 @@ module programStatusRegister(
 	assign dataBus = GatePSR ? PSR : {16'bz};
 	
 	
-endmodule
+endmodule*/
 
 module branchEnable(
 	input[15:0] instruction,

@@ -28,17 +28,21 @@ module lc3
 	output [16 * 8 -1:0] debugRegRead,
 	output [15:0] debugInstruction,
 	output [5:0] debugCurrentState, debugNextState,
+	output [15:0] debugPSR,
 
 
 	
 	input clk, reset_n,
 	input[15:0] keyboardInput,
+	input [2:0] interrupt_priority,
+	input [7:0] INTV,
 	output[15:0] displayOutput
     );
 
 wire  INT, R, BEN, ACV, clk, reset_n;
 wire[15:0]  instruction;
 assign debugInstruction = instruction;
+assign debugPSR = PSR;
 wire[15:0]  PSR;
 wire GatePC1, SetPriv, RW, MIOEN, PSRMUX, TableMUX, MARMUX, ADDR1MUX, GateSP, GatePSR, LDMAR, GateVector, GateMARMUX, GateALU, GatePC, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector, GateMD, R;
 wire[1:0] ADDR2MUX, SPMUX, VectorMUX, ALUK, SR1MUX, DRMUX, PCMUX;
@@ -85,7 +89,7 @@ controller controller_inst(
  .PSRMUX(PSRMUX),
  .MIOEN(MIOEN),
  .RW(RW),
- .SetPriv(SetPriv),
+ .SETPRIV(SETPRIV),
  .debugCurrentState(debugCurrentState),
  .debugNextState(debugNextState)
  );
@@ -125,6 +129,7 @@ datapath #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) datapath_inst(
  .ADDR2MUX(ADDR2MUX),
  .SPMMUX(SPMMUX),
  .VectorMUX(VectorMUX),
+ .SPMUX(SPMUX),
  .ADDR1MUX(ADDR1MUX),
  .MARMUX(MARMUX),
  .TableMUX(TableMUX),
@@ -136,9 +141,12 @@ datapath #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) datapath_inst(
  .ACV(ACV),
  .R(R),
  .PSR(PSR),
+ .INT(INT),
  .instruction(instruction),
  .foreignKeyboardInput(keyboardInput),
  .foreignDisplayOutput(displayOutput),
+ .interrupt_priority(interrupt_priority),
+ .INTV(INTV),
  
  .debugMemoryRead(debugMemoryRead),
  .debugRegRead(debugRegRead)

@@ -9,7 +9,6 @@ INFO: [VRFC 10-311] analyzing module address
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/addressControlLogic.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module addressControlLogic
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/conditionCode.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module conditionCode
 INFO: [VRFC 10-311] analyzing module cctb
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Controller/controller.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module controller
@@ -21,19 +20,19 @@ INFO: [VRFC 10-311] analyzing module io_input
 INFO: [VRFC 10-311] analyzing module io_output
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module lc3
-WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:39]
-WARNING: [VRFC 10-3248] data object 'R' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:43]
-WARNING: [VRFC 10-9364] second declaration of 'R' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:43]
-WARNING: [VRFC 10-3248] data object 'LDPriority' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
-WARNING: [VRFC 10-9364] second declaration of 'LDPriority' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
-WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
-WARNING: [VRFC 10-2938] 'GateMDR' is already implicitly declared on line 69 [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:93]
-WARNING: [VRFC 10-3248] data object 'PCMUX' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:94]
-WARNING: [VRFC 10-9364] second declaration of 'PCMUX' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:94]
-WARNING: [VRFC 10-3248] data object 'BEN' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
-WARNING: [VRFC 10-9364] second declaration of 'BEN' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
-WARNING: [VRFC 10-3248] data object 'PSR' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:96]
-WARNING: [VRFC 10-9364] second declaration of 'PSR' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:96]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:41]
+WARNING: [VRFC 10-3248] data object 'R' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:45]
+WARNING: [VRFC 10-9364] second declaration of 'R' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:45]
+WARNING: [VRFC 10-3248] data object 'LDPriority' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
+WARNING: [VRFC 10-9364] second declaration of 'LDPriority' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
+WARNING: [VRFC 10-2938] 'SETPRIV' is already implicitly declared on line 90 [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'clk' is not allowed [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:95]
+WARNING: [VRFC 10-3248] data object 'PCMUX' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:96]
+WARNING: [VRFC 10-9364] second declaration of 'PCMUX' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:96]
+WARNING: [VRFC 10-3248] data object 'BEN' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:97]
+WARNING: [VRFC 10-9364] second declaration of 'BEN' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:97]
+WARNING: [VRFC 10-3248] data object 'PSR' is already declared [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:98]
+WARNING: [VRFC 10-9364] second declaration of 'PSR' is ignored [C:/Users/Aweso/Verilog/LC3/LC3.srcs/lc3.v:98]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memory.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module memory
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Memory/memoryRegister.v" into library xil_defaultlib
@@ -43,8 +42,6 @@ INFO: [VRFC 10-311] analyzing module instructionRegister
 INFO: [VRFC 10-311] analyzing module SR2mux
 INFO: [VRFC 10-311] analyzing module MARmux
 WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/misc.v:60]
-INFO: [VRFC 10-311] analyzing module accessControlViolation
-INFO: [VRFC 10-311] analyzing module programStatusRegister
 INFO: [VRFC 10-311] analyzing module branchEnable
 INFO: [VRFC 10-311] analyzing module SR1adrMux
 INFO: [VRFC 10-311] analyzing module DRadrMux
@@ -55,11 +52,26 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs
 INFO: [VRFC 10-311] analyzing module regFile
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/top.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.srcs/Datapath/interrupt.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module stackPointer
+INFO: [VRFC 10-311] analyzing module TRAPBlock
+INFO: [VRFC 10-311] analyzing module PSRBlock
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/Module tests/misc_tb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module instructionRegister_tb
 INFO: [VRFC 10-311] analyzing module SR2mux_tb
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/branchTest/branch_tb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module branch_tb
-ERROR: [VRFC 10-4982] syntax error near 'end' [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/branchTest/branch_tb.v:95]
-ERROR: [VRFC 10-8549] Verilog 2000 keyword 'end' used in incorrect context [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/branchTest/branch_tb.v:95]
-ERROR: [VRFC 10-8530] module 'branch_tb' is ignored due to previous errors [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/branchTest/branch_tb.v:9]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v" into library xil_defaultlib
+WARNING: [VRFC 10-9157] macro 'STATE_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v:3]
+WARNING: [VRFC 10-9157] macro 'MEMDUMP_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/memoryTest/memoryTest_tb.v:4]
+INFO: [VRFC 10-311] analyzing module memoryTest_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v" into library xil_defaultlib
+WARNING: [VRFC 10-9157] macro 'STATE_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:3]
+WARNING: [VRFC 10-9157] macro 'MEMDUMP_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:4]
+WARNING: [VRFC 10-9157] macro 'MEMLOAD_PATH' is redefined [C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/TEST_TEMPLATE/TEMPLATE_TB.v:5]
+INFO: [VRFC 10-311] analyzing module REPLACENAMEHERE_tb
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'glbl' [C:/Users/Aweso/Verilog/LC3/LC3.sim/sim_1/behav/xsim/glbl.v:6]

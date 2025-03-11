@@ -66,6 +66,28 @@
 `define PCMUX_ADDR 2'b10
 `define PCMUX_ZERO 2'b11
 
+
+//Interrupt
+//Values used in stack pointer mux
+`define SPMUX_INC	2'b00
+`define SPMUX_DEC	2'b01
+`define SPMUX_SSP	2'b10
+`define SPMUX_USP	2'b11
+
+//Values used in TRAPBLock
+`define VectorMUX_INTV	2'b00
+`define VectorMUX_0	2'b01
+`define VectorMUX_1	2'b10
+`define VectorMUX_2	2'b11
+
+//Values used in PSRBloack
+`define PSRMUX_Individual 1'b0
+`define PSRMUX_Databus 1'b1
+
+//Values used in TRAPBLock
+`define TableMUX_0 1'b0
+`define TableMUX_1 1'b1
+
 `endif
 
 
