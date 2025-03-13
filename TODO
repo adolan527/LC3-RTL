@@ -4,13 +4,12 @@ LC3.srcs/Controller/controller.v
 
 	126 	// TODO break into microsequencer, control store, and microinstruction
 	127 	// TODO implement RTI, TRAP, Interrupt, ACV, 1101
-	178 					case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+	179 					case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 
 LC3.srcs/Datapath/interrupt.v
 
 	25 	module stackPointer( //TODO verify
 	62 	module TRAPBlock(//TODO verify
-	91 				`VectorMUX_INTV: vectorMuxResult<=`INTV; //TODO define INTV
 	114 	module PSRBlock(//TODO complete
 
 LC3.srcs/Memory/addressControlLogic.v
