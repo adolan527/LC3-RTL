@@ -28,13 +28,17 @@ set "tb_replace_path=%folderName%"
 
 
 
+:: Copy template asm file, replace project name
+python naming.py %template_asm_path% %output_asm_path% %search_name% %replace_name% 
+:: update asm date
+python naming.py %output_asm_path% %output_asm_path% %asm_search_date% %asm_replace_date% 
 
-python naming.py %template_asm_path% %output_asm_path% %search_name% %replace_name%
-python naming.py %output_asm_path% %output_asm_path% %asm_search_date% %asm_replace_date%
+:: Copy template tb file, replace dir name
+python naming.py %template_tb_path% %output_tb_path% %tb_search_path% %tb_replace_path% 
+:: replace proj name
+python naming.py %output_tb_path% %output_tb_path% %search_name% %replace_name% 
 
-python naming.py %template_tb_path% %output_tb_path% %tb_search_path% %tb_replace_path%
-python naming.py %output_tb_path% %output_tb_path% %search_name% %replace_name%
+:: copy wcfg file, replace proj name
+python naming.py %template_wcfg_path% %output_wcfg_path% %search_name% %replace_name% 
 
-python naming.py %template_wcfg_path% %output_wcfg_path% %search_name% %replace_name%
-
-
+::set /p close=Press any key to quit:

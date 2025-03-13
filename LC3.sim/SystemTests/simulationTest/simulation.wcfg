@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="simulation_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="214.201 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="340"></NameColumnWidth>
+      <ValueColumnWidth column_width="125"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/simulation_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/reset_n" type="logic">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus268" type="vbus">
+      <obj_property name="label">INSTR</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/instruction[15]" type="logic">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/instruction[14]" type="logic">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/instruction[13]" type="logic">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/instruction[12]" type="logic">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">[12]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/currentState" type="array">
+      <obj_property name="ElementShortName">currentState[5:0]</obj_property>
+      <obj_property name="ObjectShortName">currentState[5:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/nextState" type="array">
+      <obj_property name="ElementShortName">nextState[5:0]</obj_property>
+      <obj_property name="ObjectShortName">nextState[5:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/programCounter_inst/PC" type="array">
+      <obj_property name="ElementShortName">PC[15:0]</obj_property>
+      <obj_property name="ObjectShortName">PC[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/memory_inst/MDR" type="array">
+      <obj_property name="ElementShortName">MDR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">MDR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/memory_inst/MAR" type="array">
+      <obj_property name="ElementShortName">MAR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">MAR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/dataBus" type="array">
+      <obj_property name="ElementShortName">dataBus[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dataBus[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/instruction" type="array">
+      <obj_property name="ElementShortName">instruction[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group53" type="group">
+      <obj_property name="label">marmux</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/MARmux_inst/addressSum" type="array">
+         <obj_property name="ElementShortName">addressSum[15:0]</obj_property>
+         <obj_property name="ObjectShortName">addressSum[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/MARmux_inst/result" type="array">
+         <obj_property name="ElementShortName">result[15:0]</obj_property>
+         <obj_property name="ObjectShortName">result[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/MARmux_inst/temp" type="array">
+         <obj_property name="ElementShortName">temp[15:0]</obj_property>
+         <obj_property name="ObjectShortName">temp[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/MARmux_inst/select" type="logic">
+         <obj_property name="ElementShortName">select</obj_property>
+         <obj_property name="ObjectShortName">select</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/MARmux_inst/GateMARmux" type="logic">
+         <obj_property name="ElementShortName">GateMARmux</obj_property>
+         <obj_property name="ObjectShortName">GateMARmux</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/registers" type="array">
+      <obj_property name="ElementShortName">registers[7:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">registers[7:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/top/first32mem" type="array">
+      <obj_property name="ElementShortName">first32mem[31:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">first32mem[31:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group21" type="group">
+      <obj_property name="label">ALU</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/ALU_inst/result" type="array">
+         <obj_property name="ElementShortName">result[15:0]</obj_property>
+         <obj_property name="ObjectShortName">result[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/ALU_inst/operand_A" type="array">
+         <obj_property name="ElementShortName">operand_A[15:0]</obj_property>
+         <obj_property name="ObjectShortName">operand_A[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/ALU_inst/operand_B" type="array">
+         <obj_property name="ElementShortName">operand_B[15:0]</obj_property>
+         <obj_property name="ObjectShortName">operand_B[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/ALU_inst/operationSelect" type="array">
+         <obj_property name="ElementShortName">operationSelect[1:0]</obj_property>
+         <obj_property name="ObjectShortName">operationSelect[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/ALU_inst/GateALU" type="logic">
+         <obj_property name="ElementShortName">GateALU</obj_property>
+         <obj_property name="ObjectShortName">GateALU</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group207" type="group">
+      <obj_property name="label">REG</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/SR1adr" type="array">
+         <obj_property name="ElementShortName">SR1adr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">SR1adr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/SR2adr" type="array">
+         <obj_property name="ElementShortName">SR2adr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">SR2adr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/DRadr" type="array">
+         <obj_property name="ElementShortName">DRadr[2:0]</obj_property>
+         <obj_property name="ObjectShortName">DRadr[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/LDREG" type="logic">
+         <obj_property name="ElementShortName">LDREG</obj_property>
+         <obj_property name="ObjectShortName">LDREG</obj_property>
+      </wvobject>
+      <wvobject fp_name="/simulation_tb/lc3_inst/datapath_inst/regFile_inst/enable" type="array">
+         <obj_property name="ElementShortName">enable[7:0]</obj_property>
+         <obj_property name="ObjectShortName">enable[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/simulation_tb/lc3_inst/controller_inst/PSR" type="array">
+      <obj_property name="ElementShortName">PSR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">PSR[15:0]</obj_property>
+   </wvobject>
+</wave_config>

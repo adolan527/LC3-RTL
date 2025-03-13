@@ -146,7 +146,7 @@ module controller(
 			end
 			FETCH_CHECK_ACV: begin //check ACV
 /* Begin default assignments */
- GateMDR <= 0; LDMAR <= 0; GateALU <= 0; GatePSR <= 0; LDCC <= 0; PSRMUX <= 0; LDMDR <= 0; LDPC <= 0; GateMARMUX <= 0; LDPriority <= 0; LDREG <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDIR <= 0; GatePC <= 0; LDSavedSSP <= 0; GateVector <= 0; LDACV <= 0; GateSP <= 0; LDVector <= 0; LDPriv <= 0; LDBEN <= 0; 
+ MIOEN <= 0; GateMDR <= 0; LDMAR <= 0; GateALU <= 0; GatePSR <= 0; LDCC <= 0; PSRMUX <= 0; LDMDR <= 0; LDPC <= 0; GateMARMUX <= 0; LDPriority <= 0; LDREG <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDIR <= 0; GatePC <= 0; LDSavedSSP <= 0; GateVector <= 0; LDACV <= 0; GateSP <= 0; LDVector <= 0; LDPriv <= 0; LDBEN <= 0; 
  /* End default assignments*/
 				if(ACV) nextState<=FETCH_ACV;
 				else nextState <= FETCH_AWAIT;
@@ -165,15 +165,16 @@ module controller(
 				GateMDR <= 1; LDIR <= 1; 
  
 /* Begin default assignments */
- GatePC1 <= 0; LDVector <= 0; GateMARMUX <= 0; GatePC <= 0; LDSavedSSP <= 0; LDPriority <= 0; LDBEN <= 0; GateALU <= 0; GateSP <= 0; LDCC <= 0; GateVector <= 0; LDMAR <= 0; LDACV <= 0; LDPriv <= 0; LDPC <= 0; LDSavedUSP <= 0; GatePSR <= 0; LDMDR <= 0; PSRMUX <= 0; LDREG <= 0; 
+MIOEN <= 0;  GatePC1 <= 0; LDVector <= 0; GateMARMUX <= 0; GatePC <= 0; LDSavedSSP <= 0; LDPriority <= 0; LDBEN <= 0; GateALU <= 0; GateSP <= 0; LDCC <= 0; GateVector <= 0; LDMAR <= 0; LDACV <= 0; LDPriv <= 0; LDPC <= 0; LDSavedUSP <= 0; GatePSR <= 0; LDMDR <= 0; PSRMUX <= 0; LDREG <= 0; 
  /* End default assignments*/
 
 				nextState<=DECODE_INSTR;
 			end
 			DECODE_INSTR: begin //BEN<−IR[11] & N + IR[10] & Z + IR[9] & P[IR[15:12]]
 				//BEN is continuously assigned from datapath.
+				LDBEN <= 1;
 /* Begin default assignments */
- GatePC1 <= 0; GateSP <= 0; LDMDR <= 0; GateMDR <= 0; GatePC <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; LDPriv <= 0; LDPC <= 0; GatePSR <= 0; PSRMUX <= 0; LDCC <= 0; LDVector <= 0; GateMARMUX <= 0; LDIR <= 0; LDACV <= 0; LDMAR <= 0; LDBEN <= 0; LDPriority <= 0; LDREG <= 0; GateVector <= 0; GateALU <= 0; 
+ MIOEN <= 0; GatePC1 <= 0; GateSP <= 0; LDMDR <= 0; GateMDR <= 0; GatePC <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; LDPriv <= 0; LDPC <= 0; GatePSR <= 0; PSRMUX <= 0; LDCC <= 0; LDVector <= 0; GateMARMUX <= 0; LDIR <= 0; LDACV <= 0; LDMAR <= 0; LDPriority <= 0; LDREG <= 0; GateVector <= 0; GateALU <= 0; 
  /* End default assignments*/
 				case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
 					`OPCODE_ADD		: 	nextState<=INSTR_ADD;
@@ -200,7 +201,7 @@ module controller(
 				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND; LDREG <= 1; LDCC<=1; GateALU <= 1; 
  
 /* Begin default assignments */
- GateMDR <= 0; GatePC <= 0; GateVector <= 0; LDACV <= 0; LDMAR <= 0; LDPriority <= 0; GatePC1 <= 0; LDSavedSSP <= 0; GateSP <= 0; GateMARMUX <= 0; PSRMUX <= 0; LDPriv <= 0; LDBEN <= 0; LDIR <= 0; LDVector <= 0; LDSavedUSP <= 0; LDPC <= 0; GatePSR <= 0; LDMDR <= 0; 
+ MIOEN <= 0; GateMDR <= 0; GatePC <= 0; GateVector <= 0; LDACV <= 0; LDMAR <= 0; LDPriority <= 0; GatePC1 <= 0; LDSavedSSP <= 0; GateSP <= 0; GateMARMUX <= 0; PSRMUX <= 0; LDPriv <= 0; LDBEN <= 0; LDIR <= 0; LDVector <= 0; LDSavedUSP <= 0; LDPC <= 0; GatePSR <= 0; LDMDR <= 0; 
  /* End default assignments*/
 
 				nextState<= FETCH;
@@ -209,7 +210,7 @@ module controller(
 				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND; LDREG <= 1; LDCC<=1; GateALU <= 1; 
  
 /* Begin default assignments */
- LDMDR <= 0; LDVector <= 0; LDSavedSSP <= 0; GateVector <= 0; GateMDR <= 0; PSRMUX <= 0; GatePC1 <= 0; GatePSR <= 0; LDSavedUSP <= 0; LDACV <= 0; LDMAR <= 0; GateSP <= 0; LDPC <= 0; LDIR <= 0; LDBEN <= 0; GatePC <= 0; LDPriv <= 0; GateMARMUX <= 0; LDPriority <= 0; 
+MIOEN <= 0; LDMDR <= 0; LDVector <= 0; LDSavedSSP <= 0; GateVector <= 0; GateMDR <= 0; PSRMUX <= 0; GatePC1 <= 0; GatePSR <= 0; LDSavedUSP <= 0; LDACV <= 0; LDMAR <= 0; GateSP <= 0; LDPC <= 0; LDIR <= 0; LDBEN <= 0; GatePC <= 0; LDPriv <= 0; GateMARMUX <= 0; LDPriority <= 0; 
  /* End default assignments*/
 
 				nextState<= FETCH;
@@ -218,7 +219,7 @@ module controller(
 				DRMUX <= `DRMUX_FIRST; SR1MUX <= `SR1MUX_SECOND; LDREG <= 1; LDCC<=1; GateALU <= 1; 
  
 /* Begin default assignments */
- GateVector <= 0; GatePSR <= 0; LDACV <= 0; LDVector <= 0; LDPriv <= 0; LDBEN <= 0; GateSP <= 0; LDMDR <= 0; LDPriority <= 0; PSRMUX <= 0; LDSavedUSP <= 0; LDIR <= 0; GateMDR <= 0; GatePC1 <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; LDMAR <= 0; GatePC <= 0; LDPC <= 0; 
+ MIOEN <= 0; GateVector <= 0; GatePSR <= 0; LDACV <= 0; LDVector <= 0; LDPriv <= 0; LDBEN <= 0; GateSP <= 0; LDMDR <= 0; LDPriority <= 0; PSRMUX <= 0; LDSavedUSP <= 0; LDIR <= 0; GateMDR <= 0; GatePC1 <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; LDMAR <= 0; GatePC <= 0; LDPC <= 0; 
  /* End default assignments*/
 
 				nextState<= FETCH;
@@ -228,7 +229,7 @@ module controller(
 				DRMUX <= `DRMUX_FIRST; ADDR1MUX <= `ADDR1MUX_PC ; ADDR2MUX <= `ADDR2MUX_OFFSET_9; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDREG <= 1; 
  
 /* Begin default assignments */
- LDCC <= 0; GateSP <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDPriority <= 0; LDBEN <= 0; GateVector <= 0; LDACV <= 0; GatePC <= 0; LDMDR <= 0; LDPriv <= 0; GatePSR <= 0; LDSavedSSP <= 0; GateALU <= 0; PSRMUX <= 0; LDMAR <= 0; LDPC <= 0; LDIR <= 0; LDVector <= 0; GatePC1 <= 0; 
+MIOEN <= 0;  LDCC <= 0; GateSP <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDPriority <= 0; LDBEN <= 0; GateVector <= 0; LDACV <= 0; GatePC <= 0; LDMDR <= 0; LDPriv <= 0; GatePSR <= 0; LDSavedSSP <= 0; GateALU <= 0; PSRMUX <= 0; LDMAR <= 0; LDPC <= 0; LDIR <= 0; LDVector <= 0; GatePC1 <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -237,7 +238,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- LDPC <= 0; LDVector <= 0; LDPriv <= 0; GatePC1 <= 0; GatePC <= 0; GatePSR <= 0; LDMDR <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDIR <= 0; GateSP <= 0; PSRMUX <= 0; LDREG <= 0; LDCC <= 0; LDSavedUSP <= 0; GateALU <= 0; GateMDR <= 0; GateVector <= 0; LDBEN <= 0; 
+MIOEN <= 0;  LDPC <= 0; LDVector <= 0; LDPriv <= 0; GatePC1 <= 0; GatePC <= 0; GatePSR <= 0; LDMDR <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDIR <= 0; GateSP <= 0; PSRMUX <= 0; LDREG <= 0; LDCC <= 0; LDSavedUSP <= 0; GateALU <= 0; GateMDR <= 0; GateVector <= 0; LDBEN <= 0; 
  /* End default assignments*/
 
 				nextState <= LOAD_CHECK_ACV;
@@ -247,7 +248,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- LDREG <= 0; LDIR <= 0; LDPC <= 0; LDCC <= 0; PSRMUX <= 0; GateVector <= 0; GatePC <= 0; GatePC1 <= 0; GateALU <= 0; LDPriv <= 0; LDSavedUSP <= 0; GateSP <= 0; LDVector <= 0; GatePSR <= 0; GateMDR <= 0; LDPriority <= 0; LDMDR <= 0; LDSavedSSP <= 0; LDBEN <= 0; 
+MIOEN <= 0;  LDREG <= 0; LDIR <= 0; LDPC <= 0; LDCC <= 0; PSRMUX <= 0; GateVector <= 0; GatePC <= 0; GatePC1 <= 0; GateALU <= 0; LDPriv <= 0; LDSavedUSP <= 0; GateSP <= 0; LDVector <= 0; GatePSR <= 0; GateMDR <= 0; LDPriority <= 0; LDMDR <= 0; LDSavedSSP <= 0; LDBEN <= 0; 
  /* End default assignments*/
 
 				nextState <= LOAD_CHECK_ACV;
@@ -257,7 +258,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- LDSavedSSP <= 0; LDCC <= 0; PSRMUX <= 0; GateMDR <= 0; GatePC1 <= 0; GateVector <= 0; LDVector <= 0; LDPriority <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPriv <= 0; GatePC <= 0; LDIR <= 0; GatePSR <= 0; LDREG <= 0; LDPC <= 0; LDMDR <= 0; LDBEN <= 0; GateALU <= 0; 
+MIOEN <= 0;  LDSavedSSP <= 0; LDCC <= 0; PSRMUX <= 0; GateMDR <= 0; GatePC1 <= 0; GateVector <= 0; LDVector <= 0; LDPriority <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPriv <= 0; GatePC <= 0; LDIR <= 0; GatePSR <= 0; LDREG <= 0; LDPC <= 0; LDMDR <= 0; LDBEN <= 0; GateALU <= 0; 
  /* End default assignments*/
 
 				nextState <= LDI_CHECK_ACV;
@@ -266,7 +267,7 @@ module controller(
 			LDI_CHECK_ACV: begin //check ACV
  
 /* Begin default assignments */
- LDACV <= 0; GatePSR <= 0; LDPC <= 0; GatePC1 <= 0; LDMDR <= 0; LDIR <= 0; GateALU <= 0; GateMDR <= 0; LDBEN <= 0; LDVector <= 0; LDSavedSSP <= 0; LDPriv <= 0; GatePC <= 0; GateVector <= 0; PSRMUX <= 0; LDCC <= 0; LDREG <= 0; LDSavedUSP <= 0; LDMAR <= 0; GateSP <= 0; GateMARMUX <= 0; LDPriority <= 0; 
+MIOEN <= 0;  LDACV <= 0; GatePSR <= 0; LDPC <= 0; GatePC1 <= 0; LDMDR <= 0; LDIR <= 0; GateALU <= 0; GateMDR <= 0; LDBEN <= 0; LDVector <= 0; LDSavedSSP <= 0; LDPriv <= 0; GatePC <= 0; GateVector <= 0; PSRMUX <= 0; LDCC <= 0; LDREG <= 0; LDSavedUSP <= 0; LDMAR <= 0; GateSP <= 0; GateMARMUX <= 0; LDPriority <= 0; 
  /* End default assignments*/
 
 				if(ACV) nextState<=LDI_ACV;
@@ -288,7 +289,7 @@ module controller(
 				LDMAR <= 1; GateMDR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- GatePC1 <= 0; GateVector <= 0; LDSavedSSP <= 0; GatePC <= 0; LDIR <= 0; GateMARMUX <= 0; LDMDR <= 0; PSRMUX <= 0; LDVector <= 0; LDPriority <= 0; LDBEN <= 0; GatePSR <= 0; LDPriv <= 0; LDREG <= 0; LDCC <= 0; LDPC <= 0; GateALU <= 0; GateSP <= 0; LDSavedUSP <= 0; 
+MIOEN <= 0;  GatePC1 <= 0; GateVector <= 0; LDSavedSSP <= 0; GatePC <= 0; LDIR <= 0; GateMARMUX <= 0; LDMDR <= 0; PSRMUX <= 0; LDVector <= 0; LDPriority <= 0; LDBEN <= 0; GatePSR <= 0; LDPriv <= 0; LDREG <= 0; LDCC <= 0; LDPC <= 0; GateALU <= 0; GateSP <= 0; LDSavedUSP <= 0; 
  /* End default assignments*/
 
 				nextState <= LOAD_CHECK_ACV;
@@ -298,7 +299,7 @@ module controller(
 
  
 /* Begin default assignments */
- LDBEN <= 0; LDPriority <= 0; LDPriv <= 0; LDIR <= 0; LDMAR <= 0; GateSP <= 0; GateVector <= 0; GateMARMUX <= 0; GatePC <= 0; LDREG <= 0; LDPC <= 0; GatePSR <= 0; LDMDR <= 0; GateALU <= 0; GatePC1 <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDACV <= 0; PSRMUX <= 0; LDSavedSSP <= 0; LDCC <= 0; LDVector <= 0; 
+MIOEN <= 0;  LDBEN <= 0; LDPriority <= 0; LDPriv <= 0; LDIR <= 0; LDMAR <= 0; GateSP <= 0; GateVector <= 0; GateMARMUX <= 0; GatePC <= 0; LDREG <= 0; LDPC <= 0; GatePSR <= 0; LDMDR <= 0; GateALU <= 0; GatePC1 <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDACV <= 0; PSRMUX <= 0; LDSavedSSP <= 0; LDCC <= 0; LDVector <= 0; 
  /* End default assignments*/
 
 				if(ACV) nextState<=LOAD_ACV;
@@ -320,7 +321,7 @@ module controller(
 				GateMDR <= 1; LDREG <= 1; DRMUX <= `DRMUX_FIRST; LDCC <= 1; 
  
 /* Begin default assignments */
- GatePSR <= 0; LDACV <= 0; LDIR <= 0; GatePC1 <= 0; GateSP <= 0; GatePC <= 0; LDSavedUSP <= 0; LDMDR <= 0; LDMAR <= 0; LDVector <= 0; GateVector <= 0; GateALU <= 0; GateMARMUX <= 0; LDPriority <= 0; LDPC <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDPriv <= 0; PSRMUX <= 0; 
+MIOEN <= 0;  GatePSR <= 0; LDACV <= 0; LDIR <= 0; GatePC1 <= 0; GateSP <= 0; GatePC <= 0; LDSavedUSP <= 0; LDMDR <= 0; LDMAR <= 0; LDVector <= 0; GateVector <= 0; GateALU <= 0; GateMARMUX <= 0; LDPriority <= 0; LDPC <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDPriv <= 0; PSRMUX <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -330,7 +331,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_PC ; ADDR2MUX <= `ADDR2MUX_OFFSET_9; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- GateSP <= 0; LDVector <= 0; LDMDR <= 0; GateALU <= 0; LDIR <= 0; PSRMUX <= 0; LDPriv <= 0; LDREG <= 0; LDPriority <= 0; GatePSR <= 0; GateMDR <= 0; LDBEN <= 0; GatePC1 <= 0; LDCC <= 0; LDSavedUSP <= 0; GateVector <= 0; GatePC <= 0; LDSavedSSP <= 0; LDPC <= 0; 
+MIOEN <= 0;  GateSP <= 0; LDVector <= 0; LDMDR <= 0; GateALU <= 0; LDIR <= 0; PSRMUX <= 0; LDPriv <= 0; LDREG <= 0; LDPriority <= 0; GatePSR <= 0; GateMDR <= 0; LDBEN <= 0; GatePC1 <= 0; LDCC <= 0; LDSavedUSP <= 0; GateVector <= 0; GatePC <= 0; LDSavedSSP <= 0; LDPC <= 0; 
  /* End default assignments*/
 
 				nextState <= STORE_CHECK_ACV;
@@ -340,7 +341,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_SR1 ; ADDR2MUX <= `ADDR2MUX_OFFSET_6; SR1MUX <= `SR1MUX_SECOND; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- LDSavedSSP <= 0; GateSP <= 0; GatePSR <= 0; GatePC1 <= 0; LDCC <= 0; LDVector <= 0; LDPriority <= 0; GateALU <= 0; GatePC <= 0; LDPC <= 0; LDBEN <= 0; LDPriv <= 0; GateVector <= 0; PSRMUX <= 0; LDIR <= 0; LDSavedUSP <= 0; LDMDR <= 0; GateMDR <= 0; LDREG <= 0; 
+MIOEN <= 0;  LDSavedSSP <= 0; GateSP <= 0; GatePSR <= 0; GatePC1 <= 0; LDCC <= 0; LDVector <= 0; LDPriority <= 0; GateALU <= 0; GatePC <= 0; LDPC <= 0; LDBEN <= 0; LDPriv <= 0; GateVector <= 0; PSRMUX <= 0; LDIR <= 0; LDSavedUSP <= 0; LDMDR <= 0; GateMDR <= 0; LDREG <= 0; 
  /* End default assignments*/
 
 				nextState <= STORE_CHECK_ACV;
@@ -350,7 +351,7 @@ module controller(
 				ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; MARMUX <= `MARMUX_ADR_SUM; GateMARMUX <= 1; LDMAR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- GatePC <= 0; LDPC <= 0; GateVector <= 0; GateSP <= 0; LDBEN <= 0; LDCC <= 0; LDMDR <= 0; LDREG <= 0; GateMDR <= 0; LDPriv <= 0; LDSavedUSP <= 0; GateALU <= 0; PSRMUX <= 0; LDIR <= 0; GatePSR <= 0; GatePC1 <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDVector <= 0; 
+MIOEN <= 0;  GatePC <= 0; LDPC <= 0; GateVector <= 0; GateSP <= 0; LDBEN <= 0; LDCC <= 0; LDMDR <= 0; LDREG <= 0; GateMDR <= 0; LDPriv <= 0; LDSavedUSP <= 0; GateALU <= 0; PSRMUX <= 0; LDIR <= 0; GatePSR <= 0; GatePC1 <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDVector <= 0; 
  /* End default assignments*/
 
 				nextState <= STI_CHECK_ACV;
@@ -360,7 +361,7 @@ module controller(
 
  
 /* Begin default assignments */
- LDMAR <= 0; LDPriority <= 0; GatePC <= 0; GateALU <= 0; GatePSR <= 0; LDMDR <= 0; LDPriv <= 0; LDREG <= 0; GateMARMUX <= 0; PSRMUX <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDIR <= 0; GatePC1 <= 0; LDSavedUSP <= 0; LDACV <= 0; GateSP <= 0; LDVector <= 0; LDPC <= 0; GateVector <= 0; LDCC <= 0; GateMDR <= 0; 
+MIOEN <= 0;  LDMAR <= 0; LDPriority <= 0; GatePC <= 0; GateALU <= 0; GatePSR <= 0; LDMDR <= 0; LDPriv <= 0; LDREG <= 0; GateMARMUX <= 0; PSRMUX <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDIR <= 0; GatePC1 <= 0; LDSavedUSP <= 0; LDACV <= 0; GateSP <= 0; LDVector <= 0; LDPC <= 0; GateVector <= 0; LDCC <= 0; GateMDR <= 0; 
  /* End default assignments*/
 
 				if(ACV) nextState<=STI_ACV;
@@ -382,7 +383,7 @@ module controller(
 				LDMAR <= 1; GateMDR <= 1; LDACV <= 1; 
  
 /* Begin default assignments */
- LDREG <= 0; GatePSR <= 0; LDMDR <= 0; GateALU <= 0; PSRMUX <= 0; LDIR <= 0; GateVector <= 0; LDBEN <= 0; GatePC1 <= 0; GateSP <= 0; GateMARMUX <= 0; LDPriv <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; GatePC <= 0; LDVector <= 0; LDCC <= 0; LDPriority <= 0; LDPC <= 0; 
+MIOEN <= 0;  LDREG <= 0; GatePSR <= 0; LDMDR <= 0; GateALU <= 0; PSRMUX <= 0; LDIR <= 0; GateVector <= 0; LDBEN <= 0; GatePC1 <= 0; GateSP <= 0; GateMARMUX <= 0; LDPriv <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; GatePC <= 0; LDVector <= 0; LDCC <= 0; LDPriority <= 0; LDPC <= 0; 
  /* End default assignments*/
 
 				nextState <= STORE_CHECK_ACV;
@@ -403,7 +404,7 @@ module controller(
 				RW <= 1; 
  
 /* Begin default assignments */
- GateMDR <= 0; GatePC <= 0; GateMARMUX <= 0; GatePSR <= 0; LDCC <= 0; LDIR <= 0; LDPriv <= 0; LDMDR <= 0; LDSavedSSP <= 0; LDACV <= 0; PSRMUX <= 0; LDMAR <= 0; GateSP <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDPC <= 0; LDREG <= 0; GateALU <= 0; GatePC1 <= 0; GateVector <= 0; LDVector <= 0; LDPriority <= 0; 
+MIOEN <= 0;  GateMDR <= 0; GatePC <= 0; GateMARMUX <= 0; GatePSR <= 0; LDCC <= 0; LDIR <= 0; LDPriv <= 0; LDMDR <= 0; LDSavedSSP <= 0; LDACV <= 0; PSRMUX <= 0; LDMAR <= 0; GateSP <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDPC <= 0; LDREG <= 0; GateALU <= 0; GatePC1 <= 0; GateVector <= 0; LDVector <= 0; LDPriority <= 0; 
  /* End default assignments*/
 
 				if(R) nextState<= FETCH;
@@ -413,13 +414,16 @@ module controller(
 			INSTR_BR: begin // check BEN
 				if(BEN) nextState <= BRANCH_EXECUTE;
 				else nextState <= FETCH;
+/* Begin default assignments */
+MIOEN <= 0;  GatePC1 <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; PSRMUX <= 0; GatePSR <= 0; LDMAR <= 0; LDVector <= 0; LDMDR <= 0; LDPriv <= 0; GateSP <= 0; GateMDR <= 0; LDCC <= 0; LDBEN <= 0; GateMARMUX <= 0; LDPriority <= 0; LDACV <= 0; GateALU <= 0; LDIR <= 0; LDREG <= 0; GatePC <= 0; GateVector <= 0; 
+ /* End default assignments*/
 			end
 			
 			BRANCH_EXECUTE: begin // PC <= PC + off9
 				LDPC <= 1; PCMUX <= `PCMUX_ADDR; ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_9; 
  
 /* Begin default assignments */
- GatePC1 <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; PSRMUX <= 0; GatePSR <= 0; LDMAR <= 0; LDVector <= 0; LDMDR <= 0; LDPriv <= 0; GateSP <= 0; GateMDR <= 0; LDCC <= 0; LDBEN <= 0; GateMARMUX <= 0; LDPriority <= 0; LDACV <= 0; GateALU <= 0; LDIR <= 0; LDREG <= 0; GatePC <= 0; GateVector <= 0; 
+MIOEN <= 0;  GatePC1 <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; PSRMUX <= 0; GatePSR <= 0; LDMAR <= 0; LDVector <= 0; LDMDR <= 0; LDPriv <= 0; GateSP <= 0; GateMDR <= 0; LDCC <= 0; LDBEN <= 0; GateMARMUX <= 0; LDPriority <= 0; LDACV <= 0; GateALU <= 0; LDIR <= 0; LDREG <= 0; GatePC <= 0; GateVector <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -429,7 +433,7 @@ module controller(
 				LDPC <= 1; PCMUX <= `PCMUX_ADDR; SR1MUX <= `SR1MUX_SECOND; ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0; 
  
 /* Begin default assignments */
- LDPriority <= 0; GateMDR <= 0; GatePSR <= 0; LDSavedUSP <= 0; LDMAR <= 0; PSRMUX <= 0; LDCC <= 0; GatePC1 <= 0; LDIR <= 0; LDPriv <= 0; LDSavedSSP <= 0; LDMDR <= 0; LDACV <= 0; GateALU <= 0; GateSP <= 0; LDVector <= 0; LDREG <= 0; LDBEN <= 0; GatePC <= 0; GateVector <= 0; GateMARMUX <= 0; 
+ MIOEN <= 0; LDPriority <= 0; GateMDR <= 0; GatePSR <= 0; LDSavedUSP <= 0; LDMAR <= 0; PSRMUX <= 0; LDCC <= 0; GatePC1 <= 0; LDIR <= 0; LDPriv <= 0; LDSavedSSP <= 0; LDMDR <= 0; LDACV <= 0; GateALU <= 0; GateSP <= 0; LDVector <= 0; LDREG <= 0; LDBEN <= 0; GatePC <= 0; GateVector <= 0; GateMARMUX <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -444,7 +448,7 @@ module controller(
 				DRMUX <= `DRMUX_SEVEN; LDREG <= 1; GatePC <= 1; LDPC <= 1; PCMUX <= `PCMUX_ADDR; SR1MUX <= `SR1MUX_SECOND; ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0; 
  
 /* Begin default assignments */
- LDVector <= 0; LDBEN <= 0; LDCC <= 0; LDPriv <= 0; GateALU <= 0; LDMAR <= 0; GatePC1 <= 0; PSRMUX <= 0; LDIR <= 0; GatePSR <= 0; GateMDR <= 0; LDMDR <= 0; LDPriority <= 0; GateVector <= 0; GateSP <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; LDSavedUSP <= 0; LDACV <= 0; 
+MIOEN <= 0;  LDVector <= 0; LDBEN <= 0; LDCC <= 0; LDPriv <= 0; GateALU <= 0; LDMAR <= 0; GatePC1 <= 0; PSRMUX <= 0; LDIR <= 0; GatePSR <= 0; GateMDR <= 0; LDMDR <= 0; LDPriority <= 0; GateVector <= 0; GateSP <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; LDSavedUSP <= 0; LDACV <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -454,7 +458,7 @@ module controller(
 				DRMUX <= `DRMUX_SEVEN; LDREG <= 1; GatePC <= 1; LDPC <= 1; PCMUX <= `PCMUX_ADDR; ADDR1MUX <= `ADDR1MUX_PC; ADDR2MUX <= `ADDR2MUX_OFFSET_11; 
  
 /* Begin default assignments */
- LDIR <= 0; LDSavedSSP <= 0; PSRMUX <= 0; LDCC <= 0; GatePSR <= 0; LDMAR <= 0; LDBEN <= 0; GatePC1 <= 0; LDPriv <= 0; GateALU <= 0; GateSP <= 0; LDMDR <= 0; LDSavedUSP <= 0; GateVector <= 0; LDVector <= 0; GateMARMUX <= 0; LDACV <= 0; GateMDR <= 0; LDPriority <= 0; 
+MIOEN <= 0;  LDIR <= 0; LDSavedSSP <= 0; PSRMUX <= 0; LDCC <= 0; GatePSR <= 0; LDMAR <= 0; LDBEN <= 0; GatePC1 <= 0; LDPriv <= 0; GateALU <= 0; GateSP <= 0; LDMDR <= 0; LDSavedUSP <= 0; GateVector <= 0; LDVector <= 0; GateMARMUX <= 0; LDACV <= 0; GateMDR <= 0; LDPriority <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -464,7 +468,7 @@ module controller(
 				MARMUX <= `MARMUX_ADR_SUM; LDMAR <= 1; ADDR1MUX <= `ADDR1MUX_SR1; ADDR2MUX <= `ADDR2MUX_OFFSET_0; SR1MUX <= `SR1MUX_SIX; 
  
 /* Begin default assignments */
- PSRMUX <= 0; LDMDR <= 0; LDIR <= 0; GateVector <= 0; LDREG <= 0; LDCC <= 0; LDPriority <= 0; GateSP <= 0; GatePSR <= 0; LDPC <= 0; GateMARMUX <= 0; GatePC1 <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDPriv <= 0; GateALU <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDACV <= 0; GatePC <= 0; LDVector <= 0; 
+MIOEN <= 0;  PSRMUX <= 0; LDMDR <= 0; LDIR <= 0; GateVector <= 0; LDREG <= 0; LDCC <= 0; LDPriority <= 0; GateSP <= 0; GatePSR <= 0; LDPC <= 0; GateMARMUX <= 0; GatePC1 <= 0; LDSavedUSP <= 0; GateMDR <= 0; LDPriv <= 0; GateALU <= 0; LDBEN <= 0; LDSavedSSP <= 0; LDACV <= 0; GatePC <= 0; LDVector <= 0; 
  /* End default assignments*/
 
 				if(PSR[15]) nextState <= RTI_EXCEPTION;
@@ -486,13 +490,16 @@ module controller(
 				GateMARMUX <= 0; LDMDR <= 0; MIOEN <= 0; //Disable
 				LDPC <= 1; PCMUX <= `PCMUX_BUS; GateMDR <= 1; 
 				nextState <= RTI_INC_R6;
+/* Begin default assignments */
+ LDACV <= 0; LDCC <= 0; LDVector <= 0; GateVector <= 0; GatePC1 <= 0; LDSavedUSP <= 0; GateALU <= 0; LDPC <= 0; LDBEN <= 0; GatePC <= 0; GatePSR <= 0; LDIR <= 0; LDMAR <= 0; LDREG <= 0; GateSP <= 0; GateMDR <= 0; LDPriority <= 0; PSRMUX <= 0; LDPriv <= 0; LDSavedSSP <= 0; 
+ /* End default assignments*/				
 			end
 			
 			RTI_INC_R6: begin // MAR <- SP + 1.  SP <- SP + 1
 				DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_INC; LDREG <= 1; GateSP <= 1; 
  
 /* Begin default assignments */
- GatePC <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDBEN <= 0; GateMDR <= 0; LDPriv <= 0; LDPriority <= 0; GatePSR <= 0; LDMDR <= 0; LDVector <= 0; LDMAR <= 0; GateALU <= 0; LDPC <= 0; GateMARMUX <= 0; LDACV <= 0; PSRMUX <= 0; LDCC <= 0; LDSavedSSP <= 0; GateVector <= 0; LDIR <= 0; 
+ MIOEN <= 0;GatePC <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDBEN <= 0; GateMDR <= 0; LDPriv <= 0; LDPriority <= 0; GatePSR <= 0; LDMDR <= 0; LDVector <= 0; LDMAR <= 0; GateALU <= 0; LDPC <= 0; GateMARMUX <= 0; LDACV <= 0; PSRMUX <= 0; LDCC <= 0; LDSavedSSP <= 0; GateVector <= 0; LDIR <= 0; 
  /* End default assignments*/
 
 				nextState <= RTI_FETCH_PSR;
@@ -513,7 +520,7 @@ module controller(
 				PSRMUX <= `PSRMUX_Databus; GateMDR <= 1; 
  
 /* Begin default assignments */
- LDIR <= 0; LDPC <= 0; LDBEN <= 0; GateMARMUX <= 0; LDPriority <= 0; GateSP <= 0; LDMAR <= 0; LDVector <= 0; LDSavedUSP <= 0; GatePSR <= 0; LDACV <= 0; LDMDR <= 0; LDREG <= 0; LDCC <= 0; LDPriv <= 0; LDSavedSSP <= 0; GateVector <= 0; GatePC <= 0; GatePC1 <= 0; GateALU <= 0; 
+MIOEN <= 0; LDIR <= 0; LDPC <= 0; LDBEN <= 0; GateMARMUX <= 0; LDPriority <= 0; GateSP <= 0; LDMAR <= 0; LDVector <= 0; LDSavedUSP <= 0; GatePSR <= 0; LDACV <= 0; LDMDR <= 0; LDREG <= 0; LDCC <= 0; LDPriv <= 0; LDSavedSSP <= 0; GateVector <= 0; GatePC <= 0; GatePC1 <= 0; GateALU <= 0; 
  /* End default assignments*/
 
 				nextState <= RTI_CHECK_MODE;
@@ -523,7 +530,7 @@ module controller(
 				DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_INC; LDREG <= 1; GateSP <= 1; 
  
 /* Begin default assignments */
- LDSavedSSP <= 0; GateALU <= 0; GateVector <= 0; LDCC <= 0; LDMAR <= 0; LDPC <= 0; GateMDR <= 0; LDMDR <= 0; LDPriority <= 0; GateMARMUX <= 0; GatePSR <= 0; LDBEN <= 0; GatePC <= 0; LDIR <= 0; LDVector <= 0; PSRMUX <= 0; LDACV <= 0; LDPriv <= 0; GatePC1 <= 0; LDSavedUSP <= 0; 
+MIOEN <= 0; LDSavedSSP <= 0; GateALU <= 0; GateVector <= 0; LDCC <= 0; LDMAR <= 0; LDPC <= 0; GateMDR <= 0; LDMDR <= 0; LDPriority <= 0; GateMARMUX <= 0; GatePSR <= 0; LDBEN <= 0; GatePC <= 0; LDIR <= 0; LDVector <= 0; PSRMUX <= 0; LDACV <= 0; LDPriv <= 0; GatePC1 <= 0; LDSavedUSP <= 0; 
  /* End default assignments*/
 
 				if(PSR[15]) nextState <= RTI_USER;
@@ -534,7 +541,7 @@ module controller(
 				LDSavedSSP <= 1; DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_USP; GateSP <= 1; LDREG <= 1; 
  
 /* Begin default assignments */
- LDSavedUSP <= 0; LDVector <= 0; GatePC1 <= 0; GatePC <= 0; LDACV <= 0; PSRMUX <= 0; GateVector <= 0; LDPriv <= 0; LDCC <= 0; GateALU <= 0; LDPriority <= 0; LDPC <= 0; LDMAR <= 0; GateMARMUX <= 0; LDMDR <= 0; LDBEN <= 0; LDIR <= 0; GateMDR <= 0; GatePSR <= 0; 
+ MIOEN <= 0;LDSavedUSP <= 0; LDVector <= 0; GatePC1 <= 0; GatePC <= 0; LDACV <= 0; PSRMUX <= 0; GateVector <= 0; LDPriv <= 0; LDCC <= 0; GateALU <= 0; LDPriority <= 0; LDPC <= 0; LDMAR <= 0; GateMARMUX <= 0; LDMDR <= 0; LDBEN <= 0; LDIR <= 0; GateMDR <= 0; GatePSR <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -544,7 +551,7 @@ module controller(
 
  
 /* Begin default assignments */
- LDMAR <= 0; GatePSR <= 0; LDMDR <= 0; GateMARMUX <= 0; LDSavedUSP <= 0; GateMDR <= 0; GatePC <= 0; LDPriv <= 0; LDSavedSSP <= 0; GateVector <= 0; GatePC1 <= 0; LDIR <= 0; LDPC <= 0; LDACV <= 0; LDCC <= 0; LDPriority <= 0; GateALU <= 0; LDBEN <= 0; LDVector <= 0; PSRMUX <= 0; GateSP <= 0; LDREG <= 0; 
+MIOEN <= 0; LDMAR <= 0; GatePSR <= 0; LDMDR <= 0; GateMARMUX <= 0; LDSavedUSP <= 0; GateMDR <= 0; GatePC <= 0; LDPriv <= 0; LDSavedSSP <= 0; GateVector <= 0; GatePC1 <= 0; LDIR <= 0; LDPC <= 0; LDACV <= 0; LDCC <= 0; LDPriority <= 0; GateALU <= 0; LDBEN <= 0; LDVector <= 0; PSRMUX <= 0; GateSP <= 0; LDREG <= 0; 
  /* End default assignments*/
 
 				nextState <= FETCH;
@@ -554,7 +561,7 @@ module controller(
 TableMUX <= `TableMUX_1; LDVector <= 1; VectorMUX <= `VectorMUX_0; GatePSR <= 1; LDMDR <= 1; LDPriv <= 1; SETPRIV <= 0; PSRMUX <= `PSRMUX_Databus; 
  
 /* Begin default assignments */
- LDPriority <= 0; GateALU <= 0; GateVector <= 0; GateMDR <= 0; GatePC1 <= 0; LDIR <= 0; LDSavedSSP <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDMAR <= 0; GateSP <= 0; GatePC <= 0; LDCC <= 0; GateMARMUX <= 0; LDACV <= 0; LDPC <= 0; LDREG <= 0; 
+MIOEN <= 0; LDPriority <= 0; GateALU <= 0; GateVector <= 0; GateMDR <= 0; GatePC1 <= 0; LDIR <= 0; LDSavedSSP <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDMAR <= 0; GateSP <= 0; GatePC <= 0; LDCC <= 0; GateMARMUX <= 0; LDACV <= 0; LDPC <= 0; LDREG <= 0; 
  /* End default assignments*/
 
 				nextState <= SWITCH_SP;
@@ -565,7 +572,7 @@ TableMUX <= `TableMUX_1; LDVector <= 1; VectorMUX <= `VectorMUX_0; GatePSR <= 1;
 TableMUX <= `TableMUX_0; PCMUX <= `PCMUX_INC; LDPC <= 1; GatePSR <= 1; LDMDR <= 1; LDVector <= 1; 
  
 /* Begin default assignments */
- LDCC <= 0; LDIR <= 0; PSRMUX <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPriority <= 0; GatePC <= 0; GateVector <= 0; GatePC1 <= 0; LDREG <= 0; LDMAR <= 0; GateMARMUX <= 0; LDACV <= 0; LDPriv <= 0; LDBEN <= 0; GateMDR <= 0; GateALU <= 0; LDSavedSSP <= 0; 
+MIOEN <= 0; LDCC <= 0; LDIR <= 0; PSRMUX <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPriority <= 0; GatePC <= 0; GateVector <= 0; GatePC1 <= 0; LDREG <= 0; LDMAR <= 0; GateMARMUX <= 0; LDACV <= 0; LDPriv <= 0; LDBEN <= 0; GateMDR <= 0; GateALU <= 0; LDSavedSSP <= 0; 
  /* End default assignments*/
 
 				nextState <= TRAP_VECTOR;
@@ -576,7 +583,7 @@ TableMUX <= `TableMUX_0; PCMUX <= `PCMUX_INC; LDPC <= 1; GatePSR <= 1; LDMDR <= 
 SETPRIV <= 0; LDPriv <= 1; MARMUX <= `MARMUX_INSTR; LDVector <= 1; TableMUX <= `TableMUX_0; 
  
 /* Begin default assignments */
- GateSP <= 0; PSRMUX <= 0; LDMAR <= 0; LDBEN <= 0; LDIR <= 0; GatePC <= 0; LDMDR <= 0; GateMARMUX <= 0; GateALU <= 0; LDPC <= 0; LDSavedSSP <= 0; GatePSR <= 0; GateMDR <= 0; LDREG <= 0; GatePC1 <= 0; LDACV <= 0; LDCC <= 0; GateVector <= 0; LDPriority <= 0; LDSavedUSP <= 0; 
+MIOEN <= 0; GateSP <= 0; PSRMUX <= 0; LDMAR <= 0; LDBEN <= 0; LDIR <= 0; GatePC <= 0; LDMDR <= 0; GateMARMUX <= 0; GateALU <= 0; LDPC <= 0; LDSavedSSP <= 0; GatePSR <= 0; GateMDR <= 0; LDREG <= 0; GatePC1 <= 0; LDACV <= 0; LDCC <= 0; GateVector <= 0; LDPriority <= 0; LDSavedUSP <= 0; 
  /* End default assignments*/
 
 				if(PSR[15]) nextState <= SWITCH_SP;
@@ -587,7 +594,7 @@ SETPRIV <= 0; LDPriv <= 1; MARMUX <= `MARMUX_INSTR; LDVector <= 1; TableMUX <= `
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_1; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- LDACV <= 0; GateMARMUX <= 0; LDCC <= 0; LDVector <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDMAR <= 0; LDPriority <= 0; GateMDR <= 0; LDBEN <= 0; GateALU <= 0; LDPC <= 0; GateVector <= 0; LDIR <= 0; GatePC <= 0; LDREG <= 0; GateSP <= 0; 
+MIOEN <= 0; LDACV <= 0; GateMARMUX <= 0; LDCC <= 0; LDVector <= 0; LDSavedSSP <= 0; LDSavedUSP <= 0; GatePC1 <= 0; LDMAR <= 0; LDPriority <= 0; GateMDR <= 0; LDBEN <= 0; GateALU <= 0; LDPC <= 0; GateVector <= 0; LDIR <= 0; GatePC <= 0; LDREG <= 0; GateSP <= 0; 
  /* End default assignments*/
 				if(PSR[15]) nextState <= SWITCH_SP;
 				else nextState <= PUSH_PSR_0;
@@ -597,7 +604,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_1; LDMDR <= 1; GatePSR <= 1; SE
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_INTV; LDPriority <= 1; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- LDSavedSSP <= 0; GatePC1 <= 0; LDMAR <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPC <= 0; LDBEN <= 0; LDIR <= 0; GateMARMUX <= 0; LDVector <= 0; GateVector <= 0; GateALU <= 0; GateMDR <= 0; LDCC <= 0; LDACV <= 0; LDREG <= 0; GatePC <= 0; 
+MIOEN <= 0; LDSavedSSP <= 0; GatePC1 <= 0; LDMAR <= 0; GateSP <= 0; LDSavedUSP <= 0; LDPC <= 0; LDBEN <= 0; LDIR <= 0; GateMARMUX <= 0; LDVector <= 0; GateVector <= 0; GateALU <= 0; GateMDR <= 0; LDCC <= 0; LDACV <= 0; LDREG <= 0; GatePC <= 0; 
  /* End default assignments*/
 				if(PSR[15]) nextState <= SWITCH_SP;
 				else nextState <= PUSH_PSR_0;
@@ -608,7 +615,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_INTV; LDPriority <= 1; LDMDR <=
 LDSavedSSP <= 1; DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_USP; GateSP <= 1; LDREG <= 1; 
  
 /* Begin default assignments */
- LDACV <= 0; GateMDR <= 0; PSRMUX <= 0; GatePC1 <= 0; GatePSR <= 0; GateMARMUX <= 0; LDCC <= 0; GatePC <= 0; LDBEN <= 0; LDPC <= 0; LDPriv <= 0; LDMAR <= 0; LDVector <= 0; LDPriority <= 0; GateALU <= 0; LDMDR <= 0; LDIR <= 0; GateVector <= 0; LDSavedUSP <= 0; 
+MIOEN <= 0; LDACV <= 0; GateMDR <= 0; PSRMUX <= 0; GatePC1 <= 0; GatePSR <= 0; GateMARMUX <= 0; LDCC <= 0; GatePC <= 0; LDBEN <= 0; LDPC <= 0; LDPriv <= 0; LDMAR <= 0; LDVector <= 0; LDPriority <= 0; GateALU <= 0; LDMDR <= 0; LDIR <= 0; GateVector <= 0; LDSavedUSP <= 0; 
  /* End default assignments*/
 
 				nextState <= PUSH_PSR_0;
@@ -618,7 +625,7 @@ LDSavedSSP <= 1; DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_USP
 SPMUX <= `SPMUX_DEC; GateSP <= 1; LDREG <= 1; LDMAR <= 1; 
  
 /* Begin default assignments */
- LDSavedUSP <= 0; LDCC <= 0; LDBEN <= 0; PSRMUX <= 0; GatePC <= 0; GateMDR <= 0; GatePSR <= 0; GatePC1 <= 0; LDPriv <= 0; LDMDR <= 0; GateALU <= 0; LDPC <= 0; LDPriority <= 0; GateVector <= 0; LDACV <= 0; LDVector <= 0; LDIR <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; 
+ MIOEN <= 0;LDSavedUSP <= 0; LDCC <= 0; LDBEN <= 0; PSRMUX <= 0; GatePC <= 0; GateMDR <= 0; GatePSR <= 0; GatePC1 <= 0; LDPriv <= 0; LDMDR <= 0; GateALU <= 0; LDPC <= 0; LDPriority <= 0; GateVector <= 0; LDACV <= 0; LDVector <= 0; LDIR <= 0; LDSavedSSP <= 0; GateMARMUX <= 0; 
  /* End default assignments*/
 				nextState <= PUSH_PSR_1	;
 			end
@@ -637,7 +644,7 @@ MIOEN <= 1;
 GatePC1 <= 1; LDMDR <= 1; 
  
 /* Begin default assignments */
- PSRMUX <= 0; LDBEN <= 0; LDPC <= 0; LDSavedUSP <= 0; GateSP <= 0; LDREG <= 0; GateVector <= 0; LDSavedSSP <= 0; GateMDR <= 0; LDVector <= 0; LDCC <= 0; LDPriority <= 0; GatePSR <= 0; LDACV <= 0; LDIR <= 0; LDPriv <= 0; GatePC <= 0; GateALU <= 0; GateMARMUX <= 0; LDMAR <= 0; 
+MIOEN <= 0; PSRMUX <= 0; LDBEN <= 0; LDPC <= 0; LDSavedUSP <= 0; GateSP <= 0; LDREG <= 0; GateVector <= 0; LDSavedSSP <= 0; GateMDR <= 0; LDVector <= 0; LDCC <= 0; LDPriority <= 0; GatePSR <= 0; LDACV <= 0; LDIR <= 0; LDPriv <= 0; GatePC <= 0; GateALU <= 0; GateMARMUX <= 0; LDMAR <= 0; 
  /* End default assignments*/
 				nextState <= PUSH_PC_1;
 			end
@@ -646,7 +653,7 @@ GatePC1 <= 1; LDMDR <= 1;
 DRMUX <= `DRMUX_SIX; SR1MUX <= `SR1MUX_SIX; SPMUX <= `SPMUX_DEC; LDREG <= 1; GateSP <= 1; 
  
 /* Begin default assignments */
- LDBEN <= 0; GatePC1 <= 0; PSRMUX <= 0; LDACV <= 0; LDCC <= 0; LDMDR <= 0; LDPriority <= 0; LDMAR <= 0; GateMDR <= 0; GateVector <= 0; LDVector <= 0; GatePSR <= 0; LDSavedUSP <= 0; GateMARMUX <= 0; GatePC <= 0; LDPriv <= 0; LDPC <= 0; LDIR <= 0; GateALU <= 0; LDSavedSSP <= 0; 
+MIOEN <= 0; LDBEN <= 0; GatePC1 <= 0; PSRMUX <= 0; LDACV <= 0; LDCC <= 0; LDMDR <= 0; LDPriority <= 0; LDMAR <= 0; GateMDR <= 0; GateVector <= 0; LDVector <= 0; GatePSR <= 0; LDSavedUSP <= 0; GateMARMUX <= 0; GatePC <= 0; LDPriv <= 0; LDPC <= 0; LDIR <= 0; GateALU <= 0; LDSavedSSP <= 0; 
  /* End default assignments*/
 				nextState <= PUSH_PC_2;
 			end
@@ -665,7 +672,7 @@ MIOEN <= 1;
 GateVector <= 1; LDMAR <= 1; 
  
 /* Begin default assignments */
- GateMDR <= 0; LDIR <= 0; GateMARMUX <= 0; LDSavedSSP <= 0; GateSP <= 0; LDBEN <= 0; LDACV <= 0; LDSavedUSP <= 0; LDPC <= 0; LDPriv <= 0; LDREG <= 0; GatePSR <= 0; GateALU <= 0; PSRMUX <= 0; LDPriority <= 0; LDCC <= 0; LDMDR <= 0; LDVector <= 0; GatePC1 <= 0; GatePC <= 0; 
+ MIOEN <= 0;GateMDR <= 0; LDIR <= 0; GateMARMUX <= 0; LDSavedSSP <= 0; GateSP <= 0; LDBEN <= 0; LDACV <= 0; LDSavedUSP <= 0; LDPC <= 0; LDPriv <= 0; LDREG <= 0; GatePSR <= 0; GateALU <= 0; PSRMUX <= 0; LDPriority <= 0; LDCC <= 0; LDMDR <= 0; LDVector <= 0; GatePC1 <= 0; GatePC <= 0; 
  /* End default assignments*/
 				nextState <= VECTOR_READ;
 			end
@@ -684,7 +691,7 @@ LDMDR <= 1; MIOEN <= 1;
 LDPC <= 1; GateMDR <= 1; PCMUX <= `PCMUX_BUS; 
  
 /* Begin default assignments */
- LDPriv <= 0; LDMDR <= 0; LDSavedSSP <= 0; GatePC1 <= 0; LDBEN <= 0; GateMARMUX <= 0; GateALU <= 0; PSRMUX <= 0; LDACV <= 0; LDREG <= 0; LDVector <= 0; GateSP <= 0; GatePSR <= 0; LDIR <= 0; LDSavedUSP <= 0; GatePC <= 0; LDMAR <= 0; LDPriority <= 0; GateVector <= 0; LDCC <= 0; 
+ MIOEN <= 0;LDPriv <= 0; LDMDR <= 0; LDSavedSSP <= 0; GatePC1 <= 0; LDBEN <= 0; GateMARMUX <= 0; GateALU <= 0; PSRMUX <= 0; LDACV <= 0; LDREG <= 0; LDVector <= 0; GateSP <= 0; GatePSR <= 0; LDIR <= 0; LDSavedUSP <= 0; GatePC <= 0; LDMAR <= 0; LDPriority <= 0; GateVector <= 0; LDCC <= 0; 
  /* End default assignments*/
 				nextState <= FETCH;
 			end
@@ -693,7 +700,7 @@ LDPC <= 1; GateMDR <= 1; PCMUX <= `PCMUX_BUS;
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- GateALU <= 0; GateVector <= 0; LDBEN <= 0; LDCC <= 0; GatePC <= 0; LDIR <= 0; LDSavedUSP <= 0; LDREG <= 0; GateMDR <= 0; GatePC1 <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDPC <= 0; LDVector <= 0; LDMAR <= 0; LDACV <= 0; GateSP <= 0; GateMARMUX <= 0; 
+ MIOEN <= 0;GateALU <= 0; GateVector <= 0; LDBEN <= 0; LDCC <= 0; GatePC <= 0; LDIR <= 0; LDSavedUSP <= 0; LDREG <= 0; GateMDR <= 0; GatePC1 <= 0; LDPriority <= 0; LDSavedSSP <= 0; LDPC <= 0; LDVector <= 0; LDMAR <= 0; LDACV <= 0; GateSP <= 0; GateMARMUX <= 0; 
  /* End default assignments*/
 				nextState <= SWITCH_SP;
 			end
@@ -702,7 +709,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SE
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- GateMARMUX <= 0; GateVector <= 0; LDVector <= 0; LDPC <= 0; LDREG <= 0; LDIR <= 0; LDSavedSSP <= 0; GateSP <= 0; GateALU <= 0; LDMAR <= 0; LDACV <= 0; LDPriority <= 0; GatePC <= 0; LDSavedUSP <= 0; GatePC1 <= 0; GateMDR <= 0; LDBEN <= 0; LDCC <= 0; 
+MIOEN <= 0; GateMARMUX <= 0; GateVector <= 0; LDVector <= 0; LDPC <= 0; LDREG <= 0; LDIR <= 0; LDSavedSSP <= 0; GateSP <= 0; GateALU <= 0; LDMAR <= 0; LDACV <= 0; LDPriority <= 0; GatePC <= 0; LDSavedUSP <= 0; GatePC1 <= 0; GateMDR <= 0; LDBEN <= 0; LDCC <= 0; 
  /* End default assignments*/
 				nextState <= SWITCH_SP;
 			end
@@ -711,7 +718,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SE
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- GatePC1 <= 0; GateMDR <= 0; LDMAR <= 0; LDBEN <= 0; GatePC <= 0; LDREG <= 0; LDPC <= 0; GateSP <= 0; GateALU <= 0; LDIR <= 0; LDCC <= 0; LDVector <= 0; LDPriority <= 0; GateVector <= 0; GateMARMUX <= 0; LDACV <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; 
+MIOEN <= 0; GatePC1 <= 0; GateMDR <= 0; LDMAR <= 0; LDBEN <= 0; GatePC <= 0; LDREG <= 0; LDPC <= 0; GateSP <= 0; GateALU <= 0; LDIR <= 0; LDCC <= 0; LDVector <= 0; LDPriority <= 0; GateVector <= 0; GateMARMUX <= 0; LDACV <= 0; LDSavedUSP <= 0; LDSavedSSP <= 0; 
  /* End default assignments*/
 				nextState <= SWITCH_SP;
 			end
@@ -721,7 +728,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SE
  
 /* Begin default assignments */
  LDSavedSSP <= 0; GatePC <= 0; GateMARMUX <= 0; LDSavedUSP <= 0; GateVector <= 0; GateALU <= 0; LDPriority <= 0; LDPC <= 0; GatePC1 <= 0; LDVector <= 0; LDBEN <= 0; LDCC <= 0; LDACV <= 0; LDREG <= 0; LDIR <= 0; GateSP <= 0; LDMAR <= 0; GateMDR <= 0; 
- /* End default assignments*/
+MIOEN <= 0; /* End default assignments*/
 				nextState <= SWITCH_SP;
 			end
 			
@@ -730,7 +737,7 @@ TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SE
 TableMUX <= `TableMUX_1; VectorMUX <= `VectorMUX_2; LDMDR <= 1; GatePSR <= 1; SETPRIV <= 0; LDPriv <= 1; PSRMUX <= `PSRMUX_Individual; 
  
 /* Begin default assignments */
- LDMAR <= 0; LDSavedSSP <= 0; GatePC <= 0; LDIR <= 0; GateSP <= 0; GateALU <= 0; LDVector <= 0; GateMARMUX <= 0; LDREG <= 0; LDPC <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDCC <= 0; GateMDR <= 0; GatePC1 <= 0; LDACV <= 0; LDPriority <= 0; GateVector <= 0; 
+MIOEN <= 0; LDMAR <= 0; LDSavedSSP <= 0; GatePC <= 0; LDIR <= 0; GateSP <= 0; GateALU <= 0; LDVector <= 0; GateMARMUX <= 0; LDREG <= 0; LDPC <= 0; LDBEN <= 0; LDSavedUSP <= 0; LDCC <= 0; GateMDR <= 0; GatePC1 <= 0; LDACV <= 0; LDPriority <= 0; GateVector <= 0; 
  /* End default assignments*/
 				nextState <= SWITCH_SP;
 			end

@@ -1,8 +1,10 @@
 `timescale 1ns / 1ps
 
-`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/state.csv"
-`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/memDump.hex"
-`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/main.hex"
+`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/state.csv" // write program state every instruction
+`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/verilog_memDump.hex" // dump memory after test
+`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/main.hex" // load hex-ified obj file
+`define TRACE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/verilog_trace.hex" // pennsim style trace
+
 
 module REPLACENAMEHERE_tb();
 
@@ -15,7 +17,8 @@ reg[15:0] registers[7:0];
 reg[15:0] mem[`MEMORY_WORDCOUNT-1:0];
 reg[15:0] first32mem[31:0];
 wire [15:0] instruction;
-wire [15:0] PSR;
+wire [15:0] PSR, PC, dataBus, MAR, MDR;
+wire LDREG, MIOEN;
 
 lc3 #(.MEMORY_INIT_FILE(`MEMLOAD_PATH)) lc3_inst( //instantiation 
  .clk(clk),.reset_n(reset_n),
@@ -24,7 +27,14 @@ lc3 #(.MEMORY_INIT_FILE(`MEMLOAD_PATH)) lc3_inst( //instantiation
  .debugInstruction(instruction),
  .debugCurrentState(currentState),
  .debugNextState(nextState),
- .debugPSR(PSR));
+ .debugPSR(PSR),
+ .debugPC(PC),
+ .debugDatabus(dataBus),
+ .debugMARRead(MAR),
+ .debugMDRRead(MDR),
+ .debugLDREG(LDREG),
+ .debugMIOEN(MIOEN)
+ );
 
 always #5 clk = ~clk; //clock
 
@@ -43,16 +53,17 @@ generate
 endgenerate
 
 
-integer file;
+integer state_file;
+integer pennsim_trace_file;
 
 // **Initial Task: Runs at the Beginning of Simulation**
 task write_initial;
     begin
-        file = $fopen(`STATE_PATH, "w"); // Open file in write mode (overwrite old content)
+        state_file = $fopen(`STATE_PATH, "w"); // Open file in write mode (overwrite old content)
         
-        if (file) begin
-            $fwrite(file, "INSTRUCTION, CurrentState, NextState, PSR, R0, R1, R2, R3, R4, R5, R6, R7\n"); // Write header
-            $fclose(file); // Close file after writing
+        if (state_file) begin
+            $fwrite(state_file, "INSTRUCTION, NextState, PC, PSR, R0, R1, R2, R3, R4, R5, R6, R7\n"); // Write header
+            $fclose(state_file); // Close file after writing
         end
         else begin
             $display("Error: Could not open output.csv");
@@ -60,16 +71,16 @@ task write_initial;
     end
 endtask
 
-// **Update Task: Runs Periodically During Simulation**
+// **Update Task: Runs before each fetch During Simulation**
 task write_update;
     begin
-        file = $fopen(`STATE_PATH, "a"); // Open file in append mode
+        state_file = $fopen(`STATE_PATH, "a"); // Open file in append mode
         
-        if (file) begin
-            $fwrite(file, "%h, %h, %h, %h, %h, %h, %h, %h, %h, %h, %h, %h\n",
-                    instruction, currentState, nextState, PSR,registers[0], registers[1], registers[2], registers[3], 
+        if (state_file) begin
+            $fwrite(state_file, "%h, %h, %h, %h, %h, %h, %h, %h, %h, %h, %h, %h\n",
+                    instruction, nextState, PC, PSR,registers[0], registers[1], registers[2], registers[3], 
                     registers[4], registers[5], registers[6], registers[7]);
-            $fclose(file); // Close file after writing
+            $fclose(state_file); // Close file after writing
         end
         else begin
             $display("Error: Could not open output.txt");
@@ -84,9 +95,37 @@ task write_final;
     end
 endtask
 
+
+
+
+/*
+(1) PC, - PC
+(2) current insn, INSTR
+(3) regfile write-enable, LDREG
+(4) regfile data in, dataBus & LDREG
+(5) data memory write-enable, MIOEN
+(6) data memory address, MAR
+(7) data memory data in, MDR
+*/
+
+reg [15:0] lastRegisterInput; //stores the last input to the regfile during this instruction
+
+task pennsim_trace;
+	begin
+	pennsim_trace_file = $fopen(`TRACE_PATH, "a"); // Open file in append mode		
+	$fwrite(pennsim_trace_file, "%h %h %h %h %h %h %h\n",
+                    PC, instruction, LDREG, lastRegisterInput, MIOEN, MAR, MDR);
+	lastRegisterInput = 0;
+	$fclose(pennsim_trace_file);	
+	end
+endtask
+
+
 always@(*)begin //writes to file the program state every fetch command
+	if(LDREG) lastRegisterInput = dataBus;
 	if(nextState == 6'd18) begin //FETCH
 		write_update();
+		pennsim_trace();
 	end
 end
 

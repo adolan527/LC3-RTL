@@ -88,7 +88,7 @@ module TRAPBlock(//TODO verify
 	
 	always@(*)begin
 		case(VectorMUX)
-			`VectorMUX_INTV: vectorMuxResult<=`INTV; //TODO define INTV
+			`VectorMUX_INTV: vectorMuxResult<= INTV; 
 			`VectorMUX_0: vectorMuxResult<= 16'b0;
 			`VectorMUX_1: vectorMuxResult<= 16'b1;
 			`VectorMUX_2: vectorMuxResult<= 16'b10;

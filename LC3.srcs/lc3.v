@@ -29,6 +29,14 @@ module lc3
 	output [15:0] debugInstruction,
 	output [5:0] debugCurrentState, debugNextState,
 	output [15:0] debugPSR,
+	output [15:0] debugPC,
+	output [15:0] debugDatabus,
+	output [15:0] debugMARRead,
+	output [15:0] debugMDRRead,
+	output debugLDREG,
+	output debugMIOEN,
+	output debugRW,
+	
 
 
 	
@@ -43,6 +51,9 @@ wire  INT, R, BEN, ACV, clk, reset_n;
 wire[15:0]  instruction;
 assign debugInstruction = instruction;
 assign debugPSR = PSR;
+assign debugLDREG = LDREG;
+assign debugMIOEN = MIOEN;
+assign debugRW = RW;
 wire[15:0]  PSR;
 wire GatePC1, SetPriv, RW, MIOEN, PSRMUX, TableMUX, MARMUX, ADDR1MUX, GateSP, GatePSR, LDMAR, GateVector, GateMARMUX, GateALU, GatePC, LDMDR, LDIR, LDBEN, LDREG, LDCC, LDPC, LDPriv, LDPriority, LDSavedSSP, LDSavedUSP, LDACV, LDVector, GateMD, R;
 wire[1:0] ADDR2MUX, SPMUX, VectorMUX, ALUK, SR1MUX, DRMUX, PCMUX;
@@ -149,7 +160,11 @@ datapath #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) datapath_inst(
  .INTV(INTV),
  
  .debugMemoryRead(debugMemoryRead),
- .debugRegRead(debugRegRead)
+ .debugRegRead(debugRegRead),
+ .debugPC(debugPC),
+ .debugDatabus(debugDatabus),
+ .debugMARRead(debugMARRead),
+ .debugMDRRead(debugMDRRead)
  );
 
 

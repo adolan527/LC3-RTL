@@ -42,8 +42,8 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 	end
 	
 	always@(*) begin
-		if(GatePC) result<=PC; 
-		else if(GatePC1) result <= PC;
+		if(GatePC) result <= PC; 
+		else if(GatePC1) result <= PC - 1;
 		else result<={16'bz};
 		addressAdder <= PC;
 	end

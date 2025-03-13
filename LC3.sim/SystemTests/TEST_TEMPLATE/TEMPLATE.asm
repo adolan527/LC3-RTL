@@ -1,10 +1,11 @@
 ; Test: REPLACENAMEHERE 
 ; Created: REPLACEDATEHERE
 
-.ORIGx0000 
+.ORIG x0000 
 	; Start code here 
 	 
 	 
+	; Define constants here 
+ 
 	 
 .END 
-	; Define constants here 

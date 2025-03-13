@@ -37,12 +37,21 @@ module datapath
 	output [15:0] PSR, instruction, foreignDisplayOutput,
 	
 	output [16 * 8 -1:0] debugRegRead,
-	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead
+	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead,
+	output [15:0] debugPC,
+	output [15:0] debugDatabus,
+	output [15:0] debugMARRead,
+	output [15:0] debugMDRRead
     );
+	assign debugPC = PC;
+	assign debugDatabus = dataBus;
     wire[15:0] dataBus, PC, SR1, SR2, SR2premux, addressSum; 
 	wire[2:0] SR1adr, SR2adr, DRadr;
 	wire[1:0] ALUK;
 	wire N, Z, P;
+	assign N = PSR[2];
+	assign Z = PSR[1];
+	assign P = PSR[0];
 	
 	wire[3:0] priorityLevel;
 	assign ALUK = instruction[15:14];
@@ -66,7 +75,7 @@ instructionRegister instructionRegister_inst(
 	.data(dataBus),.clk(clk),.reset_n(reset_n),.instruction(instruction),.enable(LDIR));
 
 programCounter programCounter_inst(
-	.pcMux(PCMUX),.bus(dataBus),.adder(addressSum),.clk(clk),.reset_n(reset_n),.GatePC(GatePC),.result(dataBus),.addressAdder(PC),.LDPC(LDPC));
+	.pcMux(PCMUX),.bus(dataBus),.adder(addressSum),.clk(clk),.reset_n(reset_n),.GatePC(GatePC),.result(dataBus),.addressAdder(PC),.LDPC(LDPC),.GatePC1(GatePC1));
 	
 ALU ALU_inst(
 	.operand_A(SR1),.operand_B(SR2),.operationSelect(ALUK),.GateALU(GateALU),.result(dataBus));
@@ -75,9 +84,28 @@ address address_inst(
 	.SR1(SR1),.PC(PC),.instruction(instruction),.result(addressSum),.ADDR1MUX(ADDR1MUX),.ADDR2MUX(ADDR2MUX));
 	
 regFile regFile_inst(
-	.data(dataBus),.DRadr(DRadr),.LDREG(LDREG),.SR1adr(SR1adr),.SR2adr(SR2adr),.clk(clk),.reset_n(reset_n),.SR1out(SR1),.SR2out(SR2premux),.debugRegRead(debugRegRead));
+	.data(dataBus),
+	.DRadr(DRadr),
+	.LDREG(LDREG),
+	.SR1adr(SR1adr),
+	.SR2adr(SR2adr),
+	.clk(clk),
+	.reset_n(reset_n),
+	.SR1out(SR1),
+	.SR2out(SR2premux),
+	.debugRegRead(debugRegRead)
+	);
 	
-branchEnable ben_inst(.BEN(BEN),.instruction(instruction),.N(N),.Z(Z),.P(P));
+branchEnable ben_inst(
+.BEN(BEN),
+.instruction(instruction),
+.N(N),
+.Z(Z),
+.P(P),
+.clk(clk),
+.reset_n(reset_n),
+.LDBEN(LDBEN)
+);
 	
 SR1adrMux SR1MUX_inst(
 	.SR1adr(SR1adr),.SR1MUX(SR1MUX),.instruction(instruction));	
@@ -97,7 +125,9 @@ memory #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) memory_inst(
  .RW(RW),
  .GateMDR(GateMDR),
  .R(R),
- .debugMemoryRead(debugMemoryRead)
+ .debugMemoryRead(debugMemoryRead),
+ .debugMARRead(debugMARRead),
+ .debugMDRRead(debugMDRRead)
  );
 
 
@@ -110,7 +140,8 @@ TRAPBlock TRAPBlock_inst(
 .GateVector(GateVector),
 .LDVector(LDVector),
 .TableMUX(TableMUX),
-.VectorMUX(VectorMUX)
+.VectorMUX(VectorMUX),
+.INTV(INTV)
 );
 
 	

@@ -1,0 +1,9 @@
+as main.asm
+ld main.obj
+set PC x0
+trace on pennsim_trace.hex
+break set x0020
+continue
+trace off
+dump -readmemh x0 x20 pennsim_memDump.hex
+quit

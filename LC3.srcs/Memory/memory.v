@@ -32,9 +32,12 @@ module memory
 	input LDMDR, LDMAR, MIOEN, RW, GateMDR, //MIOEN = memory io enable
 	output R,
 	
-	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead
+	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead,
+	output [15:0] debugMARRead, debugMDRRead
 
     );
+	assign debugMARRead = MAR;
+	assign debugMDRRead = MDR;
 	
 	wire[15:0] MDR, MAR, memoryRead;
 	wire[1:0] inmuxSelect;
