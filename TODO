@@ -1,5 +1,14 @@
 TODO list:
 
+LC3.srcs/Controller/controller.v
+
+	126 	// TODO break into microsequencer, control store, and microinstruction
+	127 	// TODO implement RTI, TRAP, Interrupt, ACV, 1101
+	179 					case(instruction[15:12])// TODO INSTR_X = OPCODE_X. case statement is unneccessary. Should Remove once all states are implemented
+
+LC3.srcs/Controller/microsequencer.v
+
+	30 		// TODO microsequencer ~ next state logic. index into control store ~ output assignment.
 
 LC3.srcs/Datapath/interrupt.v
 
