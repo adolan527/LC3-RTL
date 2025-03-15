@@ -1,0 +1,5 @@
+Mismatches between pennsim_trace.hex and verilog_trace.hex in pythonTest:
+2	pennsim_trace.hex	0002 1240 0001 4041 0000 0000 0000
+2	verilog_trace.hex	0002 1240 0001 4041 0001 0000 0000
+
+Mismatches between pennsim_memDump.hex and verilog_memDump.hex in pythonTest:

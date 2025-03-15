@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 module conditionCode(
 	input[15:0] data,
 	input LDCC, //should the condition codes be update
@@ -42,7 +42,7 @@ module conditionCode(
 	end
 	
 endmodule
-
+*/
 //ConditionCode tb
 module cctb();
 

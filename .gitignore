@@ -21,3 +21,8 @@
 
 # Always include the .xpr file
 !*.xpr
+
+#Exclude PennSim.jar
+*.jar 
+
+LC3.sim/simulation_sets

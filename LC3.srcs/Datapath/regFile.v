@@ -30,7 +30,6 @@ module regFile(
 	output reg[15:0] SR1out, SR2out, //data from source registers 1 and 2
 	output reg[16 * 8 -1:0] debugRegRead
     );
-	 
 	
 	reg[15:0] registers[7:0];
 	reg[7:0] enable;

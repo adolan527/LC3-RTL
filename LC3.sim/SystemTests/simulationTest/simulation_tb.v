@@ -1,12 +1,12 @@
 `timescale 1ns / 1ps
 
-`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/state.csv" // write program state every instruction
-`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/verilog_memDump.hex" // dump memory after test
-`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/main.hex" // load hex-ified obj file
-`define TRACE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/REPLACEPATHHERE/verilog_trace.hex" // pennsim style trace
+`define STATE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/simulationTest/state.csv" // write program state every instruction
+`define MEMDUMP_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/simulationTest/verilog_memDump.hex" // dump memory after test
+`define MEMLOAD_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/simulationTest/main.hex" // load hex-ified obj file
+`define TRACE_PATH "C:/Users/Aweso/Verilog/LC3/LC3.sim/SystemTests/simulationTest/verilog_trace.hex" // pennsim style trace
 
 
-module REPLACENAMEHERE_tb();
+module simulation_tb();
 
 reg clk, reset_n;
 wire [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead;
@@ -18,7 +18,7 @@ reg[15:0] mem[`MEMORY_WORDCOUNT-1:0];
 reg[15:0] first32mem[31:0];
 wire [15:0] instruction;
 wire [15:0] PSR, PC, dataBus, MAR, MDR;
-wire LDREG, MIOEN;
+wire LDREG, MIOEN, RW;
 
 lc3 #(.MEMORY_INIT_FILE(`MEMLOAD_PATH)) lc3_inst( //instantiation 
  .clk(clk),.reset_n(reset_n),
@@ -33,10 +33,12 @@ lc3 #(.MEMORY_INIT_FILE(`MEMLOAD_PATH)) lc3_inst( //instantiation
  .debugMARRead(MAR),
  .debugMDRRead(MDR),
  .debugLDREG(LDREG),
- .debugMIOEN(MIOEN)
+ .debugMIOEN(MIOEN),
+ .debugRW(RW)
  );
 
 always #5 clk = ~clk; //clock
+
 
 
 genvar j; // makes mem, registers, and first32mem equal to system values for easier debugging
@@ -51,6 +53,7 @@ generate
 		always @(*) first32mem[j] <= debugMemoryRead[(j+1)*16 -1 : 16 * j];
 	end	
 endgenerate
+
 
 
 integer state_file;
@@ -97,40 +100,61 @@ endtask
 
 
 
+task pennsim_trace_initial;
+	begin
+	pennsim_trace_file = $fopen(`TRACE_PATH, "w"); // Open file in write mode, clear it
+	$fclose(pennsim_trace_file);	
+	end
+endtask
 
-/*
-(1) PC, - PC
-(2) current insn, INSTR
-(3) regfile write-enable, LDREG
-(4) regfile data in, dataBus & LDREG
-(5) data memory write-enable, MIOEN
-(6) data memory address, MAR
-(7) data memory data in, MDR
-*/
-
-reg [15:0] lastRegisterInput; //stores the last input to the regfile during this instruction
+reg[15:0] PCdec;
+reg [15:0] lastRegisterInput, didRegisterWrite, lastMemoryInput, lastMemoryAddress, didMemoryWrite; //stores the last input to the regfile/memory during this instruction
 
 task pennsim_trace;
 	begin
+	PCdec = PC - 1;
 	pennsim_trace_file = $fopen(`TRACE_PATH, "a"); // Open file in append mode		
 	$fwrite(pennsim_trace_file, "%h %h %h %h %h %h %h\n",
-                    PC, instruction, LDREG, lastRegisterInput, MIOEN, MAR, MDR);
+                    PCdec, instruction, didRegisterWrite, lastRegisterInput, didMemoryWrite, lastMemoryAddress, lastMemoryInput);
 	lastRegisterInput = 0;
+	didRegisterWrite = 0;
+	lastMemoryInput = 0;
+	lastMemoryAddress = 0;
+	didMemoryWrite = 0;
 	$fclose(pennsim_trace_file);	
 	end
 endtask
 
 
+integer doLog;
 always@(*)begin //writes to file the program state every fetch command
-	if(LDREG) lastRegisterInput = dataBus;
-	if(nextState == 6'd18) begin //FETCH
-		write_update();
-		pennsim_trace();
+
+	if(instruction == 16'hFFFF)begin
+		write_final();
+		$stop;
 	end
+
+	if(LDREG) lastRegisterInput = dataBus;
+	if(LDREG) didRegisterWrite = 1;
+	if(RW) lastMemoryInput = MDR;
+	if(RW) lastMemoryAddress = MAR;	
+	if(RW) didMemoryWrite = 1;
+	if(nextState == 6'd18) begin //FETCH
+		doLog = 1;
+	end
+	else if(currentState == 6'd18 && doLog == 1) begin
+		write_update();
+		if(instruction != 0 && instruction) pennsim_trace();
+		doLog = 0;
+	end
+	
+	
 end
 
 initial begin
 write_initial();
+pennsim_trace_initial();
+doLog = 0;
 clk = 0; reset_n = 0; #10
 reset_n = 1; #1900
 reset_n = 0;

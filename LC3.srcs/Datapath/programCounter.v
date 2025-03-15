@@ -23,7 +23,7 @@
 module programCounter(//Stores the program counter, gated output to databus. PC selects from PC+1, address from bus, or address from adder (ex: using a LDR).
 	input[1:0] pcMux,//selects where the next PC value should come from
 	input[15:0] bus, adder, //data bus and address adder values
-	input clk, reset_n, GatePC, LDPC, 
+	input clk, reset_n, GatePC, GatePC1, LDPC, 
 	output reg[15:0] result, addressAdder //result -> databus, addressMux -> address adder
 	);
 
@@ -42,7 +42,9 @@ module programCounter(//Stores the program counter, gated output to databus. PC 
 	end
 	
 	always@(*) begin
-		if(GatePC) result<=PC; else result<={16'bz};
+		if(GatePC) result <= PC; 
+		else if(GatePC1) result <= PC - 1;
+		else result<={16'bz};
 		addressAdder <= PC;
 	end
 	
