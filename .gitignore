@@ -25,4 +25,6 @@
 #Exclude PennSim.jar
 *.jar 
 
+#Vivado generated
 LC3.sim/simulation_sets
+LC3.sim/simulation
