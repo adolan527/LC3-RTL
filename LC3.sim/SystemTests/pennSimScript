@@ -2,8 +2,8 @@ as main.asm
 ld main.obj
 set PC x0
 trace on pennsim_trace.hex
-break set x0020
+break set x0040
 continue
 trace off
-dump -readmemh x0 x20 pennsim_memDump.hex
+dump -readmemh x0 x40 pennsim_memDump.hex
 quit

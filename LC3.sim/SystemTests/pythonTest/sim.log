@@ -2,4 +2,22 @@ Mismatches between pennsim_trace.hex and verilog_trace.hex in pythonTest:
 2	pennsim_trace.hex	0002 1240 0001 4041 0000 0000 0000
 2	verilog_trace.hex	0002 1240 0001 4041 0001 0000 0000
 
+6	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+6	verilog_trace.hex	
+
+7	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+7	verilog_trace.hex	
+
+8	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+8	verilog_trace.hex	
+
+9	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+9	verilog_trace.hex	
+
+10	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+10	verilog_trace.hex	
+
+11	pennsim_trace.hex	0005 72BF 0000 0000 0001 0007 4041
+11	verilog_trace.hex	
+
 Mismatches between pennsim_memDump.hex and verilog_memDump.hex in pythonTest:

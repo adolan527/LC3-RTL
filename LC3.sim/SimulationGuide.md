@@ -104,8 +104,3 @@ Used to test individual modules.
 Currently is very sparse.
 Some module testbenches are defined next to their module definitions in the source code.
 This shoue be updated.
-
-### Simulation Sets
-
-Contains simulation sets created by Vivado upon simulation.
-
