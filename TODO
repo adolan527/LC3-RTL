@@ -6,7 +6,7 @@ LC3.srcs/Controller/controller.v
 
 LC3.srcs/Controller/microsequencer.v
 
-	31 		// TODO microsequencer ~ next state logic. index into control store ~ output assignment.
+	33 		// TODO microsequencer ~ next state logic. index into control store ~ output assignment.
 
 LC3.srcs/Datapath/interrupt.v
 
