@@ -37,6 +37,7 @@ module controller(
 	output wire[5:0] debugCurrentState, debugNextState
     );
 	
+
 wire[5:0]  index;
 wire IRD;
 wire[2:0] COND;
@@ -97,7 +98,9 @@ microsequencer microsequencer_inst(
  .COND(COND),
  .control_store_index(index),
  .clk(clk),
- .reset_n(reset_n)
+ .reset_n(reset_n),
+ .debugCurrentState(debugCurrentState),
+ .debugNextState(debugNextState)
 );
 
 

@@ -25,10 +25,14 @@ module microsequencer(
 	input [5:0] J, //current state
 	input[2:0] COND, //conditions from microinstruction
 	input clk, reset_n,
-	output reg[5:0] control_store_index
+	output reg[5:0] control_store_index,
+	
+	output wire[5:0] debugCurrentState, debugNextState
 	);
 	
 	// TODO microsequencer ~ next state logic. index into control store ~ output assignment.
+	assign debugCurrentState = control_store_index;
+	assign debugNextState = next_index;
 	
 	reg[5:0] nextState, next_index;
 	
