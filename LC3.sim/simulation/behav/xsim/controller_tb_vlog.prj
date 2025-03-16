@@ -1,0 +1,29 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../LC3.gen/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" \
+"../../../../LC3.srcs/Datapath/ALU.v" \
+"../../../../LC3.srcs/Memory/RAM.v" \
+"../../../../LC3.srcs/Datapath/address.v" \
+"../../../../LC3.srcs/Memory/addressControlLogic.v" \
+"../../../../LC3.srcs/Datapath/conditionCode.v" \
+"../../../../LC3.srcs/Controller/controller.v" \
+"../../../../LC3.srcs/Datapath/datapath.v" \
+"../../../../LC3.srcs/Memory/io.v" \
+"../../../../LC3.srcs/lc3.v" \
+"../../../../LC3.srcs/Memory/memory.v" \
+"../../../../LC3.srcs/Memory/memoryRegister.v" \
+"../../../../LC3.srcs/Datapath/misc.v" \
+"../../../../LC3.srcs/Datapath/programCounter.v" \
+"../../../../LC3.srcs/Datapath/regFile.v" \
+"../../../../LC3.srcs/top.v" \
+"../../../../LC3.srcs/Datapath/interrupt.v" \
+"../../../../LC3.srcs/Controller/controlStore.v" \
+"../../../../LC3.srcs/Controller/microsequencer.v" \
+"../../../SystemTests/simulationTest/simulation_tb.v" \
+"../../../SystemTests/controllerTest/controller_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
