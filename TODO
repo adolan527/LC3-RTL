@@ -13,8 +13,3 @@ LC3.srcs/Datapath/interrupt.v
 	25 	module stackPointer( //TODO verify
 	62 	module TRAPBlock(//TODO verify
 	114 	module PSRBlock(//TODO complete
-
-LC3.srcs/Memory/addressControlLogic.v
-
-	50 	// TODO: Write a tb for this module.
-	51 	// TODO: Current implementation performance to ROM implementation.
