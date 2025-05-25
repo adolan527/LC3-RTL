@@ -1,11 +1,11 @@
 # Open the file in read mode
 import sys
 
+
 PENNSIM_TRACE = "pennsim_trace.hex"
 VERILOG_TRACE = "verilog_trace.hex"
 PENNSIM_MEMDUMP = "pennsim_memDump.hex"
 VERILOG_MEMDUMP = "verilog_memDump.hex"
-
 
 def compare(path_a, path_b, log):
     a = open(path_a, "r")
@@ -58,5 +58,6 @@ if __name__ == "__main__":
 
     compare(f"{dir}{PENNSIM_TRACE}",f"{dir}{VERILOG_TRACE}",logPath)
     compare(f"{dir}{PENNSIM_MEMDUMP}", f"{dir}{VERILOG_MEMDUMP}", logPath)
+    
 
     

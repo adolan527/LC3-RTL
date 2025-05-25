@@ -44,7 +44,7 @@ module lc3
 	input[15:0] keyboardInput,
 	input [2:0] interrupt_priority,
 	input [7:0] INTV,
-	output[15:0] displayOutput
+	output[15:0] consoleOutput
     );
 
 wire  INT, R, BEN, ACV, clk, reset_n;
@@ -155,7 +155,7 @@ datapath #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) datapath_inst(
  .INT(INT),
  .instruction(instruction),
  .foreignKeyboardInput(keyboardInput),
- .foreignDisplayOutput(displayOutput),
+ .foreignConsoleOutput(consoleOutput),
  .interrupt_priority(interrupt_priority),
  .INTV(INTV),
  

@@ -24,7 +24,7 @@
 module io(
 	input[15:0] data,
 	input[15:0] foreignKeyboardInput,
-	output[15:0] foreignDisplayOutput,
+	output[15:0] foreignConsoleOutput,
 	output[15:0] KBDR, KBSR, DSR,
 	input clk, reset_n,
 	input KBSR_enable, DDR_enable, DSR_enable
@@ -33,7 +33,7 @@ module io(
 	io_input in(.data(data),.foreignData(foreignKeyboardInput),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.KBSR(KBSR),.KBDR(KBDR));
 	io_output out(.data(data),.clk(clk),.reset_n(reset_n),.DDR(DDR),.DSR(DSR),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable));
 	
-	assign foreignDisplayOutput = DDR;
+	assign foreignConsoleOutput = DDR;
 	
 endmodule
 

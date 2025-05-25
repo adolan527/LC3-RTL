@@ -47,5 +47,3 @@ module addressControlLogic(
 		
 endmodule
 
-// TODO: Write a tb for this module.
-// TODO: Current implementation performance to ROM implementation.

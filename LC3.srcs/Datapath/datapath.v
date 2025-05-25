@@ -34,7 +34,7 @@ module datapath
 	input [2:0] interrupt_priority,
 	input [7:0] INTV,
 	output BEN, ACV, R, INT, //branch enable, Access Control Violation, memory read signal, interrupt signal
-	output [15:0] PSR, instruction, foreignDisplayOutput,
+	output [15:0] PSR, instruction, foreignConsoleOutput,
 	
 	output [16 * 8 -1:0] debugRegRead,
 	output [16*`MEMORY_WORDCOUNT-1:0] debugMemoryRead,
@@ -120,7 +120,7 @@ memory #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) memory_inst(
  .data(dataBus),
  .foreignKeyboardInput(foreignKeyboardInput),
  .clk(clk),.reset_n(reset_n),.result(dataBus),
- .foreignDisplayOutput(foreignDisplayOutput),
+ .foreignConsoleOutput(foreignConsoleOutput),
  .LDMDR(LDMDR),.LDMAR(LDMAR),.MIOEN(MIOEN),
  .RW(RW),
  .GateMDR(GateMDR),

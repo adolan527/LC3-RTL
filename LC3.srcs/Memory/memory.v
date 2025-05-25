@@ -28,7 +28,7 @@ module memory
 
 	input[15:0] data, foreignKeyboardInput,
 	input clk, reset_n,
-	output [15:0] result, foreignDisplayOutput,
+	output [15:0] result, foreignConsoleOutput,
 	input LDMDR, LDMAR, MIOEN, RW, GateMDR, //MIOEN = memory io enable
 	output R,
 	
@@ -48,7 +48,7 @@ module memory
 
 	
 	memoryRegister memoryRegister_inst(.data(data),.inmux(inmux),.clk(clk),.reset_n(reset_n),.MAR(MAR),.LDMAR(LDMAR),.LDMDR(LDMDR),.MIOEN(MIOEN),.GateMDR(GateMDR),.MDR(MDR),.result(result));
-	io io_inst(.data(data),.KBDR(KBDR),.KBSR(KBSR),.DSR(DSR),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.foreignKeyboardInput(foreignKeyboardInput),.foreignDisplayOutput(foreignDisplayOutput));
+	io io_inst(.data(data),.KBDR(KBDR),.KBSR(KBSR),.DSR(DSR),.clk(clk),.reset_n(reset_n),.KBSR_enable(KBSR_enable),.DDR_enable(DDR_enable),.DSR_enable(DSR_enable),.foreignKeyboardInput(foreignKeyboardInput),.foreignConsoleOutput(foreignConsoleOutput));
 	RAM #(.MEMORY_INIT_FILE(MEMORY_INIT_FILE)) RAM_inst(
 	.MDR(MDR),
 	.address(MAR),
