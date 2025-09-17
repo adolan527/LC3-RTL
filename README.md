@@ -6,16 +6,13 @@ This ISA is often used as a resource to teach computer engineers the fundamental
 This repository is an implementation of the design outlined in the aforementioned textbook, in Verilog using Vivado.
 The goal of this project is to understand CPU microarchitecture and have a design to build upon for future projects. (ie. implementing pipelining, threads, etc)
 
-The LC3 functions properly in its current implementation, with the only limitation being memory size.
-It is currently limited to 128 words of memory. The next step in this project 
-is expanding the  memory and verifying functionality with the OS.
+The LC3 functions properly in its current implementation, with the main limitation begin IO.
+To properly implement memory-mapped IO would require using a dual-port RAM and creating an interface (most likely UART) to manage IO operations between the FPGA ports and microprocessor.
 
-Additionally, optimizations can be made to the controller to allow for faster clock speeds and
-easier verification. The main improvement is separating the control structure into a 
-microsequencer and control store, as opposed to an FSM and mux model.
+## Simulation
+A skill that this project forced me to learn was the importance of automation in testing. Within the LC3.sim/ directory, one can find a guide on the simulation process.
+This reduced the simulation process to a few simple scripts that minimize the marginal costs of testing features while providing full coverage.
 
-Lastly, implementation onto an FPGA and integration in a larger system, ie. with IO, 
-is the long-term goal of this project.
 
 ## Project Structure
 ### LC3.src/
